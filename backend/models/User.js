@@ -6,10 +6,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   dogsFollowed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
   appointmentsMade: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Appointment",
-    },
+    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
   ],
 });
 
