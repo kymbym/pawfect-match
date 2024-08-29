@@ -1,6 +1,11 @@
 import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import PartnerSignupForm from "../components/SignupForm/PartnerSignupForm";
+import PartnerLoginForm from "../components/LoginForm/PartnerLoginForm";
 
 function App() {
+
+  const [token, setToken] = useState("")
 
   return (
   <>
@@ -8,8 +13,8 @@ function App() {
 
   <Routes>
     <Route path="/" />
-    <Route path="/partner/login"/>
-    <Route path="/partner/signup"/>
+    <Route path="/partner/login" element={<PartnerLoginForm setToken={setToken}/>}/>
+    <Route path="/partner/signup" element={<PartnerSignupForm />}/>
     <Route path="/partner/pets"/>
     <Route path="/partner/pets/add"/>
     <Route path="/partner/pets/edit/:petId"/>
