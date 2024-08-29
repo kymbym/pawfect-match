@@ -6,7 +6,7 @@ const appointmentSchema = new mongoose.Schema({
   provider: { type: mongoose.Schema.Types.ObjectId, ref: "Partner" },
   contact: { type: String, required: true },
   appointmentDate: { type: Date, required: true },
-  appointmentTime: { type: Number, required: true },
+  appointmentTime: { type: Date, required: true },
   inquiries: String,
 });
 

@@ -13,6 +13,9 @@ mongoose.connection.on("connected", () => {
 
 app.use(express.json());
 
+//routes here:
+app.use("/user", usersRouter);
+
 app.listen(3000, () => {
   console.log("The express app is ready!");
 });

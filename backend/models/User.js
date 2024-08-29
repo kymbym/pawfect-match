@@ -4,11 +4,9 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  dogsFollowed: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Pet" }
-  ],
+  dogsFollowed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
   appointmentsMade: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
   ],
 });
 
