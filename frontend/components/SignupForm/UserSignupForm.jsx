@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function UserSignUpForm() {
+export default function UserSignupForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -11,10 +11,7 @@ export default function UserSignUpForm() {
   });
 
   const handleChange = (event) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = async (event) => {
