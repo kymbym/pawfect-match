@@ -5,8 +5,8 @@ const partnerSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   hashedPassword: { type: String, required: true },
   appointmentsReceived: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" }
-],
+    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
+  ],
 });
 
 partnerSchema.set("toJSON", {
