@@ -31,4 +31,21 @@ router.get("/:appointmentId", async (req, res) => {
   res.status(200).json(appointment);
 });
 
+//edit appointment:
+router.put("/:appointmentId", async (req, res) => {
+  const { appointmentId } = req.params;
+  const currentUser = getUser(req);
+  const appointment = await Appointment.findById(appointmentId);
+  if (appointment === null) {
+    return res.status(404).json({ error: "Cannot find appointment" });
+  }
+  const updatedAppointment = await Appointment.findByIdAndUpdate(
+    req.params.appointmentId,
+    req.body,
+    { new: true },
+  );
+  updatedAppointment._doc.adopter = currentUser;
+  res.status(200).json(updatedAppointment);
+});
+
 module.exports = router;
