@@ -7,8 +7,19 @@ const { verifyToken } = require("../middleware/user-verify-token");
 
 const SALT_LENGTH = 12;
 
+const createJWT = (user) => {
+  const payload = {
+    userName: user.userName,
+    email: user.email,
+    _id: user._id,
+  };
+  const secret = process.env.JWT_SECRET;
+  const options = { expiresIn: "2h" };
+  return jwt.sign(payload, secret, options);
+};
+
 router.post("/signup", async (req, res) => {
-  const { userName, email, hashedPassword } = req.body;
+  const { userName, email, password } = req.body;
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -16,13 +27,11 @@ router.post("/signup", async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(
-      req.body.hashedPassword,
+      password,
       SALT_LENGTH,
     );
     const user = await User.create({ userName, email, hashedPassword });
-    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
-      expiresIn: "5m", //after testing, change to "1h"
-    });
+    const token = createJWT(user);
     res.status(201).json({ user, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -33,10 +42,8 @@ router.post("/login", async (req, res) => {
   const { userName, email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (user && bcrypt.compare({ password }, user.hashedPassword)) {
-      const token = jwt.sign({ user }, process.env.JWT_SECRET, {
-        expiresIn: "5m",
-      });
+    if (user && bcrypt.compare(password, user.hashedPassword)) {
+      const token = createJWT(user);
       res.status(200).json({ token });
     } else {
       res.status(401).json({ error: "Invalid username or password" });

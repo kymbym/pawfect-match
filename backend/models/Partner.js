@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const partnerSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  organizationName: { type: String, required: true },
   email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
+  hashedPassword: { type: String, required: true },
   appointmentsReceived: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
   ],

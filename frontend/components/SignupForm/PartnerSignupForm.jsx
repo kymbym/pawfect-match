@@ -1,88 +1,67 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { signupPartner } from "../../services/partnerservices";
+// import { useNavigate } from "react-router-dom";
 
-export default function UserSignUpForm() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    organizationName: "",
-    email: "",
-    password: "",
-    confirmPw: "",
+const PartnerSignupForm = () => {
+
+    // const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        organizationName: "",
+        email: "",
+        password: "",
+        confirmPw: "",
   });
 
-  const handleChange = (event) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
+    const handleChange = (e) => {
+        e.preventDefault();
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      console.log(formData);
-      navigate("/home/userId");
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        if (formData.password !== formData.confirmPw) {
+            alert("passwords do not match");
+            return;
+        }
+        
+        console.log("form data", formData)
+
+        try {
+            await signupPartner(formData);
+            // navigate("/")
+        } catch (error) {
+            alert("error")
+        }
     }
-  };
 
-  const { organizationName, email, password, confirmPw } = formData;
-
-  const isFormInvalid = () => {
-    return !(organizationName && email && password && password === confirmPw);
-  };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:{" "}
-          <input
-            type="text"
-            id="name"
-            value={organizationName}
-            name="name"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Email:{" "}
-          <input
-            type="email"
-            id="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:{" "}
-          <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Confirm Password:{" "}
-          <input
-            type="password"
-            id="confirmPw"
-            value={confirmPw}
-            name="confirmPw"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <br />
-        <button disabled={isFormInvalid()}>Submit</button>
+      <h1>Partner Sign Up</h1>
+
+      <form onSubmit={handleSignup}>
+        <div>
+          <label>Organization Name:</label>
+          <input type="text" id="organizationName" name="organizationName" value={formData.organizationName} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input type="password" id="confirmPw" name="confirmPw" value={formData.confirmPw} onChange={handleChange} required />
+        </div>
+        <button type="submit">Submit</button>
       </form>
+
     </>
   );
-}
+};
+
+export default PartnerSignupForm;
