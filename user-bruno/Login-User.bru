@@ -1,0 +1,24 @@
+meta {
+  name: Login-User
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/api/user/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "car@mail.com",
+    "hashedPassword": "123"
+  }
+}
+
+script:post-response {
+    bru.setVar("token",res.body.token)
+    const payload = JSON.parse(atob(res.body.token.split(".")[1]))
+    bru.setVar("userId",payload._id)
+}

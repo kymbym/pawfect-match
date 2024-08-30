@@ -18,7 +18,7 @@ export default function UserSignupForm() {
     event.preventDefault();
     try {
       console.log(formData);
-      navigate("/home/userId");
+      navigate("/home/:userId");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
