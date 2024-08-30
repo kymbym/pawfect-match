@@ -1,0 +1,25 @@
+meta {
+  name: Delete Specific Appointment
+  type: http
+  seq: 9
+}
+
+delete {
+  url: http://localhost:3000/api/appointments/:appointmentId
+  body: json
+  auth: bearer
+}
+
+params:path {
+  appointmentId: 66d15b5fed68a60d210e1ec5
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "appointmentDate": "7 Sep"
+  }
+}

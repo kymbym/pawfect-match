@@ -48,4 +48,11 @@ router.put("/:appointmentId", async (req, res) => {
   res.status(200).json(updatedAppointment);
 });
 
+//delete appointment
+router.delete("/:appointmentId", async (req, res) => {
+  const { appointmentId } = req.params;
+  const deletedAppointment = await Appointment.findByIdAndDelete(appointmentId);
+  res.status(200).json(deletedAppointment);
+});
+
 module.exports = router;
