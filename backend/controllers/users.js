@@ -19,6 +19,7 @@ const createJWT = (user) => {
 };
 
 router.post("/signup", async (req, res) => {
+  console.log(req.body);
   const { userName, email, password } = req.body;
   try {
     const userExists = await User.findOne({ email });
@@ -36,7 +37,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { userName, email, hashedPassword } = req.body;
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (user && bcrypt.compare(password, user.hashedPassword)) {
