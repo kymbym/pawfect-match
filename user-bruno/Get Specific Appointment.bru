@@ -1,0 +1,19 @@
+meta {
+  name: Get Specific Appointment
+  type: http
+  seq: 7
+}
+
+get {
+  url: http://localhost:3000/api/appointments/:appointmentId
+  body: none
+  auth: bearer
+}
+
+params:path {
+  appointmentId: 66d15b5fed68a60d210e1ec5
+}
+
+auth:bearer {
+  token: {{token}}
+}
