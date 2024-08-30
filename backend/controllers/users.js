@@ -30,10 +30,10 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { userName, email, hashedPassword } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (user && bcrypt.compare({ password }, user.hashedPassword)) {
+    if (user && bcrypt.compare({ hashedPassword }, user.hashedPassword)) {
       const token = jwt.sign({ user }, process.env.JWT_SECRET, {
         expiresIn: "5m",
       });
