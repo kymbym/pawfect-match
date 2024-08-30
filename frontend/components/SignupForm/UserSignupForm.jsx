@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserNavBar from "../NavBar/UserNavBar";
 
 export default function UserSignupForm() {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ export default function UserSignupForm() {
 
   return (
     <>
+      <UserNavBar />
+      <h1>Create an account</h1>
+      <h2>Enter your details to create an account.</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name:{" "}
@@ -80,6 +84,10 @@ export default function UserSignupForm() {
         <br />
         <button disabled={isFormInvalid()}>Submit</button>
       </form>
+      <h2>
+        Have an existing account? <u>Login here</u>{" "}
+        {/*insert link to log in page here */}
+      </h2>
     </>
   );
 }

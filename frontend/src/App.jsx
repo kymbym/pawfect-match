@@ -3,6 +3,9 @@ import { useState } from "react";
 import PartnerSignupForm from "../components/SignupForm/PartnerSignupForm";
 import PartnerLoginForm from "../components/LoginForm/PartnerLoginForm";
 
+/* User Pages */
+import UserSignupForm from "../components/SignupForm/UserSignupForm";
+
 function App() {
 
   const [token, setToken] = useState("")
@@ -21,7 +24,7 @@ function App() {
     <Route path="/partner/appointments"/>
 
         <Route path="/user/login" />
-        <Route path="/user/signup" element={<UserSignupPage />} />
+        <Route path="/user/signup" element={<UserSignupForm />} />
         <Route path="/home/:userId" />
         <Route path="/search" />
         <Route path="/pets/:petId" />
