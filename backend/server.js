@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 app.use(express.static("../frontend/dist"));
 const partnersRouter = require("./controllers/partners");
 const usersRouter = require("./controllers/users");
+const appointmentsRouter = require("./controllers/appointments");
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use("/api/partner", partnersRouter);
 app.use("/api/user", usersRouter);
+app.use("/api/appointments", appointmentsRouter);
 
 app.listen(3000, () => {
   console.log("The express app is ready!");

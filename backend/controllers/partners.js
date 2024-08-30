@@ -3,42 +3,45 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Partner = require("../models/Partner");
-const Pet = require ("../models/Pet")
+const Pet = require("../models/Pet");
 const { verifyToken } = require("../middleware/partner-verify-token");
 const { default: mongoose } = require("mongoose");
 
 const SALT_LENGTH = 12;
 
 const createJWT = (partner) => {
-    const payload = { organizationName: partner.organizationName, _id: partner._id };
-    const secret = process.env.JWT_SECRET;
-    const options = { expiresIn: "2h" };
-    return jwt.sign(payload, secret, options);
-}
+  const payload = {
+    organizationName: partner.organizationName,
+    _id: partner._id,
+  };
+  const secret = process.env.JWT_SECRET;
+  const options = { expiresIn: "2h" };
+  return jwt.sign(payload, secret, options);
+};
 
 // partner signup
 router.post("/signup", async (req, res) => {
-    const { organizationName, email, password } = req.body;
+  const { organizationName, email, password } = req.body;
 
-    try {
-        const partnerInDatabase = await Partner.findOne({ email });
+  try {
+    const partnerInDatabase = await Partner.findOne({ email });
 
-        if (partnerInDatabase) {
-            return res.status(400).json({ error: "email already in use" })
-        }
-
-        const hashedPassword = bcrypt.hashSync(password, SALT_LENGTH);
-        const partner = await Partner.create({
-            organizationName,
-            email,
-            hashedPassword
-        });
-        
-        const token = createJWT(partner)
-        return res.status(201).json({ partner, token })
-    } catch (error) {
-        res.status(400).json({ error: error.message })
+    if (partnerInDatabase) {
+      return res.status(400).json({ error: "email already in use" });
     }
+
+    const hashedPassword = bcrypt.hashSync(password, SALT_LENGTH);
+    const partner = await Partner.create({
+      organizationName,
+      email,
+      hashedPassword,
+    });
+
+    const token = createJWT(partner);
+    return res.status(201).json({ partner, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 // partner login
@@ -83,22 +86,24 @@ router.get("/:partnerId", verifyToken, async (req, res) => {
   }
 });
 
-// upload new pet 
+// upload new pet
 router.post("/pets", verifyToken, async (req, res) => {
   const { _id } = req.partner;
   const petData = req.body;
 
   try {
-    const pet = new Pet({ ...petData, provider: _id })
+    const pet = new Pet({ ...petData, provider: _id });
     await pet.save();
 
-    return res.status(201).json({ msg: "pet added successfully", petId: pet._id })
+    return res
+      .status(201)
+      .json({ msg: "pet added successfully", petId: pet._id });
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
 });
 
-// edit pet 
+// edit pet
 router.put("/pets/:petId", verifyToken, async (req, res) => {
   const { petId } = req.params;
   const updates = req.body;
@@ -108,16 +113,20 @@ router.put("/pets/:petId", verifyToken, async (req, res) => {
       return res.status(400).json({ msg: "invalid pet id" });
     }
 
-    const pet = await Pet.findById(petId)
+    const pet = await Pet.findById(petId);
     if (!pet) {
       return res.status(404).json({ error: "pet not found" });
     }
 
     if (!pet.provider.equals(req.partner._id)) {
-      return res.status(403).json({ error: "unauthorized! not allowed to edit" });
+      return res
+        .status(403)
+        .json({ error: "unauthorized! not allowed to edit" });
     }
 
-    const updatedPet = await Pet.findByIdAndUpdate(petId, updates, { new: true });
+    const updatedPet = await Pet.findByIdAndUpdate(petId, updates, {
+      new: true,
+    });
     res.status(200).json({ msg: "pet updated successfully ", updatedPet });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -133,22 +142,23 @@ router.delete("/pets/:petId", verifyToken, async (req, res) => {
       return res.status(400).json({ msg: "invalid pet id" });
     }
 
-    const pet = await Pet.findById(petId)
+    const pet = await Pet.findById(petId);
 
     if (!pet) {
       return res.status(404).json({ error: "pet not found" });
     }
 
     if (!pet.provider.equals(req.partner._id)) {
-      return res.status(403).json({ error: "unauthorized! not allowed to edit" });
+      return res
+        .status(403)
+        .json({ error: "unauthorized! not allowed to edit" });
     }
 
     const deletedPet = await Pet.findByIdAndDelete(petId);
     res.status(200).json({ msg: "pet deleted successfully", deletedPet });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-})
+});
 
 module.exports = router;
-

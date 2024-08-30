@@ -38,7 +38,7 @@ export const loginPartner = async (formData) => {
     }
 
     const json = await response.json();
-    console.log("login response", json)
+    console.log("login response", json);
     return json.token;
   } catch (error) {
     console.error("error logging in", error.message);
