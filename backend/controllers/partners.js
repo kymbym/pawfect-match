@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Partner = require("../models/Partner");
+const { verifyToken } = require("../middleware/partner-verify-token")
 
 const SALT_LENGTH = 12;
 
@@ -56,4 +57,25 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/:partnerId", verifyToken, async (req, res) => {
+  try {
+    if (req.partner._id !== req.params.partnerId) {
+      return res.status(401).json({ error: "unauthorized" });
+    }
+    const partner = await Partner.findById(req.partner._id);
+    if (!partner) {
+      res.status(404);
+      throw new Error("profile not found");
+    }
+    res.json({ partner });
+  } catch (error) {
+    if (res.statusCode === 404) {
+      res.status(404).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
+  }
+});
+
 module.exports = router;
+
