@@ -1,13 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function UserNavBar() {
   return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <Link to="/">Pawfect Match</Link>
+      <Link to="/home/:partnerId">Home</Link>
+      <Link to="/appointments">View Appointments</Link>
+      <Link to="/pets">View Current Pet Listings</Link>
+    </>
   );
 }
