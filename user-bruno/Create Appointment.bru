@@ -1,0 +1,24 @@
+meta {
+  name: Create Appointment
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/appointments
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "contact": "1234",
+    "appointmentDate": "2 Sep",
+    "appointmentTime": "1pm",
+    "inquiries": "let me adopt pls"
+  }
+}

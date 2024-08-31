@@ -3,29 +3,32 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Partner = require("../models/Partner");
-const Pet = require ("../models/Pet")
+const Pet = require("../models/Pet");
 const { verifyToken } = require("../middleware/partner-verify-token");
 const { default: mongoose } = require("mongoose");
 
 const SALT_LENGTH = 12;
 
 const createJWT = (partner) => {
-    const payload = { organizationName: partner.organizationName, _id: partner._id };
-    const secret = process.env.JWT_SECRET;
-    const options = { expiresIn: "2h" };
-    return jwt.sign(payload, secret, options);
-}
+  const payload = {
+    organizationName: partner.organizationName,
+    _id: partner._id,
+  };
+  const secret = process.env.JWT_SECRET;
+  const options = { expiresIn: "2h" };
+  return jwt.sign(payload, secret, options);
+};
 
 // partner signup
 router.post("/signup", async (req, res) => {
-    const { organizationName, email, password } = req.body;
+  const { organizationName, email, password } = req.body;
 
-    try {
-        const partnerInDatabase = await Partner.findOne({ email });
+  try {
+    const partnerInDatabase = await Partner.findOne({ email });
 
-        if (partnerInDatabase) {
-            return res.status(400).json({ error: "email already in use" })
-        }
+    if (partnerInDatabase) {
+      return res.status(400).json({ error: "email already in use" });
+    }
 
         const hashedPassword = bcrypt.hashSync(password, SALT_LENGTH);
         const partner = await Partner.create({
@@ -91,4 +94,3 @@ router.get("/:partnerId", verifyToken, async (req, res) => {
 });
 
 module.exports = router;
-
