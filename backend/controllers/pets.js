@@ -2,21 +2,19 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Partner = require("../models/Partner");
 const Pet = require("../models/Pet");
-const { verifyToken } = require("../middleware/partner-verify-token");
+const { verifyToken } = require("../middleware/verify-token");
 const { default: mongoose } = require("mongoose");
 
 // get pets
 router.get("/", verifyToken, async (req, res) => {
-  const { _id, role } = req.partner;
-  console.log("partner id from token", _id);
-  console.log("partner role?", role);
+  const { _id } = req.partner || req.user;
+  // console.log("partner id from token", req.partner._id);
 
   try {
     let pets = [];
 
-    if (role === "partner") {
+    if (req.partner) {
       pets = await Pet.find({ provider: _id });
     } else {
       pets = await Pet.find({}); // user get all pets uploaded from all providers
@@ -35,6 +33,12 @@ router.post("/", verifyToken, async (req, res) => {
   const petData = req.body;
 
   try {
+    if (!req.partner) {
+      return res
+        .status(403)
+        .json({ error: "unauthorized! not allowed to upload" });
+    }
+
     const pet = new Pet({ ...petData, provider: _id });
     await pet.save();
 
@@ -48,7 +52,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 // get pet by id
 router.get("/:petId", verifyToken, async (req, res) => {
-  const { petId, role } = req.params;
+  const { petId } = req.params;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(petId)) {
@@ -61,7 +65,7 @@ router.get("/:petId", verifyToken, async (req, res) => {
       return res.status(404).json({ error: "pet not found" });
     }
 
-    if (role === "partner") {
+    if (req.partner) {
       if (!pet.provider.equals(req.partner._id)) {
         return res
           .status(403)
@@ -69,7 +73,7 @@ router.get("/:petId", verifyToken, async (req, res) => {
       }
       res.status(200).json({ pet });
     } else {
-      res.status(200).json({ name: pet.name }); // user gets specific pet data by id
+      res.status(200).json({}); // user gets specific pet data by id. write code here
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -121,10 +125,12 @@ router.delete("/:petId", verifyToken, async (req, res) => {
       return res.status(404).json({ error: "pet not found" });
     }
 
-    if (!pet.provider.equals(req.partner._id)) {
-      return res
-        .status(403)
-        .json({ error: "unauthorized! not allowed to edit" });
+    if (!req.partner) {
+      if (!pet.provider.equals(req.partner._id)) {
+        return res
+          .status(403)
+          .json({ error: "unauthorized! not allowed to edit" });
+      }
     }
 
     const deletedPet = await Pet.findByIdAndDelete(petId);

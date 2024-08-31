@@ -3,7 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const { verifyToken } = require("../middleware/user-verify-token");
+const { verifyToken } = require("../middleware/verify-token");
+const mongoose = require("mongoose")
 
 const SALT_LENGTH = 12;
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Partner = require("../models/Partner");
 const Pet = require("../models/Pet");
-const { verifyToken } = require("../middleware/partner-verify-token");
+const { verifyToken } = require("../middleware/verify-token");
 const { default: mongoose } = require("mongoose");
 
 const SALT_LENGTH = 12;
@@ -76,7 +76,7 @@ router.get("/:partnerId", verifyToken, async (req, res) => {
 
   try {
     const { _id } = req.partner;
-    if (_id !== req.params.partnerId) {
+    if (_id.toString() !== req.params.partnerId) {
       return res.status(401).json({ error: "unauthorized ids do not match" });
     }
     const partner = await Partner.findById(req.partner._id);
