@@ -1,0 +1,19 @@
+meta {
+  name: SignUp Partner
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:3000/api/partner/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "organizationName": "spca",
+    "email": "spca@mail.com",
+    "password": "123"
+  }
+}

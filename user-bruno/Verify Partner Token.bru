@@ -1,0 +1,26 @@
+meta {
+  name: Verify Partner Token
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:3000/api/partner/:partnerId
+  body: json
+  auth: bearer
+}
+
+params:path {
+  partnerId: {{partnerId}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "email": "spca@mail.com",
+    "password": "123"
+  }
+}

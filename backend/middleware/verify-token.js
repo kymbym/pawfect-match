@@ -18,10 +18,10 @@ const getUser = (req) => req.user;
 const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    if(!token) {
-      return res.status(401).json({ error: "token not found" })
+    if (!token) {
+      return res.status(401).json({ error: "token not found" });
     }
-    console.log("extracted token", token)
+    console.log("extracted token", token);
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log("decoded token", decoded)
@@ -39,7 +39,7 @@ const verifyToken = async (req, res, next) => {
     }
     
   } catch (error) {
-    console.error("token verification error backend", error)
+    console.error("token verification error backend", error);
     res.status(401).json({ error: "invalid authorization token." });
   }
 }
