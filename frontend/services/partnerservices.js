@@ -49,7 +49,7 @@ export const loginPartner = async (formData, token) => {
 };
 
 export const getPetById = async (petId, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -71,8 +71,34 @@ export const getPetById = async (petId, token) => {
   }
 };
 
+export const getAllPets = async (token) => {
+  const url = `/api/pets`;
+  console.log("fetching pets with token", token);
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("received response", response);
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error fetching all pets", error.message);
+    return { pets: [] };
+  }
+};
+
 export const updatePet = async (petId, petData, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -96,7 +122,7 @@ export const updatePet = async (petId, petData, token) => {
 };
 
 export const deletePet = async (petId, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -117,28 +143,4 @@ export const deletePet = async (petId, token) => {
   }
 };
 
-export const getAllPets = async (token) => {
-  const url = `/api/partner/pets`;
-  console.log("fetching pets with token", token);
 
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log("received response", response)
-    if (!response.ok) {
-      throw new Error(`response status: ${response.status}`);
-    }
-
-    const json = await response.json()
-    return json;
-  } catch (error) {
-    console.error("error fetching all pets", error.message)
-    return { pets: [] }
-  }
-};
