@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
-import { signUpUser } from "../../services/userService";
 
-export default function UserSignupForm() {
+export default function UserAppointmentForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPw: "",
+    contact: "",
+    date: "",
+    time: "",
+    inquiries: "",
   });
+  const { petId } = useParams();
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -20,65 +20,67 @@ export default function UserSignupForm() {
     event.preventDefault();
     try {
       console.log(formData);
-      await signUpUser(formData);
       navigate("/home/:userId");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
-  const { name, email, password, confirmPw } = formData;
+  const { contact, date, time, inquiries } = formData;
 
   const isFormInvalid = () => {
-    return !(name && email && password && password === confirmPw);
+    return !(contact && date && time && inquiries);
   };
 
   return (
     <>
       <UserNavBar />
-      <h1>Create an account</h1>
-      <h2>Enter your details to create an account.</h2>
+      <h1>Book an appointment</h1>
+      <h2>Enter your details and we'll see you real soon!</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Name:{" "}
+          <input type="hidden" name="petId" value={petId} />
+        </label>
+        <label>
+          Contact:{" "}
           <input
             type="text"
-            id="name"
-            value={name}
-            name="name"
+            id="contact"
+            value={contact}
+            name="contact"
             onChange={handleChange}
           />
         </label>
         <br />
         <label>
-          Email:{" "}
+          Date:{" "}
           <input
-            type="email"
-            id="email"
-            value={email}
-            name="email"
+            type="date"
+            id="date"
+            value={date}
+            name="date"
             onChange={handleChange}
           />
         </label>
         <br />
         <label>
-          Password:{" "}
+          Time:{" "}
           <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
+            type="time"
+            id="time"
+            value={time}
+            name="time"
             onChange={handleChange}
           />
         </label>
         <br />
         <label>
-          Confirm Password:{" "}
+          Inquiries (if any):{" "}
           <input
-            type="password"
-            id="confirmPw"
-            value={confirmPw}
-            name="confirmPw"
+            type="text"
+            id="inquiries"
+            value={inquiries}
+            name="inquiries"
             onChange={handleChange}
           />
         </label>
@@ -86,10 +88,6 @@ export default function UserSignupForm() {
         <br />
         <button disabled={isFormInvalid()}>Submit</button>
       </form>
-      <p>
-        Have an existing account? <u>Login here</u>{" "}
-        {/*insert link to log in page here */}
-      </p>
     </>
   );
 }
