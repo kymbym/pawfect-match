@@ -13,7 +13,7 @@ const createJWT = (partner) => {
   const payload = {
     organizationName: partner.organizationName,
     _id: partner._id,
-    role: "partner"
+    role: "partner",
   };
   const secret = process.env.JWT_SECRET;
   const options = { expiresIn: "2h" };
@@ -31,19 +31,19 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "email already in use" });
     }
 
-        const hashedPassword = bcrypt.hashSync(password, SALT_LENGTH);
-        const partner = await Partner.create({
-            organizationName,
-            email,
-            hashedPassword
-        });
-        
-        const token = createJWT(partner)
-        console.log("signup token", token)
-        return res.status(201).json({ partner, token })
-    } catch (error) {
-        res.status(400).json({ error: error.message })
-    }
+    const hashedPassword = bcrypt.hashSync(password, SALT_LENGTH);
+    const partner = await Partner.create({
+      organizationName,
+      email,
+      hashedPassword,
+    });
+
+    const token = createJWT(partner);
+    console.log("signup token", token);
+    return res.status(201).json({ partner, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 // partner login
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, partner.hashedPassword);
     if (match) {
       const token = createJWT(partner);
-      console.log("login token", token)
+      console.log("login token", token);
       return res.status(200).json({ token });
     }
     res.status(401).json({ error: "invalid email or password" });
@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
 
 // verify partner token
 router.get("/:partnerId", verifyToken, async (req, res) => {
-  console.log("partnerId route reached")
+  console.log("partnerId route reached");
 
   console.log(`decoded token id: ${req.partner._id}`);
   console.log(`req params id: ${req.params.partnerId}`);

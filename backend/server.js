@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 app.use(express.static("../frontend/dist"));
 const partnersRouter = require("./controllers/partners");
 const usersRouter = require("./controllers/users");
-const petsRouter = require ("./controllers/pets")
+const petsRouter = require("./controllers/pets");
 const appointmentsRouter = require("./controllers/appointments");
 
 mongoose.connect(process.env.MONGODB_URI);

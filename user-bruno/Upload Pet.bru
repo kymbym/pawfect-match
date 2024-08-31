@@ -1,0 +1,31 @@
+meta {
+  name: Upload Pet
+  type: http
+  seq: 13
+}
+
+post {
+  url: http://localhost:3000/api/partner/pets
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "koda",
+    "breed": "pom",
+    "gender": "male",
+    "age": "2",
+    "color": "white",
+    "medicalHistory": {
+      "sterilized": "true",
+      "vaccinated": "true"
+    },
+    "personality": "calm",
+    "adoptionStage": "false"
+  }
+}

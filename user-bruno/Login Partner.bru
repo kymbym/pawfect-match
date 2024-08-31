@@ -1,0 +1,24 @@
+meta {
+  name: Login Partner
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:3000/api/partner/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "organizationName": "spca",
+    "password": "123"
+  }
+}
+
+script:post-response {
+  bru.setVar("token",res.body.token)
+    const payload = JSON.parse(atob(res.body.token.split(".")[1]))
+    bru.setVar("partnerId",payload._id)
+}

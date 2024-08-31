@@ -17,9 +17,9 @@ router.get("/", verifyToken, async (req, res) => {
     let pets = [];
 
     if (role === "partner") {
-      pets = await Pet.find({ provider: _id })
+      pets = await Pet.find({ provider: _id });
     } else {
-      pets = await Pet.find ({}); // user get all pets uploaded from all providers
+      pets = await Pet.find({}); // user get all pets uploaded from all providers
     }
 
     res.status(200).json({ pets });
@@ -63,13 +63,15 @@ router.get("/:petId", verifyToken, async (req, res) => {
 
     if (role === "partner") {
       if (!pet.provider.equals(req.partner._id)) {
-        return res.status(403).json({ error: "unauthorized! not allowed to edit" });
-    }
-    res.status(200).json({ pet });
-      } else {
-        res.status(200).json({name: pet.name, }) // user gets specific pet data by id 
+        return res
+          .status(403)
+          .json({ error: "unauthorized! not allowed to edit" });
       }
-    } catch (error) {
+      res.status(200).json({ pet });
+    } else {
+      res.status(200).json({ name: pet.name }); // user gets specific pet data by id
+    }
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
@@ -90,7 +92,9 @@ router.put("/:petId", verifyToken, async (req, res) => {
     }
 
     if (!pet.provider.equals(req.partner._id)) {
-      return res.status(403).json({ error: "unauthorized! not allowed to edit" });
+      return res
+        .status(403)
+        .json({ error: "unauthorized! not allowed to edit" });
     }
 
     const updatedPet = await Pet.findByIdAndUpdate(petId, updates, {

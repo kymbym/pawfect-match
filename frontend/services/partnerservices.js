@@ -130,15 +130,15 @@ export const getAllPets = async (token) => {
       },
     });
 
-    console.log("received response", response)
+    console.log("received response", response);
     if (!response.ok) {
       throw new Error(`response status: ${response.status}`);
     }
 
-    const json = await response.json()
+    const json = await response.json();
     return json;
   } catch (error) {
-    console.error("error fetching all pets", error.message)
-    return { pets: [] }
+    console.error("error fetching all pets", error.message);
+    return { pets: [] };
   }
 };
