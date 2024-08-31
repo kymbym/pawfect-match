@@ -1,6 +1,7 @@
 const express = require("express");
 const { verifyToken, getUser } = require("../middleware/user-verify-token");
 const Appointment = require("../models/Appointment");
+const Pet = require("../models/Pet");
 const router = express.Router();
 
 // Protected Routes
@@ -10,9 +11,12 @@ router.use(verifyToken);
 //make appointment:
 router.post("/", async (req, res) => {
   const currentUser = getUser(req);
+  const selectedPet = await Pet.findById(petId);
   req.body.adopter = currentUser._id;
+  req.body.pet = selectedPet._id;
   const appointment = await Appointment.create(req.body);
   appointment._doc.adopter = currentUser;
+  appointment._doc.pet = selectedPet;
   res.status(201).json(appointment);
 });
 

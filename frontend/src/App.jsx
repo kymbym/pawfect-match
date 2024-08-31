@@ -6,6 +6,7 @@ import PartnerLoginForm from "../components/LoginForm/PartnerLoginForm";
 /* User Pages */
 import UserSignupForm from "../components/SignupForm/UserSignupForm";
 import UserLoginForm from "../components/LoginForm/UserLoginForm";
+import UserAppointmentForm from "../components/UserComponents/UserAppointmentForm";
 import UserHomePage from "../pages/UserPages/UserHomePage/UserHomePage";
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
         <Route path="/search" />
         <Route path="/pets/:petId" />
         <Route path="/favorites/:userId" />
-        <Route path="/appointments/create" />
+        <Route path="/appointments/create/" element={<UserAppointmentForm />} />
         <Route path="/appointments/:userId" />
       </Routes>
     </>
