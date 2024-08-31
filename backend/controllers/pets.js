@@ -7,13 +7,21 @@ const Pet = require("../models/Pet");
 const { verifyToken } = require("../middleware/partner-verify-token");
 const { default: mongoose } = require("mongoose");
 
-// get pets for partner
+// get pets
 router.get("/", verifyToken, async (req, res) => {
-  const { _id } = req.partner;
+  const { _id, role } = req.partner;
   console.log("partner id from token", _id);
+  console.log("partner role?", role);
 
   try {
-    const pets = await Pet.find({ provider: _id });
+    let pets = [];
+
+    if (role === "partner") {
+      pets = await Pet.find({ provider: _id })
+    } else {
+      pets = await Pet.find ({}); // user get all pets uploaded from all providers
+    }
+
     res.status(200).json({ pets });
   } catch (error) {
     console.error("error fetching pets from api/pets", error);
@@ -40,7 +48,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 // get pet by id
 router.get("/:petId", verifyToken, async (req, res) => {
-  const { petId } = req.params;
+  const { petId, role } = req.params;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(petId)) {
@@ -53,8 +61,15 @@ router.get("/:petId", verifyToken, async (req, res) => {
       return res.status(404).json({ error: "pet not found" });
     }
 
+    if (role === "partner") {
+      if (!pet.provider.equals(req.partner._id)) {
+        return res.status(403).json({ error: "unauthorized! not allowed to edit" });
+    }
     res.status(200).json({ pet });
-  } catch (error) {
+      } else {
+        res.status(200).json({name: pet.name, }) // user gets specific pet data by id 
+      }
+    } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
@@ -75,9 +90,7 @@ router.put("/:petId", verifyToken, async (req, res) => {
     }
 
     if (!pet.provider.equals(req.partner._id)) {
-      return res
-        .status(403)
-        .json({ error: "unauthorized! not allowed to edit" });
+      return res.status(403).json({ error: "unauthorized! not allowed to edit" });
     }
 
     const updatedPet = await Pet.findByIdAndUpdate(petId, updates, {
