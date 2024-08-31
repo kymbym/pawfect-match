@@ -1,5 +1,9 @@
 const express = require("express");
-const { verifyToken, getUser } = require("../middleware/verify-token");
+const {
+  verifyToken,
+  getUser,
+  getPartner,
+} = require("../middleware/verify-token");
 const Appointment = require("../models/Appointment");
 const Pet = require("../models/Pet");
 const router = express.Router();
@@ -7,9 +11,13 @@ const router = express.Router();
 // Protected Routes
 router.use(verifyToken);
 
-//include partner and pet later
 //make appointment:
 router.post("/", async (req, res) => {
+  if (getPartner(req)) {
+    return res
+      .status(403)
+      .json({ error: "Unauthorized to make appointments as Partner!" });
+  }
   const currentUser = getUser(req);
   const petId = req.body.petId;
   try {
@@ -39,14 +47,24 @@ router.post("/", async (req, res) => {
   }
 });
 
-//show all appointments made by me (user):
+//gets all appointments
 router.get("/", async (req, res) => {
   try {
-    const allAppointments = await Appointment.find({})
-      .populate("adopter")
-      .populate("pet")
-      .exec();
-    res.status(200).json(allAppointments);
+    if (getPartner(req)) {
+      //should get appointments matching this partner
+      const appointmentsReceived = await Appointment.find({
+        provider: req.partner._id,
+      });
+      res.status(200).json(appointmentsReceived);
+    }
+    //show all appointments made by me (user):
+    if (getUser(req)) {
+      const allAppointments = await Appointment.find({ adopter: req.user._id })
+        .populate("adopter")
+        .populate("pet")
+        .exec();
+      res.status(200).json(allAppointments);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -57,14 +75,16 @@ router.get("/", async (req, res) => {
 router.get("/:appointmentId", async (req, res) => {
   const { appointmentId } = req.params;
   try {
-    const appointment = await Appointment.findById(appointmentId)
-      .populate("adopter")
-      .populate("pet")
-      .exec();
-    if (appointment === null) {
-      return res.status(404).json({ error: "Cannot find appointment" });
+    if (getUser(req)) {
+      const appointment = await Appointment.findById(appointmentId)
+        .populate("adopter")
+        .populate("pet")
+        .exec();
+      if (appointment === null) {
+        return res.status(404).json({ error: "Cannot find appointment" });
+      }
+      res.status(200).json(appointment);
     }
-    res.status(200).json(appointment);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -72,8 +92,15 @@ router.get("/:appointmentId", async (req, res) => {
 
 //edit appointment:
 router.put("/:appointmentId", async (req, res) => {
+  if (getPartner(req)) {
+    return res
+      .status(403)
+      .json({ error: "Unauthorized to edit appointments as Partner!" });
+  }
+
   const { appointmentId } = req.params;
   const currentUser = getUser(req);
+
   try {
     const appointment = await Appointment.findById(appointmentId);
 
@@ -101,8 +128,15 @@ router.put("/:appointmentId", async (req, res) => {
 
 //delete appointment
 router.delete("/:appointmentId", async (req, res) => {
+  if (getPartner(req)) {
+    return res
+      .status(403)
+      .json({ error: "Unauthorized to delete appointments as Partner!" });
+  }
+
   const { appointmentId } = req.params;
   const currentUser = getUser(req);
+
   try {
     const appointment = await Appointment.findById(appointmentId);
     if (appointment === null) {

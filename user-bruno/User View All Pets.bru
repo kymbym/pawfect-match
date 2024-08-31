@@ -1,0 +1,15 @@
+meta {
+  name: User View All Pets
+  type: http
+  seq: 14
+}
+
+get {
+  url: http://localhost:3000/api/pets
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
