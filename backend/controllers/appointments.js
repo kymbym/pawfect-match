@@ -15,22 +15,26 @@ router.post("/", async (req, res) => {
   if (!petId) {
     return res.status(400).json({ error: "No pet Id" });
   }
-
   const selectedPet = await Pet.findById(petId);
   if (!selectedPet) {
     return res.status(400).json({ error: "Pet not found" });
   }
   req.body.adopter = currentUser._id;
   req.body.pet = selectedPet._id;
+  req.body.provider = selectedPet.provider;
   const appointment = await Appointment.create(req.body);
   appointment._doc.adopter = currentUser;
   appointment._doc.pet = selectedPet;
+  appointment._doc.provider = selectedPet.provider;
   res.status(201).json(appointment);
 });
 
 //show all appointments made by me (user):
 router.get("/", async (req, res) => {
-  const allAppointments = await Appointment.find({}).populate("adopter").exec();
+  const allAppointments = await Appointment.find({})
+    .populate("adopter")
+    .populate("pet")
+    .exec();
   res.status(200).json(allAppointments);
 });
 
@@ -39,6 +43,7 @@ router.get("/:appointmentId", async (req, res) => {
   const { appointmentId } = req.params;
   const appointment = await Appointment.findById(appointmentId)
     .populate("adopter")
+    .populate("pet")
     .exec();
   res.status(200).json(appointment);
 });
