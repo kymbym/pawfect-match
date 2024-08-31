@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyToken, getUser } = require("../middleware/user-verify-token");
+const { verifyToken, getUser } = require("../middleware/verify-token");
 const Appointment = require("../models/Appointment");
 const router = express.Router();
 

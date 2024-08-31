@@ -49,7 +49,7 @@ export const loginPartner = async (formData, token) => {
 };
 
 export const getPetById = async (petId, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -72,7 +72,7 @@ export const getPetById = async (petId, token) => {
 };
 
 export const updatePet = async (petId, petData, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -96,7 +96,7 @@ export const updatePet = async (petId, petData, token) => {
 };
 
 export const deletePet = async (petId, token) => {
-  const url = `/api/partner/pets/${petId}`;
+  const url = `/api/pets/${petId}`;
 
   try {
     const response = await fetch(url, {
@@ -118,7 +118,7 @@ export const deletePet = async (petId, token) => {
 };
 
 export const getAllPets = async (token) => {
-  const url = `/api/partner/pets`;
+  const url = `/api/pets`;
   console.log("fetching pets with token", token);
 
   try {

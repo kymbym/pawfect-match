@@ -34,7 +34,18 @@ const AllPets = ({ token }) => {
       ) : (
         pets.map((pet) => (
         <li key={pet._id}>
-          {pet.name}
+          <h2>{pet.name}</h2>
+          <p>Breed: {pet.breed}</p>
+          <p>Gender: {pet.gender}</p>
+          <p>Age: {pet.age}</p>
+          <p>Color: {pet.color}</p>
+          <p>Personality: {pet.personality}</p>
+          <p>Adoption Stage: {pet.adoptionStage}</p>
+          <p>Medical History:</p>
+            <ul>
+            <li>{pet.medicalHistory.sterilized ? "Sterilized" : "Not Sterilized"}</li>
+            <li>{pet.medicalHistory.vaccinated ? "Vaccinated" : "Not Vaccinated"}</li>
+            </ul>
     </li>
     ))
     )}
