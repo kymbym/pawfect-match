@@ -10,6 +10,7 @@ import UserSignupForm from "../components/SignupForm/UserSignupForm";
 import UserLoginForm from "../components/LoginForm/UserLoginForm";
 import UserAppointmentForm from "../components/UserComponents/UserAppointmentForm";
 import UserHomePage from "../pages/UserPages/UserHomePage/UserHomePage";
+import UserSearchPage from "../pages/UserPages/UserSearchPage/UserSearchPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -39,7 +40,7 @@ function App() {
         <Route path="/user/login" element={<UserLoginForm />} />
         <Route path="/user/signup" element={<UserSignupForm />} />
         <Route path="/home/:userId" element={<UserHomePage />} />
-        <Route path="/search" />
+        <Route path="/search" element={<UserSearchPage />} />
         <Route path="/pets/:petId" />
         <Route path="/favorites/:userId" />
         <Route
