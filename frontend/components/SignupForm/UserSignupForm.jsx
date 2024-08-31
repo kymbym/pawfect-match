@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
+import { signUpUser } from "../../services/userService";
 
 export default function UserSignupForm() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function UserSignupForm() {
     event.preventDefault();
     try {
       console.log(formData);
+      await signUpUser(formData);
       navigate("/home/:userId");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -84,10 +86,10 @@ export default function UserSignupForm() {
         <br />
         <button disabled={isFormInvalid()}>Submit</button>
       </form>
-      <h2>
+      <p>
         Have an existing account? <u>Login here</u>{" "}
         {/*insert link to log in page here */}
-      </h2>
+      </p>
     </>
   );
 }
