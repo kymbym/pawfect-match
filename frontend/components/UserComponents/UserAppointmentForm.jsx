@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
 
 export default function UserAppointmentForm() {
@@ -10,6 +10,7 @@ export default function UserAppointmentForm() {
     time: "",
     inquiries: "",
   });
+  const { petId } = useParams();
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -37,6 +38,9 @@ export default function UserAppointmentForm() {
       <h1>Book an appointment</h1>
       <h2>Enter your details and we'll see you real soon!</h2>
       <form onSubmit={handleSubmit}>
+        <label>
+          <input type="hidden" name="petId" value={petId} />
+        </label>
         <label>
           Contact:{" "}
           <input

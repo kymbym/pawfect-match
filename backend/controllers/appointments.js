@@ -11,7 +11,15 @@ router.use(verifyToken);
 //make appointment:
 router.post("/", async (req, res) => {
   const currentUser = getUser(req);
+  const petId = req.body.petId;
+  if (!petId) {
+    return res.status(400).json({ error: "No pet Id" });
+  }
+
   const selectedPet = await Pet.findById(petId);
+  if (!selectedPet) {
+    return res.status(400).json({ error: "Pet not found" });
+  }
   req.body.adopter = currentUser._id;
   req.body.pet = selectedPet._id;
   const appointment = await Appointment.create(req.body);
