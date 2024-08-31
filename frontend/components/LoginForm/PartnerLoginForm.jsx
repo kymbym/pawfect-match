@@ -1,10 +1,10 @@
 import { loginPartner } from "../../services/partnerservices";
 import { isValidToken } from "../../utils/jwtUtils";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PartnerLoginForm = ({ setToken }) => {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -17,6 +17,7 @@ const PartnerLoginForm = ({ setToken }) => {
             console.log("received token partner login", token)
             if (isValidToken(token)) {
                 setToken(token);
+                navigate("/partner/pets");
             } else {
                 alert("invalid login!")
             }

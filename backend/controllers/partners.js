@@ -13,6 +13,7 @@ const createJWT = (partner) => {
   const payload = {
     organizationName: partner.organizationName,
     _id: partner._id,
+    role: "partner",
   };
   const secret = process.env.JWT_SECRET;
   const options = { expiresIn: "2h" };
@@ -38,6 +39,7 @@ router.post("/signup", async (req, res) => {
     });
 
     const token = createJWT(partner);
+    console.log("signup token", token);
     return res.status(201).json({ partner, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -56,6 +58,7 @@ router.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, partner.hashedPassword);
     if (match) {
       const token = createJWT(partner);
+      console.log("login token", token);
       return res.status(200).json({ token });
     }
     res.status(401).json({ error: "invalid email or password" });
@@ -66,10 +69,15 @@ router.post("/login", async (req, res) => {
 
 // verify partner token
 router.get("/:partnerId", verifyToken, async (req, res) => {
+  console.log("partnerId route reached");
+
+  console.log(`decoded token id: ${req.partner._id}`);
+  console.log(`req params id: ${req.params.partnerId}`);
+
   try {
     const { _id } = req.partner;
     if (_id !== req.params.partnerId) {
-      return res.status(401).json({ error: "unauthorized" });
+      return res.status(401).json({ error: "unauthorized ids do not match" });
     }
     const partner = await Partner.findById(req.partner._id);
     if (!partner) {
@@ -83,81 +91,6 @@ router.get("/:partnerId", verifyToken, async (req, res) => {
     } else {
       res.status(500).json({ error: error.message });
     }
-  }
-});
-
-// upload new pet
-router.post("/pets", verifyToken, async (req, res) => {
-  const { _id } = req.partner;
-  const petData = req.body;
-
-  try {
-    const pet = new Pet({ ...petData, provider: _id });
-    await pet.save();
-
-    return res
-      .status(201)
-      .json({ msg: "pet added successfully", petId: pet._id });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-// edit pet
-router.put("/pets/:petId", verifyToken, async (req, res) => {
-  const { petId } = req.params;
-  const updates = req.body;
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(petId)) {
-      return res.status(400).json({ msg: "invalid pet id" });
-    }
-
-    const pet = await Pet.findById(petId);
-    if (!pet) {
-      return res.status(404).json({ error: "pet not found" });
-    }
-
-    if (!pet.provider.equals(req.partner._id)) {
-      return res
-        .status(403)
-        .json({ error: "unauthorized! not allowed to edit" });
-    }
-
-    const updatedPet = await Pet.findByIdAndUpdate(petId, updates, {
-      new: true,
-    });
-    res.status(200).json({ msg: "pet updated successfully ", updatedPet });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-// delete pet
-router.delete("/pets/:petId", verifyToken, async (req, res) => {
-  const { petId } = req.params;
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(petId)) {
-      return res.status(400).json({ msg: "invalid pet id" });
-    }
-
-    const pet = await Pet.findById(petId);
-
-    if (!pet) {
-      return res.status(404).json({ error: "pet not found" });
-    }
-
-    if (!pet.provider.equals(req.partner._id)) {
-      return res
-        .status(403)
-        .json({ error: "unauthorized! not allowed to edit" });
-    }
-
-    const deletedPet = await Pet.findByIdAndDelete(petId);
-    res.status(200).json({ msg: "pet deleted successfully", deletedPet });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
   }
 });
 

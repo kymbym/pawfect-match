@@ -29,11 +29,11 @@ const PartnerSignupForm = () => {
 
         try {
             await signupPartner(formData);
-            // navigate("/")
+            // navigate("/partner/login")
         } catch (error) {
             alert("error")
         }
-    }
+    };
 
 
   return (
