@@ -170,6 +170,29 @@ export const deletePet = async (petId, token) => {
   }
 };
 
+export const getPartnerAppointments = async (token) => {
+  const url = `/api/appointments`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error getting appointments", error.message);
+  }
+};
+
 const S3_BUCKET = import.meta.env.VITE_S3_BUCKET;
 const REGION = import.meta.env.VITE_AWS_REGION;
 
@@ -204,9 +227,7 @@ export const uploadFile = async (file) => {
 
 export const uploadFiles = async (files) => {
   try {
-    const uploadPromises = await Array.from(files).map((file) =>
-      uploadFile(file),
-    );
+    const uploadPromises = Array.from(files).map((file) => uploadFile(file));
     const urls = await Promise.all(uploadPromises);
     return urls;
   } catch (error) {
