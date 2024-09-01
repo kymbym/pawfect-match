@@ -52,7 +52,7 @@ function App() {
           path="/appointments/create/:petId"
           element={<UserAppointmentForm />}
         />
-        <Route path="/appointments/:userId" element={<UserViewAppointmentPage />} />
+        <Route path="/appointments/:userId" element={<UserViewAppointmentPage token={token}/>} />
       </Routes>
     </>
   );

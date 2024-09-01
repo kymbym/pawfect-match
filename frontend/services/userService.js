@@ -40,3 +40,26 @@ export async function logInUser(formData) {
     console.error(error.message);
   }
 }
+
+//get appointments made by user
+export async function getUserAppointments(token) {
+  const url = "/api/appointments";
+  try {
+    console.log("token", token);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("appointments:", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
