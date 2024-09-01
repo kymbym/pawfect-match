@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import MainPage from "../pages/MainPage";
 import PartnerSignupForm from "../components/SignupForm/PartnerSignupForm";
 import PartnerLoginForm from "../components/LoginForm/PartnerLoginForm";
 import PetProfile from "../components/PetProfile/PetProfile";
@@ -22,7 +23,7 @@ function App() {
       <h1>Pawfect Match</h1>
 
       <Routes>
-        <Route path="/" />
+        <Route path="/" element={<MainPage />}/>
         <Route
           path="/partner/login"
           element={<PartnerLoginForm setToken={setToken} />}
