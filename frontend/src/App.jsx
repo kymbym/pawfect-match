@@ -4,6 +4,7 @@ import PartnerSignupForm from "../components/SignupForm/PartnerSignupForm";
 import PartnerLoginForm from "../components/LoginForm/PartnerLoginForm";
 import PetProfile from "../components/PetProfile/PetProfile";
 import AllPets from "../components/PartnerComponents/AllPets";
+import AddPetProfile from "../components/PartnerComponents/AddPetProfile";
 
 /* User Pages */
 import UserSignupForm from "../components/SignupForm/UserSignupForm";
@@ -29,7 +30,7 @@ function App() {
         <Route path="/partner/signup" element={<PartnerSignupForm />} />
         <Route path="/partner/home" />
         <Route path="/partner/pets" element={<AllPets token={token} />} />
-        <Route path="/partner/pets/add" />
+        <Route path="/partner/pets/add" element={<AddPetProfile token={token}/>}/>
         <Route
           path="/partner/pets/:petId"
           element={<PetProfile view="partner" token={token} />}

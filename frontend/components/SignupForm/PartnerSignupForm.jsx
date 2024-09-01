@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { signupPartner } from "../../services/partnerservices";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PartnerSignupForm = () => {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         organizationName: "",
@@ -20,6 +20,7 @@ const PartnerSignupForm = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
+
         if (formData.password !== formData.confirmPw) {
             alert("passwords do not match");
             return;
@@ -29,17 +30,23 @@ const PartnerSignupForm = () => {
 
         try {
             await signupPartner(formData);
-            // navigate("/partner/login")
+            navigate("/partner/login")
         } catch (error) {
             alert("error")
         }
     };
 
+    const { organizationName, email, password, confirmPw } = formData;
+
+      const isFormInvalid = () => {
+        return !(organizationName && email && password && password === confirmPw);
+  };
+
 
   return (
     <>
-      <h1>Partner Sign Up</h1>
-
+      <h1>Create an account</h1>
+      <h2>Enter your details to create an account.</h2>
       <form onSubmit={handleSignup}>
         <div>
           <label>Organization Name:</label>
@@ -57,8 +64,12 @@ const PartnerSignupForm = () => {
           <label>Confirm Password:</label>
           <input type="password" id="confirmPw" name="confirmPw" value={formData.confirmPw} onChange={handleChange} required />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={isFormInvalid()}>Submit</button>
       </form>
+      <p>
+        Have an existing account? <u>Login here</u>{" "}
+        {/*insert link to log in page here */}
+      </p>
 
     </>
   );

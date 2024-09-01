@@ -8,7 +8,8 @@ const PetProfile = ({ view, token }) => {
   const [petData, setPetData] = useState("");
   const { name, breed, gender, age, color, personality, adoptionStage, medicalHistory } = petData;
   const [isEditing, setIsEditing] = useState(false);
-  console.log("token in petprofile", token);
+  
+  console.log("token in petprofile partner", token);
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -38,15 +39,15 @@ const PetProfile = ({ view, token }) => {
     setIsEditing(true);
   };
 
-  // const handleSave = async () => {
-  //   setIsEditing(false);
-  //   try {
-  //     const { pet } = await getPetById(petId, token);
-  //     setPetData(pet);
-  //   } catch (error) {
-  //     console.error("error occurred while fetching updated pet data", error)
-  //   }
-  // }
+  const handleSave = async () => {
+    setIsEditing(false);
+    try {
+      const { pet } = await getPetById(petId, token);
+      setPetData(pet);
+    } catch (error) {
+      console.error("error occurred while fetching updated pet data", error)
+    }
+  }
 
   if (!petData) {
     console.log("no pets");
@@ -55,7 +56,7 @@ const PetProfile = ({ view, token }) => {
   return (
     <>
       {isEditing ? (
-        <EditPetProfile petId={petId} petData={petData} token={token}/>
+        <EditPetProfile petId={petId} petData={petData} token={token} handleSave={handleSave}/>
       ) : (
         <>
           <h1>{name}</h1>

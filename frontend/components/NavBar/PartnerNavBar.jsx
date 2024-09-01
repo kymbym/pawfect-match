@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function UserNavBar() {
+const PartnerNavBar = () => {
   return (
     <>
       <Link to="/">Pawfect Match</Link>
@@ -10,3 +10,5 @@ export default function UserNavBar() {
     </>
   );
 }
+
+export default PartnerNavBar;

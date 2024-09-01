@@ -1,17 +1,25 @@
-import { updatePet } from "../../services/partnerservices";
 import { useState } from "react";
+import { addPet } from "../../services/partnerservices";
+import { useNavigate } from "react-router-dom";
 
-const EditPetProfile = ({ petId, petData, token, handleSave }) => {
+const AddPetProfile = ({ token }) => {
   const [newPetData, setNewPetData] = useState({
-    ...petData,
+    name: "",
+    breed: "",
+    gender: "",
+    age: "",
+    color: "",
+    personality: "",
+    adoptionStage: "",
     medicalHistory: {
-      sterilized: petData.medicalHistory?.sterilized,
-      vaccinated: petData.medicalHistory?.vaccinated,
+      sterilized: false,
+      vaccinated: false,
     },
   });
 
-  const handleChange = (e) => {
+  const navigate = useNavigate();
 
+  const handleChange = (e) => {
     if (e.target.type === "checkbox") {
       setNewPetData({
         ...newPetData,
@@ -28,17 +36,18 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedPet = await updatePet(petId, newPetData, token);
-      console.log("pet is succesfully updated", updatedPet);
-      alert("pet successfully updated");
-      handleSave();
+      await addPet(newPetData, token);
+      alert("Pet successfully added");
+      navigate('/partner/pets'); 
     } catch (error) {
-      console.error("error occurred while updating pet", error);
+      console.error("error occurred while adding pet", error);
+      alert("Failed to add pet");
     }
   };
 
   return (
     <>
+      <h1>Add New Pet</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Name:
@@ -47,6 +56,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="name"
             value={newPetData.name}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -56,6 +66,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="breed"
             value={newPetData.breed}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -65,6 +76,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="gender"
             value={newPetData.gender}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -74,6 +86,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="age"
             value={newPetData.age}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -83,6 +96,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="color"
             value={newPetData.color}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -92,6 +106,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="personality"
             value={newPetData.personality}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -101,6 +116,7 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="adoptionStage"
             value={newPetData.adoptionStage}
             onChange={handleChange}
+            required
           />
         </label>
         <label>
@@ -121,11 +137,11 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="submit">Add Pet</button>
+        <button type="button" onClick={() => navigate('/partner/pets')}>Cancel</button>
       </form>
     </>
   );
 };
 
-export default EditPetProfile;
+export default AddPetProfile;

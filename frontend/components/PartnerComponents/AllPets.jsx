@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllPets } from "../../services/partnerservices";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AllPets = ({ token }) => {
 
   const [pets, setPets] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) return; 
@@ -26,11 +27,15 @@ const AllPets = ({ token }) => {
 
     fetchPets();
   }, [token]);
+
+  const handleAddPet = () => {
+    navigate("/partner/pets/add")
+  }
   
   return (
     <>
       <h1>All Pets</h1>
-      <button>Upload Pet</button>
+      <button onClick={handleAddPet}>Upload Pet</button>
       {pets.length === 0 ? (
         <h1>no pets found!</h1>
       ) : (
