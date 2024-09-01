@@ -7,7 +7,7 @@ export default function MainPage () {
       <UserNavBar />
       <h1>Find your furrever friend today.</h1>
       <h2>Making a difference, one doggo at a time.</h2>
-      <img src="/images/main-banner.png" />
+      <img src="/images/main-banner.png" alt="A ring of various dogs"/>
       <br />
       <button>
         <Link to="/user/signup">Get Started</Link>
