@@ -6,7 +6,7 @@ import EditPetProfile from "../PartnerComponents/EditPetProfile";
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
-  const { name, breed, gender, age, color, personality, adoptionStage, medicalHistory } = petData;
+  const { name, breed, gender, age, color, personality, adoptionStage, medicalHistory, profilePhoto, photos } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   
@@ -64,6 +64,7 @@ const PetProfile = ({ view, token }) => {
         <EditPetProfile petId={petId} petData={petData} token={token} handleSave={handleSave}/>
       ) : (
         <>
+        <img src={profilePhoto} alt={`photo of ${name}`} />
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
@@ -80,6 +81,10 @@ const PetProfile = ({ view, token }) => {
               {medicalHistory?.vaccinated ? "Vaccinated" : "Not Vaccinated"}
             </li>
           </ul>
+
+          {photos.map((photoUrl) => (
+            <img key={photoUrl} src={photoUrl} alt={`${name}`} />
+          ))}
 
           {view === "partner" && (
             <div>

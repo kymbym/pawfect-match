@@ -33,7 +33,7 @@ const PartnerSignupForm = ({ setToken }) => {
       console.log("received token partner signup", token);
       if (isValidToken(token)) {
         setToken(token);
-        navigate("/home/:partnerId");
+        navigate("/partner/home");
       } else {
         alert("invalid signup!");
       }

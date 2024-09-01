@@ -19,7 +19,7 @@ const PartnerLoginForm = ({ setToken }) => {
       console.log("received token partner login", token)
       if (isValidToken(token)) {
         setToken(token);
-        navigate("/home/:partnerId");
+        navigate(`/partner/home/`);
       } else {
         alert("invalid login!")
       }

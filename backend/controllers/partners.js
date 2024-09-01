@@ -66,6 +66,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// get partner by id
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const { _id } = req.partner;
+    const partner = await Partner.findById(_id);
+    if (!partner) {
+      return res.status(404).json({ error: "profile not found!" });
+    }
+    return res.json({ partner });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // verify partner token
 router.get("/:partnerId", verifyToken, async (req, res) => {
   console.log("partnerId route reached");
