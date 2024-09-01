@@ -142,29 +142,3 @@ export const deletePet = async (petId, token) => {
     console.error("error deleting pet", error.message);
   }
 };
-
-export const getAllPets = async (token) => {
-  const url = `/api/partner/pets`;
-  console.log("fetching pets with token", token);
-
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log("received response", response)
-    if (!response.ok) {
-      throw new Error(`response status: ${response.status}`);
-    }
-
-    const json = await response.json()
-    return json;
-  } catch (error) {
-    console.error("error fetching all pets", error.message)
-    return { pets: [] }
-  }
-};

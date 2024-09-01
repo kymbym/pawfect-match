@@ -32,7 +32,7 @@ function App() {
         <Route path="/partner/pets/add" />
         <Route
           path="/partner/pets/:petId"
-          element={<PetProfile view="partner" />}
+          element={<PetProfile view="partner" token={token} />}
         />
         <Route path="/partner/appointments" />
 
