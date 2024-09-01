@@ -32,7 +32,7 @@ function App() {
           element={<PartnerLoginForm setToken={setToken} />}
         />
         <Route path="/partner/signup" element={<PartnerSignupForm setToken={setToken} />} />
-        <Route path="/home/:partnerId" element={<PartnerHomePage />}/>
+        <Route path="/partner/home" element={<PartnerHomePage token={token}/>}/>
         <Route path="/partner/search" element={<UserSearchPage />} />
         <Route path="/partner/pets" element={<AllPets token={token} />} />
         <Route path="/partner/pets/add" element={<AddPetProfile token={token}/>}/>

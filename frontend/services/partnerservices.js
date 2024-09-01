@@ -72,6 +72,29 @@ export const getPetById = async (petId, token) => {
   }
 };
 
+export const getPartnerById = async (token) => {
+  const url = `/api/partner`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error getting partner details", error.message);
+  }
+};
+
 export const getAllPets = async (token) => {
   const url = `/api/pets`;
   console.log("fetching pets with token", token);

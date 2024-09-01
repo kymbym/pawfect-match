@@ -46,7 +46,7 @@ const PartnerAppointments = ({ token }) => {
           ))}
         </div>
       )}
-      <button onClick={() => navigate("/home/:partnerId")}>Back to Home</button>
+      <button onClick={() => navigate(`/partner/home`)}>Back to Home</button>
     </>
   );
 };
