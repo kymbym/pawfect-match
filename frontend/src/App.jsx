@@ -50,9 +50,12 @@ function App() {
         <Route path="/favorites/:userId" />
         <Route
           path="/appointments/create/:petId"
-          element={<UserAppointmentForm />}
+          element={<UserAppointmentForm token={token} />}
         />
-        <Route path="/appointments/:userId" element={<UserViewAppointmentPage token={token}/>} />
+        <Route
+          path="/appointments/:userId"
+          element={<UserViewAppointmentPage token={token} />}
+        />
       </Routes>
     </>
   );

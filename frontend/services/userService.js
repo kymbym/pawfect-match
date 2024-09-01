@@ -84,3 +84,31 @@ export async function deleteSpecificAppointment(appointmentId, token) {
     console.error(error.message);
   }
 }
+
+//edit appointment (WIP)
+export async function editSpecificAppointment(appointmentId, formData, token) {
+  const url = `/api/appointments/${appointmentId}`;
+  try {
+    console.log("appointment id: ", appointmentId);
+    console.log("token", token);
+    console.log("form data received", formData);
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+//user search pets
+export async function searchPetsByName() {}

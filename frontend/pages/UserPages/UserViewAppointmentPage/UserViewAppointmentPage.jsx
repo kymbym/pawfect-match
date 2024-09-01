@@ -4,9 +4,12 @@ import {
   getUserAppointments,
   deleteSpecificAppointment,
 } from "../../../services/userService";
+import UserAppointmentForm from "../../../components/UserComponents/UserAppointmentForm";
 
 export default function UserViewAppointmentPage({ token }) {
   const [appointments, setAppointments] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   // console.log("token in userview page:", token)
 
   useEffect(() => {
@@ -21,23 +24,28 @@ export default function UserViewAppointmentPage({ token }) {
   console.log("current appointments:", appointments);
 
   const getUpdatedAppointments = async () => {
-    try{
-        const data = await getUserAppointments(token);
-    setAppointments(data);
+    try {
+      const data = await getUserAppointments(token);
+      setAppointments(data);
     } catch (error) {
-        console.error(error.message);
+      console.error(error.message);
     }
-  }
+  };
 
   const handleDelete = async (appointmentId) => {
     try {
-    console.log(appointmentId);
-    await deleteSpecificAppointment(appointmentId, token);
-    await getUpdatedAppointments();
+      console.log(appointmentId);
+      await deleteSpecificAppointment(appointmentId, token);
+      await getUpdatedAppointments();
     } catch (error) {
-        console.error(error.message)
+      console.error(error.message);
     }
   };
+
+  const handleEdit = (appointment) => {
+    setSelectedAppointment(appointment._id);
+    setShowAppointmentForm(true);
+  }
 
   return (
     <>
@@ -52,12 +60,13 @@ export default function UserViewAppointmentPage({ token }) {
               <h2>Pet Name: {appointment.pet.name}</h2>
               <h3>Date: {appointment.appointmentDate}</h3>
               <h3>Time: {appointment.appointmentTime}</h3>
-              <button>Edit</button>
+              <button onClick={() => handleEdit(appointment)}>Edit</button>
               <button onClick={() => handleDelete(appointment._id)}>
                 Delete
               </button>
             </div>
           ))}
+          {showAppointmentForm && (<UserAppointmentForm isEditing={true} appointmentInfo={selectedAppointment} token={token} />)}
         </div>
       )}
     </>
