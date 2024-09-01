@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { addPet } from "../../services/partnerservices";
 import { useNavigate } from "react-router-dom";
+import { uploadFile, uploadFiles } from "../../services/partnerservices";
 
 const AddPetProfile = ({ token }) => {
-
   const [newPetData, setNewPetData] = useState({
     name: "",
-    // imageUrl: "",
     breed: "",
     gender: "",
     age: "",
     color: "",
     personality: "",
+    photos: [],
+    profilePhoto: "",
     adoptionStage: "",
     medicalHistory: {
       sterilized: false,
@@ -40,25 +41,40 @@ const AddPetProfile = ({ token }) => {
     try {
       await addPet(newPetData, token);
       alert("pet successfully added");
-      navigate('/partner/pets'); 
+      navigate("/partner/pets");
     } catch (error) {
       console.error("error occurred while adding pet", error);
       alert("failed to add pet");
     }
   };
 
-//   const handleFileChange = async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
+  const handleFileChange = async (e) => {
+    const files = e.target.files;
+    if (files.lenght === 0) return;
 
-//     try {
-//         alert("uploading file...")
-//         const uploadedImageUrl = await uploadFile(file);
-//         console.log("uploaded image url", uploadedImageUrl)
-//     } catch (error) {
-//         console.error("error uploading file", error)
-//     }
-//   };
+    try {
+      alert("uploading file...");
+      const uploadedImageUrl = await uploadFiles(files);
+      setNewPetData({ ...newPetData, photos: uploadedImageUrl });
+      console.log("uploaded image url", uploadedImageUrl);
+    } catch (error) {
+      console.error("error uploading file", error);
+    }
+  };
+
+  const handleProfilePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      alert("uploading profile photo...")
+      const uploadedImageUrl = await uploadFile(file);
+      setNewPetData({...newPetData, profilePhoto: uploadedImageUrl});
+      console.log("uploaded profile photo url", uploadedImageUrl);
+    } catch (error) {
+      console.error("error uploading file", error)
+    }
+  }
 
   return (
     <>
@@ -151,15 +167,30 @@ const AddPetProfile = ({ token }) => {
             checked={newPetData.medicalHistory.vaccinated}
             onChange={handleChange}
           />
-          {/* <input
-        type="file"
-        name="image"
-        accept="image/*"
-        onChange={handleFileChange}
-      /> */}
+        </label>
+        <label>
+          Profile Picture:
+          <input
+            type="file"
+            name="profilePhoto"
+            accept="image/*"
+            onChange={handleProfilePhotoChange}
+          />
+        </label>
+        <label>
+          Other Photos:
+          <input
+            type="file"
+            name="photos"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+          />
         </label>
         <button type="submit">Add Pet</button>
-        <button type="button" onClick={() => navigate('/partner/pets')}>Cancel</button>
+        <button type="button" onClick={() => navigate("/partner/pets")}>
+          Cancel
+        </button>
       </form>
     </>
   );

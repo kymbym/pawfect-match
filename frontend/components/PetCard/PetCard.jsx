@@ -7,8 +7,8 @@ export default function PetCard ({ pet, view }) {
     return (
       <>
         <Link to={petLink}>
-          <p>image link here dont forget alt</p>
           <p>{pet.name}</p>
+          <img src={pet.profilePhoto} alt={`photo of ${pet.name}`} />
         </Link>
       </>
     );
