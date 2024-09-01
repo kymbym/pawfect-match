@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (user && bcrypt.compare(password, user.hashedPassword)) {
       const token = createJWT(user);
-      res.status(200).json({ token });
+      res.status(200).json({ user, token });
     } else {
       res.status(401).json({ error: "Invalid username or password" });
     }

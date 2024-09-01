@@ -23,7 +23,7 @@ function App() {
       <h1>Pawfect Match</h1>
 
       <Routes>
-        <Route path="/" element={<MainPage />}/>
+        <Route path="/" element={<MainPage />} />
         <Route
           path="/partner/login"
           element={<PartnerLoginForm setToken={setToken} />}
@@ -38,7 +38,10 @@ function App() {
         />
         <Route path="/partner/appointments" />
 
-        <Route path="/user/login" element={<UserLoginForm />} />
+        <Route
+          path="/user/login"
+          element={<UserLoginForm setToken={setToken} />}
+        />
         <Route path="/user/signup" element={<UserSignupForm />} />
         <Route path="/home/:userId" element={<UserHomePage />} />
         <Route path="/search" element={<UserSearchPage />} />
