@@ -13,7 +13,6 @@ const createJWT = (partner) => {
   const payload = {
     organizationName: partner.organizationName,
     _id: partner._id,
-    role: "partner",
   };
   const secret = process.env.JWT_SECRET;
   const options = { expiresIn: "2h" };
@@ -48,12 +47,12 @@ router.post("/signup", async (req, res) => {
 
 // partner login
 router.post("/login", async (req, res) => {
-  const { organizationName, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const partner = await Partner.findOne({ organizationName });
+    const partner = await Partner.findOne({ email });
     if (partner === null) {
-      return res.status(401).json({ error: "no such organization" });
+      return res.status(401).json({ error: "no such email" });
     }
     const match = await bcrypt.compare(password, partner.hashedPassword);
     if (match) {

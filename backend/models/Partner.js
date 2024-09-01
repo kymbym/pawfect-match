@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const partnerSchema = new mongoose.Schema({
   organizationName: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
+  email: { type: String, unique: true, required: true, lowercase: true },
   hashedPassword: { type: String, required: true },
   appointmentsReceived: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },

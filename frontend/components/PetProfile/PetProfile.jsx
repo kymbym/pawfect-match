@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPetById, deletePet } from "../../services/partnerservices";
 import EditPetProfile from "../PartnerComponents/EditPetProfile";
 
@@ -8,7 +8,9 @@ const PetProfile = ({ view, token }) => {
   const [petData, setPetData] = useState("");
   const { name, breed, gender, age, color, personality, adoptionStage, medicalHistory } = petData;
   const [isEditing, setIsEditing] = useState(false);
-  console.log("token in petprofile", token);
+  const navigate = useNavigate();
+  
+  console.log("token in petprofile partner", token);
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -28,7 +30,7 @@ const PetProfile = ({ view, token }) => {
     try {
       await deletePet(petId, token);
       alert("pet successfully deleted");
-      // redirect to all pets?
+      navigate("/partner/pets");
     } catch (error) {
       console.error("error occurred while deleting pet", error);
     }
@@ -38,15 +40,19 @@ const PetProfile = ({ view, token }) => {
     setIsEditing(true);
   };
 
-  // const handleSave = async () => {
-  //   setIsEditing(false);
-  //   try {
-  //     const { pet } = await getPetById(petId, token);
-  //     setPetData(pet);
-  //   } catch (error) {
-  //     console.error("error occurred while fetching updated pet data", error)
-  //   }
-  // }
+  const handleSave = async () => {
+    setIsEditing(false);
+    try {
+      const { pet } = await getPetById(petId, token);
+      setPetData(pet);
+    } catch (error) {
+      console.error("error occurred while fetching updated pet data", error)
+    }
+  };
+
+  const handleBack = () => {
+    navigate("/partner/pets")
+  }
 
   if (!petData) {
     console.log("no pets");
@@ -55,7 +61,7 @@ const PetProfile = ({ view, token }) => {
   return (
     <>
       {isEditing ? (
-        <EditPetProfile petId={petId} petData={petData} token={token}/>
+        <EditPetProfile petId={petId} petData={petData} token={token} handleSave={handleSave}/>
       ) : (
         <>
           <h1>{name}</h1>
@@ -77,6 +83,7 @@ const PetProfile = ({ view, token }) => {
 
           {view === "partner" && (
             <div>
+              <button onClick={handleBack}>Back</button>
               <button onClick={handleEdit}>Edit</button>
               <button onClick={handleDelete}>Delete</button>
             </div>

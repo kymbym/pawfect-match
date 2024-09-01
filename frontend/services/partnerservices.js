@@ -1,4 +1,4 @@
-export const signupPartner = async (formData, token) => {
+export const signupPartner = async (formData) => {
   const url = "/api/partner/signup";
 
   try {
@@ -7,7 +7,6 @@ export const signupPartner = async (formData, token) => {
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -16,7 +15,7 @@ export const signupPartner = async (formData, token) => {
     }
 
     const json = await response.json();
-    return json;
+    return json.token;
   } catch (error) {
     console.error("error creating account", error.message);
   }
@@ -40,7 +39,6 @@ export const loginPartner = async (formData, token) => {
     }
 
     const json = await response.json();
-    console.log("login response", json);
     console.log("login response", json);
     return json.token;
   } catch (error) {
@@ -94,6 +92,32 @@ export const getAllPets = async (token) => {
   } catch (error) {
     console.error("error fetching all pets", error.message);
     return { pets: [] };
+  }
+};
+
+export const addPet = async (petData, token) => {
+  const url = `/api/pets`;
+  console.log("upload new pet with token", token);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(petData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log("add new pet response", json);
+    return json;
+  } catch (error) {
+    console.error("error adding pet", error.message);
   }
 };
 
