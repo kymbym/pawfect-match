@@ -12,6 +12,7 @@ import UserLoginForm from "../components/LoginForm/UserLoginForm";
 import UserAppointmentForm from "../components/UserComponents/UserAppointmentForm";
 import UserHomePage from "../pages/UserPages/UserHomePage/UserHomePage";
 import UserSearchPage from "../pages/UserPages/UserSearchPage/UserSearchPage";
+import UserViewAppointmentPage from "../pages/UserPages/UserViewAppointmentPage/UserViewAppointmentPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -51,7 +52,7 @@ function App() {
           path="/appointments/create/:petId"
           element={<UserAppointmentForm />}
         />
-        <Route path="/appointments/:userId" />
+        <Route path="/appointments/:userId" element={<UserViewAppointmentPage />} />
       </Routes>
     </>
   );
