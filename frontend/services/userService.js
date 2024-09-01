@@ -63,3 +63,24 @@ export async function getUserAppointments(token) {
     console.error(error.message);
   }
 }
+
+//user delete appointment
+export async function deleteSpecificAppointment(appointmentId, token) {
+  const url = `/api/appointments/${appointmentId}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("deleted:", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}

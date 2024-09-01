@@ -1,6 +1,9 @@
 import UserNavBar from "../../../components/NavBar/UserNavBar";
 import { useEffect, useState } from "react";
-import { getUserAppointments } from "../../../services/userService";
+import {
+  getUserAppointments,
+  deleteSpecificAppointment,
+} from "../../../services/userService";
 
 export default function UserViewAppointmentPage({ token }) {
   const [appointments, setAppointments] = useState([]);
@@ -17,6 +20,25 @@ export default function UserViewAppointmentPage({ token }) {
 
   console.log("current appointments:", appointments);
 
+  const getUpdatedAppointments = async () => {
+    try{
+        const data = await getUserAppointments(token);
+    setAppointments(data);
+    } catch (error) {
+        console.error(error.message);
+    }
+  }
+
+  const handleDelete = async (appointmentId) => {
+    try {
+    console.log(appointmentId);
+    await deleteSpecificAppointment(appointmentId, token);
+    await getUpdatedAppointments();
+    } catch (error) {
+        console.error(error.message)
+    }
+  };
+
   return (
     <>
       <UserNavBar />
@@ -30,6 +52,10 @@ export default function UserViewAppointmentPage({ token }) {
               <h2>Pet Name: {appointment.pet.name}</h2>
               <h3>Date: {appointment.appointmentDate}</h3>
               <h3>Time: {appointment.appointmentTime}</h3>
+              <button>Edit</button>
+              <button onClick={() => handleDelete(appointment._id)}>
+                Delete
+              </button>
             </div>
           ))}
         </div>
