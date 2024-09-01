@@ -73,7 +73,7 @@ router.get("/:petId", verifyToken, async (req, res) => {
       }
       res.status(200).json({ pet });
     } else {
-      res.status(200).json({}); // user gets specific pet data by id. write code here
+      res.status(200).json({ pet }); // user gets specific pet data by id. write code here
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
