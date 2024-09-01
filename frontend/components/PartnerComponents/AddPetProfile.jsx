@@ -3,8 +3,10 @@ import { addPet } from "../../services/partnerservices";
 import { useNavigate } from "react-router-dom";
 
 const AddPetProfile = ({ token }) => {
+
   const [newPetData, setNewPetData] = useState({
     name: "",
+    // imageUrl: "",
     breed: "",
     gender: "",
     age: "",
@@ -37,13 +39,26 @@ const AddPetProfile = ({ token }) => {
     e.preventDefault();
     try {
       await addPet(newPetData, token);
-      alert("Pet successfully added");
+      alert("pet successfully added");
       navigate('/partner/pets'); 
     } catch (error) {
       console.error("error occurred while adding pet", error);
-      alert("Failed to add pet");
+      alert("failed to add pet");
     }
   };
+
+//   const handleFileChange = async (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+
+//     try {
+//         alert("uploading file...")
+//         const uploadedImageUrl = await uploadFile(file);
+//         console.log("uploaded image url", uploadedImageUrl)
+//     } catch (error) {
+//         console.error("error uploading file", error)
+//     }
+//   };
 
   return (
     <>
@@ -136,6 +151,12 @@ const AddPetProfile = ({ token }) => {
             checked={newPetData.medicalHistory.vaccinated}
             onChange={handleChange}
           />
+          {/* <input
+        type="file"
+        name="image"
+        accept="image/*"
+        onChange={handleFileChange}
+      /> */}
         </label>
         <button type="submit">Add Pet</button>
         <button type="button" onClick={() => navigate('/partner/pets')}>Cancel</button>

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { getAllPets } from "../../services/partnerservices";
-import { Link, useNavigate } from "react-router-dom";
+import PartnerNavBar from "../NavBar/PartnerNavBar";
+import { useNavigate } from "react-router-dom";
+import PetCard from "../PetCard/PetCard";
 
 const AllPets = ({ token }) => {
 
   const [pets, setPets] = useState([]);
   const navigate = useNavigate();
+  const view = "partner";
 
   useEffect(() => {
     if (!token) return; 
@@ -35,6 +38,25 @@ const AllPets = ({ token }) => {
   return (
     <>
       <h1>All Pets</h1>
+      <PartnerNavBar />
+      <button onClick={handleAddPet}>Upload Pet</button>
+      {pets.length === 0 ? (
+        <h1>no pets found!</h1>
+      ) : (
+        <div>
+          {pets.map((pet) => (
+            <PetCard key={pet._id} pet={pet} view={view} /> 
+          ))}
+        </div>
+      )}
+    </>
+  )
+};
+
+export default AllPets;
+
+{/* <>
+      <h1>All Pets</h1>
       <button onClick={handleAddPet}>Upload Pet</button>
       {pets.length === 0 ? (
         <h1>no pets found!</h1>
@@ -57,8 +79,4 @@ const AllPets = ({ token }) => {
     </li>
     ))
     )}
-    </>
-  )
-};
-
-export default AllPets;
+    </> */}

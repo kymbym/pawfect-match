@@ -19,7 +19,7 @@ const PartnerLoginForm = ({ setToken }) => {
       console.log("received token partner login", token)
       if (isValidToken(token)) {
         setToken(token);
-        navigate("/partner/pets");
+        navigate("/home/:partnerId");
       } else {
         alert("invalid login!")
       }
@@ -29,36 +29,45 @@ const PartnerLoginForm = ({ setToken }) => {
   }
 };
 
+  const handleSignupClick = () => {
+    navigate("/partner/signup")
+  }
+
     const isFormInvalid = () => {
         return !(email && password);
     };
 
     return (
-        <>
-            <h1>Log in to your account</h1>
-            <h2>Enter your details to sign in to your account.</h2>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </label>
-                <button type="submit" disabled={isFormInvalid()}>Submit</button>
-            </form>
-        </>
+      <>
+        <h1>Log in to your account</h1>
+        <h2>Enter your details to sign in to your account.</h2>
+        <form onSubmit={handleLogin}>
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <button type="submit" disabled={isFormInvalid()}>
+            Submit
+          </button>
+        </form>
+        <p>
+          Want to be a partner? <u onClick={handleSignupClick} style={{ cursor: "pointer" }}>Sign up</u>
+        </p>
+      </>
     );
 };
 

@@ -13,7 +13,6 @@ const createJWT = (partner) => {
   const payload = {
     organizationName: partner.organizationName,
     _id: partner._id,
-    role: "partner",
   };
   const secret = process.env.JWT_SECRET;
   const options = { expiresIn: "2h" };
