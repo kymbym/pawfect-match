@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
+import { editSpecificAppointment } from "../../services/userService";
 
-export default function UserAppointmentForm() {
+export default function UserAppointmentForm({
+  isEditing = false,
+  appointmentInfo = {},
+  token,
+}) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     contact: "",
@@ -20,7 +25,17 @@ export default function UserAppointmentForm() {
     event.preventDefault();
     try {
       console.log(formData);
-      navigate("/home/:userId");
+      if (isEditing) {
+        const appointmentInfo = formData;
+        await editSpecificAppointment(
+          appointmentInfo._id,
+          appointmentInfo,
+          token
+        );
+        // navigate(`/appointments/${userId}`)
+      } else {
+        navigate("/home/:userId");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -35,8 +50,12 @@ export default function UserAppointmentForm() {
   return (
     <>
       <UserNavBar />
-      <h1>Book an appointment</h1>
-      <h2>Enter your details and we'll see you real soon!</h2>
+      <h1>{isEditing ? "Edit appointment" : "Book an appointment"}</h1>
+      <h2>
+        {isEditing
+          ? "Update your appointment details"
+          : "Enter your details and we'll see you real soon!"}
+      </h2>
       <form onSubmit={handleSubmit}>
         <label>
           <input type="hidden" name="petId" value={petId} />
@@ -55,7 +74,7 @@ export default function UserAppointmentForm() {
         <label>
           Date:{" "}
           <input
-            type="date"
+            type="text"
             id="date"
             value={date}
             name="date"
@@ -66,7 +85,7 @@ export default function UserAppointmentForm() {
         <label>
           Time:{" "}
           <input
-            type="time"
+            type="text"
             id="time"
             value={time}
             name="time"
@@ -86,7 +105,9 @@ export default function UserAppointmentForm() {
         </label>
         <br />
         <br />
-        <button disabled={isFormInvalid()}>Submit</button>
+        <button disabled={isFormInvalid()}>
+          {isEditing ? "Update Appointment" : "Submit"}
+        </button>
       </form>
     </>
   );

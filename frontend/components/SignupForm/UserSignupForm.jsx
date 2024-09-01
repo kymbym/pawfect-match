@@ -6,7 +6,7 @@ import { signUpUser } from "../../services/userService";
 export default function UserSignupForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    userName: "",
     email: "",
     password: "",
     confirmPw: "",
@@ -20,17 +20,18 @@ export default function UserSignupForm() {
     event.preventDefault();
     try {
       console.log(formData);
-      await signUpUser(formData);
-      navigate("/home/:userId");
+      const json = await signUpUser(formData);
+      // console.log("userid", json.user._id);
+      navigate(`/home/${json.user._id}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
-  const { name, email, password, confirmPw } = formData;
+  const { userName, email, password, confirmPw } = formData;
 
   const isFormInvalid = () => {
-    return !(name && email && password && password === confirmPw);
+    return !(userName && email && password && password === confirmPw);
   };
 
   return (
@@ -43,9 +44,9 @@ export default function UserSignupForm() {
           Name:{" "}
           <input
             type="text"
-            id="name"
-            value={name}
-            name="name"
+            id="userName"
+            value={userName}
+            name="userName"
             onChange={handleChange}
           />
         </label>
