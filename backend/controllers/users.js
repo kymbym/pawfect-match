@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { verifyToken } = require("../middleware/verify-token");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const SALT_LENGTH = 12;
 
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/:userId", verifyToken, async (req, res) => {
   try {
-    if (req.user._id !== req.params.userId) {
+    if (req.user._id.toString() !== req.params.userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     const user = await User.findById(req.user._id);
