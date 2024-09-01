@@ -9,9 +9,11 @@ export async function signUpUser(formData) {
       },
       body: JSON.stringify(formData),
     });
+    const json = await response.json();
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
+    return json;
   } catch (error) {
     console.error(error.message);
   }
