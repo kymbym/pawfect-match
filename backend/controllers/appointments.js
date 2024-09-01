@@ -11,7 +11,7 @@ const router = express.Router();
 // Protected Routes
 router.use(verifyToken);
 
-//make appointment:
+// make appointment
 router.post("/", async (req, res) => {
   if (getPartner(req)) {
     return res
@@ -47,17 +47,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-//gets all appointments
+// gets all appointments
 router.get("/", async (req, res) => {
   try {
     if (getPartner(req)) {
-      //should get appointments matching this partner
       const appointmentsReceived = await Appointment.find({
         provider: req.partner._id,
-      });
+      }).populate("pet");
       res.status(200).json(appointmentsReceived);
     }
-    //show all appointments made by me (user):
+    // show all appointments made by me (user):
     if (getUser(req)) {
       const allAppointments = await Appointment.find({ adopter: req.user._id })
         .populate("adopter")
@@ -71,7 +70,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//view specific appointment:
+// view specific appointment
 router.get("/:appointmentId", async (req, res) => {
   const { appointmentId } = req.params;
   try {
@@ -90,7 +89,7 @@ router.get("/:appointmentId", async (req, res) => {
   }
 });
 
-//edit appointment:
+// edit appointment
 router.put("/:appointmentId", async (req, res) => {
   if (getPartner(req)) {
     return res
@@ -126,7 +125,7 @@ router.put("/:appointmentId", async (req, res) => {
   }
 });
 
-//delete appointment
+// delete appointment
 router.delete("/:appointmentId", async (req, res) => {
   if (getPartner(req)) {
     return res

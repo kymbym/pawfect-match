@@ -1,4 +1,7 @@
-export const signupPartner = async (formData, token) => {
+import AWS from "aws-sdk";
+import S3 from "aws-sdk/clients/s3";
+
+export const signupPartner = async (formData) => {
   const url = "/api/partner/signup";
 
   try {
@@ -7,7 +10,6 @@ export const signupPartner = async (formData, token) => {
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -16,7 +18,7 @@ export const signupPartner = async (formData, token) => {
     }
 
     const json = await response.json();
-    return json;
+    return json.token;
   } catch (error) {
     console.error("error creating account", error.message);
   }
@@ -40,7 +42,6 @@ export const loginPartner = async (formData, token) => {
     }
 
     const json = await response.json();
-    console.log("login response", json);
     console.log("login response", json);
     return json.token;
   } catch (error) {
@@ -71,6 +72,29 @@ export const getPetById = async (petId, token) => {
   }
 };
 
+export const getPartnerById = async (token) => {
+  const url = `/api/partner`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error getting partner details", error.message);
+  }
+};
+
 export const getAllPets = async (token) => {
   const url = `/api/pets`;
   console.log("fetching pets with token", token);
@@ -94,6 +118,32 @@ export const getAllPets = async (token) => {
   } catch (error) {
     console.error("error fetching all pets", error.message);
     return { pets: [] };
+  }
+};
+
+export const addPet = async (petData, token) => {
+  const url = `/api/pets`;
+  console.log("upload new pet with token", token);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(petData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log("add new pet response", json);
+    return json;
+  } catch (error) {
+    console.error("error adding pet", error.message);
   }
 };
 
@@ -143,28 +193,68 @@ export const deletePet = async (petId, token) => {
   }
 };
 
-// export const getAllPets = async (token) => {
-//   const url = `/api/partner/pets`;
-//   console.log("fetching pets with token", token);
+export const getPartnerAppointments = async (token) => {
+  const url = `/api/appointments`;
 
-//   try {
-//     const response = await fetch(url, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-//     console.log("received response", response)
-//     if (!response.ok) {
-//       throw new Error(`response status: ${response.status}`);
-//     }
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
 
-//     const json = await response.json()
-//     return json;
-//   } catch (error) {
-//     console.error("error fetching all pets", error.message)
-//     return { pets: [] }
-//   }
-// };
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error getting appointments", error.message);
+  }
+};
+
+const S3_BUCKET = import.meta.env.VITE_S3_BUCKET;
+const REGION = import.meta.env.VITE_AWS_REGION;
+
+AWS.config.update({
+  region: REGION,
+  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY,
+  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+});
+
+const s3 = new S3({
+  params: { Bucket: S3_BUCKET },
+  region: REGION,
+});
+
+export const uploadFile = async (file) => {
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: file.name,
+    Body: file,
+  };
+
+  try {
+    const upload = await s3.putObject(params).promise();
+    console.log(upload);
+    const url = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
+    return url;
+  } catch (error) {
+    console.error(error);
+    throw new Error("error uploading file", error.message);
+  }
+};
+
+export const uploadFiles = async (files) => {
+  try {
+    const uploadPromises = Array.from(files).map((file) => uploadFile(file));
+    const urls = await Promise.all(uploadPromises);
+    return urls;
+  } catch (error) {
+    console.error("error uploading files", error);
+    throw new Error("error uploading files");
+  }
+};
