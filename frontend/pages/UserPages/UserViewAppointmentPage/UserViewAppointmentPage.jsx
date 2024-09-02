@@ -73,6 +73,7 @@ export default function UserViewAppointmentPage({ token }) {
                 <h2>Pet Name: {appointment.pet.name}</h2>
                 <h3>Date: {formattedAppointmentDate}</h3>
                 <h3>Time: {appointment.appointmentTime}</h3>
+                <h3>Inquiries: {appointment.inquiries}</h3>
                 <button onClick={() => handleEdit(appointment)}>Edit</button>
                 <button onClick={() => handleDelete(appointment._id)}>
                   Delete

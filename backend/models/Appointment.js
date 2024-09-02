@@ -10,8 +10,6 @@ const appointmentSchema = new mongoose.Schema({
   inquiries: String,
 });
 
-// change date and time to type: Date
-
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
 module.exports = Appointment;

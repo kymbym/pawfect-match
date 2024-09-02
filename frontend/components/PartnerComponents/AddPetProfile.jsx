@@ -51,7 +51,7 @@ const AddPetProfile = ({ token }) => {
 
   const handleFileChange = async (e) => {
     const files = e.target.files;
-    if (files.lenght === 0) return;
+    if (files.length === 0) return;
 
     try {
       alert("uploading file...");

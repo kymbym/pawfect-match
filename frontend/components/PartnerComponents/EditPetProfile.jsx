@@ -1,4 +1,4 @@
-
+import { uploadFile, uploadFiles } from "../../services/partnerservices";
 import { updatePet } from "../../services/partnerservices";
 import { useState } from "react";
 
@@ -25,6 +25,34 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
       setNewPetData({ ...newPetData, [e.target.name]: e.target.value });
     }
   };
+
+  const handleFileChange = async (e) => {
+    const files = e.target.files;
+    if (files.length === 0) return;
+
+    try {
+      alert("uploading file...");
+      const uploadedImageUrl = await uploadFiles(files);
+      setNewPetData({ ...newPetData, photos: [...newPetData.photos, ...uploadedImageUrl] });
+      console.log("uploaded image url", uploadedImageUrl);
+    } catch (error) {
+      console.error("error uploading file", error);
+    }
+  };
+
+  const handleProfilePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      alert("uploading profile photo...")
+      const uploadedImageUrl = await uploadFile(file);
+      setNewPetData({...newPetData, profilePhoto: uploadedImageUrl});
+      console.log("uploaded profile photo url", uploadedImageUrl);
+    } catch (error) {
+      console.error("error uploading file", error)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,6 +148,25 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
             name="vaccinated"
             checked={newPetData.medicalHistory.vaccinated}
             onChange={handleChange}
+          />
+        </label>
+        <label>
+          Profile Picture:
+          <input
+            type="file"
+            name="profilePhoto"
+            accept="image/*"
+            onChange={handleProfilePhotoChange}
+          />
+        </label>
+        <label>
+          Other Photos:
+          <input
+            type="file"
+            name="photos"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
           />
         </label>
         <button type="submit">Save</button>
