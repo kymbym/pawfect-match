@@ -6,7 +6,7 @@ import EditPetProfile from "../PartnerComponents/EditPetProfile";
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
-  const { name, breed, gender, age, color, personality, adoptionStage, medicalHistory, profilePhoto, photos } = petData;
+  const { name, breed, gender, birthday, color, personality, adoptionStage, medicalHistory, profilePhoto, photos } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   
@@ -68,7 +68,7 @@ const PetProfile = ({ view, token }) => {
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
-          <p>Age: {age}</p>
+          <p>Birthday: {birthday}</p>
           <p>Color: {color}</p>
           <p>Personality: {personality}</p>
           <p>Adoption Stage: {adoptionStage}</p>
