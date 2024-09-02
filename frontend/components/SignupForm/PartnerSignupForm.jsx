@@ -55,6 +55,7 @@ const PartnerSignupForm = ({ setToken }) => {
 
   return (
     <>
+    <img src="../../public/images/sign-up-banner.png" alt="A poodle" />
       <h1>Create an account</h1>
       <h2>Enter your details to create an account.</h2>
       <form onSubmit={handleSignup}>
