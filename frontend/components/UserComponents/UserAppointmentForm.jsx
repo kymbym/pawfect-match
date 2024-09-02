@@ -20,8 +20,9 @@ export default function UserAppointmentForm({
     appointmentTime: "",
     inquiries: "",
   });
-  // ?/appointments?petId=xxx&appointmentId=xxx -> search params?
+
   console.log("appointment form token", token);
+  
 
   useEffect(() => {
     if (isEditing && appointmentInfo) {

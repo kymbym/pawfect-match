@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { uploadFile, uploadFiles } from "../../services/partnerservices";
 
 const AddPetProfile = ({ token }) => {
+  
   const [newPetData, setNewPetData] = useState({
     name: "",
     breed: "",
     gender: "",
-    birthday: null,
+    birthday: "",
     color: "",
     personality: "",
     photos: [],
@@ -50,7 +51,7 @@ const AddPetProfile = ({ token }) => {
 
   const handleFileChange = async (e) => {
     const files = e.target.files;
-    if (files.lenght === 0) return;
+    if (files.length === 0) return;
 
     try {
       alert("uploading file...");

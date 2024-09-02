@@ -5,6 +5,7 @@ import {
   deleteSpecificAppointment,
 } from "../../../services/userService";
 import UserAppointmentForm from "../../../components/UserComponents/UserAppointmentForm";
+import { format } from "date-fns";
 
 export default function UserViewAppointmentPage({ token }) {
   const [appointments, setAppointments] = useState([]);
@@ -63,17 +64,23 @@ export default function UserViewAppointmentPage({ token }) {
         <p>Currently no appointments!</p>
       ) : (
         <div>
-          {appointments.map((appointment) => (
-            <div key={appointment._id}>
-              <h2>Pet Name: {appointment.pet.name}</h2>
-              <h3>Date: {appointment.appointmentDate}</h3>
-              <h3>Time: {appointment.appointmentTime}</h3>
-              <button onClick={() => handleEdit(appointment)}>Edit</button>
-              <button onClick={() => handleDelete(appointment._id)}>
-                Delete
-              </button>
-            </div>
-          ))}
+          {appointments.map((appointment) => {
+            const formattedAppointmentDate = appointment.appointmentDate
+              ? format(new Date(appointment.appointmentDate), "dd-MMMM-yyyy")
+              : "N/A";
+            return (
+              <div key={appointment._id}>
+                <h2>Pet Name: {appointment.pet.name}</h2>
+                <h3>Date: {formattedAppointmentDate}</h3>
+                <h3>Time: {appointment.appointmentTime}</h3>
+                <h3>Inquiries: {appointment.inquiries}</h3>
+                <button onClick={() => handleEdit(appointment)}>Edit</button>
+                <button onClick={() => handleDelete(appointment._id)}>
+                  Delete
+                </button>
+              </div>
+            );
+          })}
           {showAppointmentForm && (
             <UserAppointmentForm
               isEditing={true}

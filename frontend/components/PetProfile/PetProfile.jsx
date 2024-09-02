@@ -1,15 +1,34 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetById, deletePet } from "../../services/partnerservices";
-import EditPetProfile from "../PartnerComponents/EditPetProfile";
+import { getPetById, deletePet, deletePhoto } from "../../services/partnerservices";
+import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
+import { format } from "date-fns";
 
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
-  const { name, breed, gender, birthday, color, personality, adoptionStage, medicalHistory, profilePhoto, photos = [], appointments = [] } = petData;
+  const {
+    name,
+    breed,
+    gender,
+    birthday,
+    color,
+    personality,
+    adoptionStage,
+    medicalHistory,
+    profilePhoto,
+    photos = [],
+    appointments = [],
+  } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  
+
+  // const formattedBirthday = birthday
+  //   ? format(new Date(birthday), "yyyy-MM-dd")
+  //   : "Unknown";
+  // console.log(birthday);
+  // console.log(formattedBirthday);
+
   console.log("token in petprofile partner", token);
 
   useEffect(() => {
@@ -36,7 +55,7 @@ const PetProfile = ({ view, token }) => {
     }
   };
 
-  const handleEdit = () => {
+  const handleUpdate = () => {
     setIsEditing(true);
   };
 
@@ -46,38 +65,57 @@ const PetProfile = ({ view, token }) => {
       const { pet } = await getPetById(petId, token);
       setPetData(pet);
     } catch (error) {
-      console.error("error occurred while fetching updated pet data", error)
+      console.error("error occurred while fetching updated pet data", error);
     }
   };
 
   const handleBack = () => {
     if (view === "partner") {
-      navigate("/partner/pets")
+      navigate("/partner/pets");
     } else {
-      navigate("/search")
+      navigate("/search");
     }
-  }
+  };
 
   const handleCreateAppointment = (petId) => {
     console.log("petId", petId);
-    navigate(`/appointments/create/${petId}`)
-  }
+    navigate(`/appointments/create/${petId}`);
+  };
+
+  const handleDeletePhoto = async (photoUrl) => {
+    try {
+      const updatedPet = await deletePhoto(photoUrl, petId, token);
+      setPetData({ ...petData, photos: updatedPet.photos })
+      alert("pet photo successfully deleted");
+      navigate("/partner/pets");
+    } catch (error) {
+      console.error("error occurred while deleting photo", error);
+    }
+  };
 
   if (!petData) {
     console.log("no pets");
   }
 
+  const formattedDate = new Date(petData.createdAt).toLocaleDateString();
+
   return (
     <>
       {isEditing ? (
-        <EditPetProfile petId={petId} petData={petData} token={token} handleSave={handleSave}/>
+        <UpdatePetProfile
+          petId={petId}
+          petData={petData}
+          token={token}
+          handleSave={handleSave}
+        />
       ) : (
         <>
-        <img src={profilePhoto} alt={`photo of ${name}`} />
+          <img src={profilePhoto} alt={`photo of ${name}`} />
+          <p>Uploaded on: {formattedDate}</p>
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
-          <p>Birthday: {birthday}</p>
+          <p>Birthday: {birthday ? format(new Date(birthday), "dd-MMMM-yyyy") : "Unknown"}</p>
           <p>Color: {color}</p>
           <p>Personality: {personality}</p>
           <p>Adoption Stage: {adoptionStage}</p>
@@ -90,26 +128,45 @@ const PetProfile = ({ view, token }) => {
               {medicalHistory?.vaccinated ? "Vaccinated" : "Not Vaccinated"}
             </li>
           </ul>
-          
-
+          <div>
           {photos.map((photoUrl) => (
-            <img key={photoUrl} src={photoUrl} alt={`${name}`} />
+            <div key={photoUrl}>
+            <img src={photoUrl} alt={`${name}`} />
+            {view === "partner" && (
+              <button onClick={() => handleDeletePhoto(photoUrl)}>🗑️</button>
+            )}
+            </div>
           ))}
+          </div>
 
           {view === "partner" && (
             <div>
               <h2>Appointments for {name}</h2>
-              {appointments.map((appointment) => (
-                <li key={appointment._id}>
-                 <p>Adopter: {appointment.adopter.userName}</p>
-                    <p>Date: {appointment.appointmentDate}</p>
-                    <p>Time: {appointment.appointmentTime}</p>
-                    <p>Contact: {appointment.contact}</p>
-                    <p>Inquiries: {appointment.inquiries}</p>
-                </li>
-              ))}
+              {appointments.length === 0 ? (
+                <h1>no appointments yet!!</h1>
+              ) : (
+                <div>
+                  {appointments.map((appointment) => {
+                    const formattedAppointmentDate = appointment.appointmentDate
+                      ? format(
+                          new Date(appointment.appointmentDate),
+                          "dd-MMMM-yyyy"
+                        )
+                      : "N/A";
+                    return (
+                      <li key={appointment._id}>
+                        <p>Adopter: {appointment.adopter.userName}</p>
+                        <p>Date: {formattedAppointmentDate}</p>
+                        <p>Time: {appointment.appointmentTime}</p>
+                        <p>Contact: {appointment.contact}</p>
+                        <p>Inquiries: {appointment.inquiries}</p>
+                      </li>
+                    );
+                  })}
+                </div>
+              )}
               <button onClick={handleBack}>Back</button>
-              <button onClick={handleEdit}>Edit</button>
+              <button onClick={handleUpdate}>Update</button>
               <button onClick={handleDelete}>Delete</button>
             </div>
           )}
@@ -117,7 +174,9 @@ const PetProfile = ({ view, token }) => {
           {view === "user" && (
             <div>
               <button onClick={handleBack}>Back</button>
-              <button onClick={() => handleCreateAppointment(petId)}>Book Appointment</button>
+              <button onClick={() => handleCreateAppointment(petId)}>
+                Book Appointment
+              </button>
               <button>Follow</button>
             </div>
           )}

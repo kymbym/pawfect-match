@@ -95,9 +95,10 @@ export const getPartnerById = async (token) => {
   }
 };
 
-export const getAllPets = async (token) => {
-  const url = `/api/pets`;
-  console.log("fetching pets with token", token);
+export const getAllPets = async (token, sort) => {
+  const url = `/api/pets?sort=${sort}`;
+  console.log("fetching pets with token", token, sort);
+  console.log("request getallpets url", url);
 
   try {
     const response = await fetch(url, {
@@ -256,5 +257,27 @@ export const uploadFiles = async (files) => {
   } catch (error) {
     console.error("error uploading files", error);
     throw new Error("error uploading files");
+  }
+};
+
+export const deletePhoto = async (photoUrl, petId, token) => {
+  const url = `/api/pets/${petId}/delete-photo`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`failed to delete photo: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error("error deleting photo", error.message);
   }
 };

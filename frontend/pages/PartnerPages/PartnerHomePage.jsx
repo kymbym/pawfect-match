@@ -1,11 +1,11 @@
 import PartnerNavBar from "../../components/NavBar/PartnerNavBar";
 import { useEffect, useState } from "react";
 import { getPartnerById } from "../../services/partnerservices";
+import { Link } from "react-router-dom";
 
 const PartnerHomePage = ({ token }) => {
   
   const [organizationName, setOrganizationName] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (!token) return;
@@ -23,21 +23,13 @@ const PartnerHomePage = ({ token }) => {
     fetchPartnerDetails();
   }, [token]);
 
-  const handleSearch = () => {
-    console.log("searching");
-  };
-
   return (
     <>
       <PartnerNavBar />
       <h1>Welcome, {organizationName}!</h1>
-      <h2>Summary Report</h2>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+      <h3>Your next upcoming appointment:</h3>
+      <Link to="/partner/appointments">View Appointments</Link>
+      <Link to="/partner/pets">View Current Pet Listings</Link>
     </>
   );
 };

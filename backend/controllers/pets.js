@@ -10,14 +10,24 @@ const { default: mongoose } = require("mongoose");
 // get pets
 router.get("/", verifyToken, async (req, res) => {
   const { _id } = req.partner || req.user;
+  const { sort } = req.query;
   // console.log("partner id from token", req.partner._id);
+  console.log("received sort query", sort);
+
   const { name } = req.query;
   // console.log("search query in router: ", name)
   try {
     let pets = [];
+    let sortBy = {};
+
+    if (sort === "latest") {
+      sortBy = { createdAt: -1 };
+    } else if (sort === "earliest") {
+      sortBy = { createdAt: 1 };
+    }
 
     if (req.partner) {
-      pets = await Pet.find({ provider: _id });
+      pets = await Pet.find({ provider: _id }).sort(sortBy).exec();
     } else if (req.user && name) {
       pets = await Pet.find({ name: String(name) }); // user gets pet by name
     } else {
@@ -145,6 +155,29 @@ router.delete("/:petId", verifyToken, async (req, res) => {
 
     const deletedPet = await Pet.findByIdAndDelete(petId);
     res.status(200).json({ msg: "pet deleted successfully", deletedPet });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// delete photo of specific pet
+router.delete("/:petId/delete-photo", async (req, res) => {
+  const { petId } = req.params;
+  const { photoUrl } = req.body;
+
+  try {
+    const pet = await Pet.findById(petId);
+
+    if (!pet) {
+      return res.status(404).json({ error: "pet not found" });
+    }
+
+    pet.photos = pet.photos.filter((photo) => photo !== photoUrl);
+    await pet.save();
+
+    res
+      .status(200)
+      .json({ msg: "pet photo deleted successfully", photos: pet.photos });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
