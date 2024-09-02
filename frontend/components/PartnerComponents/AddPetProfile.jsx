@@ -8,7 +8,7 @@ const AddPetProfile = ({ token }) => {
     name: "",
     breed: "",
     gender: "",
-    age: "",
+    birthday: null,
     color: "",
     personality: "",
     photos: [],
@@ -111,11 +111,11 @@ const AddPetProfile = ({ token }) => {
           />
         </label>
         <label>
-          Age:
+          Date:
           <input
-            type="text"
-            name="age"
-            value={newPetData.age}
+            type="date"
+            name="date"
+            value={newPetData.date}
             onChange={handleChange}
             required
           />

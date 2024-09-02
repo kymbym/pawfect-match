@@ -71,7 +71,6 @@ router.get("/:petId", verifyToken, async (req, res) => {
     );
 
     console.log("fetched pet data from backend route", pet);
-    console.log("fetched appointments from backend route", appointments);
 
     if (req.partner) {
       if (!pet.provider.equals(req.partner._id)) {

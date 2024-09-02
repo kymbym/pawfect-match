@@ -4,7 +4,7 @@ const petSchema = new mongoose.Schema({
   name: { type: String, required: true },
   breed: { type: String, required: true },
   gender: { type: String, required: true },
-  age: { type: String, required: true },
+  birthday: { type: Date, default: Date.now(), required: true },
   color: { type: String, required: true },
   medicalHistory: {
     sterilized: { type: Boolean, required: true },

@@ -8,7 +8,9 @@ const appointmentSchema = new mongoose.Schema({
   appointmentDate: { type: String, required: true },
   appointmentTime: { type: String, required: true },
   inquiries: String,
-}); //change date and time to type: Date
+});
+
+// change date and time to type: Date
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
