@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 //signing up user
 export async function signUpUser(formData) {
   const url = "/api/user/signup";
@@ -67,8 +69,8 @@ export async function getUserAppointments(token) {
 //user posts appointment
 export async function createAppointment(formData, token) {
   console.log("post function form data", formData);
-  console.log("pet id in form", formData.petId);
-  const url = "/api/appointments/create/";
+  console.log("pet id in create appt function", formData.pet);
+  const url = "/api/appointments";
   try {
     const response = await fetch(url, {
       method: "POST",
