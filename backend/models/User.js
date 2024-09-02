@@ -5,9 +5,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   hashedPassword: { type: String, required: true },
   dogsFollowed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
-  appointmentsMade: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
-  ],
+  // appointmentsMade: [
+  //   { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
+  // ],
 });
 
 userSchema.set("toJSON", {
