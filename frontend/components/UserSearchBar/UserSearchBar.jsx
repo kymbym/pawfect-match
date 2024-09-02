@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchPetsByName } from "../../services/userService";
 
-export default function UserSearchBar() {
+export default function UserSearchBar({token}) {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -12,7 +12,10 @@ export default function UserSearchBar() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const results = searchPetsByName(query);
+    // console.log("event inside handle submit", query);
+    // console.log("token inside handlesubmit: ", token)
+    const results = await searchPetsByName(query, token);
+    console.log(results);
     navigate(`/search?name=${query.toLowerCase()}`, {state: {results}})
   };
 
