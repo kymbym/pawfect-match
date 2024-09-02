@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       .json({ error: "Unauthorized to make appointments as Partner!" });
   }
   const currentUser = getUser(req);
-  const petId = req.body.petId;
+  const petId = req.body.pet;
   try {
     if (!petId) {
       return res.status(400).json({ error: "No pet Id" });
