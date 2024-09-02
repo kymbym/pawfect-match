@@ -28,6 +28,10 @@ export default function UserSignupForm() {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate("/user/login")
+  }
+
   const { userName, email, password, confirmPw } = formData;
 
   const isFormInvalid = () => {
@@ -88,8 +92,7 @@ export default function UserSignupForm() {
         <button disabled={isFormInvalid()}>Submit</button>
       </form>
       <p>
-        Have an existing account? <u>Login here</u>{" "}
-        {/*insert link to log in page here */}
+        Have an existing account? <u onClick={handleLoginClick} style={{ cursor: "pointer" }}>Login here</u> 
       </p>
     </>
   );

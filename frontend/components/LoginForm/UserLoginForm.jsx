@@ -35,6 +35,14 @@ export default function UserLoginForm({ setToken }) {
     }
   };
 
+  const handleSignupClick = () => {
+    navigate("/user/signup")
+  }
+
+  const handlePartnerLoginClick = () => {
+    navigate("/partner/login")
+  }
+
   const { email, password } = formData;
 
   const isFormInvalid = () => {
@@ -43,7 +51,7 @@ export default function UserLoginForm({ setToken }) {
 
   return (
     <>
-      <UserNavBar />
+      {/* <UserNavBar /> */}
       <h1>Log in to your account</h1>
       <h2>Enter your details to sign in to your account.</h2>
       <form onSubmit={handleSubmit}>
@@ -73,10 +81,10 @@ export default function UserLoginForm({ setToken }) {
         <button disabled={isFormInvalid()}>Submit</button>
       </form>
       <p>
-        Need an account? <u>Sign up</u> {/*insert link to sign up page here */}
+        Need an account? <u onClick={handleSignupClick} style={{ cursor: "pointer" }}>Sign up</u> 
       </p>
       <h3>
-        Looking for our Partner portal? <u>Login here</u>
+        Looking for our Partner portal? <u onClick={handlePartnerLoginClick} style={{ cursor: "pointer" }}>Login here</u> 
       </h3>
     </>
   );
