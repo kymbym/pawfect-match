@@ -70,6 +70,11 @@ const PetProfile = ({ view, token }) => {
     }
   };
 
+  const handleCreateAppointment = (petId) => {
+    console.log("petId", petId);
+    navigate(`/appointments/create/${petId}`)
+  }
+
   if (!petData) {
     console.log("no pets");
   }
@@ -134,7 +139,7 @@ const PetProfile = ({ view, token }) => {
           {view === "user" && (
             <div>
               <button onClick={handleBack}>Back</button>
-              <button>Book Appointment</button>
+              <button onClick={() => handleCreateAppointment(petId)}>Book Appointment</button>
               <button>Follow</button>
             </div>
           )}

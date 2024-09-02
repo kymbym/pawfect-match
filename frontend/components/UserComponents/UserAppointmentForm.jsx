@@ -12,14 +12,15 @@ export default function UserAppointmentForm({
   token,
 }) {
   const navigate = useNavigate();
+  const { petId } = useParams();
   const [formData, setFormData] = useState({
+    pet: petId,
     contact: "",
-    date: "",
-    time: "",
+    appointmentDate: "",
+    appointmentTime: "",
     inquiries: "",
   });
-  // ?/appointments?petId=xxx&appointmentId=xxx
-  const { petId } = useParams();
+  // ?/appointments?petId=xxx&appointmentId=xxx -> search params?
   console.log("appointment form token", token);
 
   const handleChange = (event) => {
@@ -37,17 +38,17 @@ export default function UserAppointmentForm({
         // navigate(`/appointments/${userId}`)
       } else {
         createAppointment(formData, token);
-        navigate("/home/:userId");
+        // navigate(`/home/${userId}`);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
-  const { contact, date, time, inquiries } = formData;
+  const { contact, appointmentDate, appointmentTime, inquiries } = formData;
 
   const isFormInvalid = () => {
-    return !(contact && date && time);
+    return !(contact && appointmentDate && appointmentTime);
   };
 
   return (
@@ -61,8 +62,10 @@ export default function UserAppointmentForm({
       </h2>
       <form onSubmit={handleSubmit}>
         <label>
-          <input type="hidden" name="petId" value={petId} />
+          PetId:{" "}
+          <input type="text" name="pet" value={petId} disabled="disabled" />
         </label>
+        <br />
         <label>
           Contact:{" "}
           <input
@@ -79,8 +82,8 @@ export default function UserAppointmentForm({
           <input
             type="date"
             id="date"
-            value={date}
-            name="date"
+            value={appointmentDate}
+            name="appointmentDate"
             onChange={handleChange}
           />
         </label>
@@ -90,8 +93,8 @@ export default function UserAppointmentForm({
           <input
             type="time"
             id="time"
-            value={time}
-            name="time"
+            value={appointmentTime}
+            name="appointmentTime"
             onChange={handleChange}
           />
         </label>
