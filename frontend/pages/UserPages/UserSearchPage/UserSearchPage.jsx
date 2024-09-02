@@ -2,12 +2,13 @@ import UserNavBar from "../../../components/NavBar/UserNavBar";
 import PetCard from "../../../components/PetCard/PetCard";
 import UserSearchBar from "../../../components/UserSearchBar/UserSearchBar";
 import { useState, useEffect } from "react";
+import {useLocation} from "react-router-dom";
 import { getAllPets } from "../../../services/partnerservices";
 
 export default function UserSearchPage({ token }) {
-
-  const [displayQuery, setdisplayQuery] = useState("");
+  // const [displayQuery, setdisplayQuery] = useState("");
   const [pets, setPets] = useState([]);
+  const location = useLocation();
   const view = "user";
 
   useEffect(() => {
@@ -23,13 +24,18 @@ export default function UserSearchPage({ token }) {
         } else {
           console.error("no pets data found!");
         }
+        if (location.state){
+          console.log("location state result:", location.state.results.pets);
+          const findPetByNameResult = location.state.results.pets;
+          setPets(findPetByNameResult);
+        }
       } catch (error) {
         console.error("error fetching pets", error);
       }
     };
-
-    fetchPets();
-  }, [token]);
+ 
+      fetchPets();
+  }, [token, location.state]);
 
   return (
     <>
