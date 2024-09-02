@@ -38,7 +38,7 @@ const PartnerLoginForm = ({ setToken }) => {
 
   return (
     <>
-      <img src="../../public/images/partner-login-banner.png" alt="A poodle lying on the floor" />
+      <img src="../../../images/partner-login-banner.png" alt="A poodle lying on the floor" />
       <h1>Log in to your account</h1>
       <h2>Enter your details to sign in to your account.</h2>
       <form onSubmit={handleLogin}>

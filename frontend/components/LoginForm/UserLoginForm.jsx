@@ -52,7 +52,7 @@ export default function UserLoginForm({ setToken }) {
   return (
     <>
       {/* <UserNavBar /> i feel like just need to show the pawfect match button to return to main and not the entire nav bar!*/}
-      <img src="../../public/images/user-login-banner.png" alt="A poodle sniffing coffee" />
+      <img src="../../../images/user-login-banner.png" alt="A poodle sniffing coffee" />
       <h1>Log in to your account</h1>
       <h2>Enter your details to sign in to your account.</h2>
       <form onSubmit={handleSubmit}>
