@@ -1,6 +1,5 @@
 import UserNavBar from "../../../components/NavBar/UserNavBar";
 import PetCard from "../../../components/PetCard/PetCard";
-import PetProfile from "../../../components/PetProfile/PetProfile";
 import UserSearchBar from "../../../components/UserSearchBar/UserSearchBar";
 import { useState, useEffect } from "react";
 import { getAllPets } from "../../../services/partnerservices";
@@ -8,7 +7,6 @@ import { getAllPets } from "../../../services/partnerservices";
 export default function UserSearchPage({ token }) {
 
   const [displayQuery, setdisplayQuery] = useState("");
-
   const [pets, setPets] = useState([]);
   const view = "user";
 
@@ -37,7 +35,7 @@ export default function UserSearchPage({ token }) {
     <>
       <UserNavBar />
       <h1>Find your bestie!</h1>
-      <UserSearchBar />
+      <UserSearchBar token={token} />
       <p>other search functions</p>
       <div>
           {pets.map((pet) => (

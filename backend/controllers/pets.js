@@ -14,6 +14,8 @@ router.get("/", verifyToken, async (req, res) => {
   // console.log("partner id from token", req.partner._id);
   console.log("received sort query", sort);
 
+  const { name } = req.query;
+  // console.log("search query in router: ", name)
   try {
     let pets = [];
     let sortBy = {};
@@ -26,8 +28,10 @@ router.get("/", verifyToken, async (req, res) => {
 
     if (req.partner) {
       pets = await Pet.find({ provider: _id }).sort(sortBy).exec();
+    } else if (req.user && name) {
+      pets = await Pet.find({ name: String(name) }); // user gets pet by name
     } else {
-      pets = await Pet.find({}).sort(sortBy).exec();
+      pets = await Pet.find({}); //user gets everything if no search
     }
 
     res.status(200).json({ pets });
