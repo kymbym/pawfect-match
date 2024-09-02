@@ -9,7 +9,7 @@ const AddPetProfile = ({ token }) => {
     name: "",
     breed: "",
     gender: "",
-    birthday: null,
+    birthday: "",
     color: "",
     personality: "",
     photos: [],

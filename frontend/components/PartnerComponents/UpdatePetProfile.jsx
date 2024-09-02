@@ -2,7 +2,7 @@ import { uploadFile, uploadFiles } from "../../services/partnerservices";
 import { updatePet } from "../../services/partnerservices";
 import { useState } from "react";
 
-const EditPetProfile = ({ petId, petData, token, handleSave }) => {
+const UpdatePetProfile = ({ petId, petData, token, handleSave }) => {
   const [newPetData, setNewPetData] = useState({
     ...petData,
     medicalHistory: {
@@ -176,4 +176,4 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
   );
 };
 
-export default EditPetProfile;
+export default UpdatePetProfile;

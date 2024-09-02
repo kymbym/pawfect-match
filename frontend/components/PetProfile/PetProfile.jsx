@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetById, deletePet } from "../../services/partnerservices";
-import EditPetProfile from "../PartnerComponents/EditPetProfile";
+import { getPetById, deletePet, deletePhoto } from "../../services/partnerservices";
+import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
 import { format } from "date-fns";
 
 const PetProfile = ({ view, token }) => {
@@ -55,7 +55,7 @@ const PetProfile = ({ view, token }) => {
     }
   };
 
-  const handleEdit = () => {
+  const handleUpdate = () => {
     setIsEditing(true);
   };
 
@@ -82,14 +82,27 @@ const PetProfile = ({ view, token }) => {
     navigate(`/appointments/create/${petId}`);
   };
 
+  const handleDeletePhoto = async (photoUrl) => {
+    try {
+      const updatedPet = await deletePhoto(photoUrl, petId, token);
+      setPetData({ ...petData, photos: updatedPet.photos })
+      alert("pet photo successfully deleted");
+      navigate("/partner/pets");
+    } catch (error) {
+      console.error("error occurred while deleting photo", error);
+    }
+  };
+
   if (!petData) {
     console.log("no pets");
   }
 
+  const formattedDate = new Date(petData.createdAt).toLocaleDateString();
+
   return (
     <>
       {isEditing ? (
-        <EditPetProfile
+        <UpdatePetProfile
           petId={petId}
           petData={petData}
           token={token}
@@ -98,6 +111,7 @@ const PetProfile = ({ view, token }) => {
       ) : (
         <>
           <img src={profilePhoto} alt={`photo of ${name}`} />
+          <p>Uploaded on: {formattedDate}</p>
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
@@ -114,10 +128,16 @@ const PetProfile = ({ view, token }) => {
               {medicalHistory?.vaccinated ? "Vaccinated" : "Not Vaccinated"}
             </li>
           </ul>
-
+          <div>
           {photos.map((photoUrl) => (
-            <img key={photoUrl} src={photoUrl} alt={`${name}`} />
+            <div key={photoUrl}>
+            <img src={photoUrl} alt={`${name}`} />
+            {view === "partner" && (
+              <button onClick={() => handleDeletePhoto(photoUrl)}>🗑️</button>
+            )}
+            </div>
           ))}
+          </div>
 
           {view === "partner" && (
             <div>
@@ -146,7 +166,7 @@ const PetProfile = ({ view, token }) => {
                 </div>
               )}
               <button onClick={handleBack}>Back</button>
-              <button onClick={handleEdit}>Edit</button>
+              <button onClick={handleUpdate}>Update</button>
               <button onClick={handleDelete}>Delete</button>
             </div>
           )}

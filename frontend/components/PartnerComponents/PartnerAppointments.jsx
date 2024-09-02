@@ -26,6 +26,9 @@ const PartnerAppointments = ({ token }) => {
     fetchAppointments();
   }, [token]);
 
+  console.log("Appointments data:", appointments);
+
+
   return (
     <>
       <h1>Your Appointments</h1>
@@ -36,8 +39,8 @@ const PartnerAppointments = ({ token }) => {
         <div>
           {appointments.map((appointment) => (
             <li key={appointment._id}>
-              <p>Pet Name: {appointment.pet.name}</p>
-              <p>Breed: {appointment.pet.breed}</p>
+              <p>Pet Name: {appointment.pet?.name}</p>
+              <p>Breed: {appointment.pet?.breed}</p>
               <p>Date: {appointment.appointmentDate}</p>
               <p>Time: {appointment.appointmentTime}</p>
               <p>Contact: {appointment.contact}</p>
