@@ -69,11 +69,11 @@ const EditPetProfile = ({ petId, petData, token, handleSave }) => {
           />
         </label>
         <label>
-          Age:
+          Birthday:
           <input
-            type="text"
-            name="age"
-            value={newPetData.age}
+            type="date"
+            name="birthday"
+            value={newPetData.birthday}
             onChange={handleChange}
           />
         </label>

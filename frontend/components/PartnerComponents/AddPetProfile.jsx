@@ -111,11 +111,11 @@ const AddPetProfile = ({ token }) => {
           />
         </label>
         <label>
-          Date:
+          Birthday:
           <input
             type="date"
-            name="date"
-            value={newPetData.date}
+            name="birthday"
+            value={newPetData.birthday}
             onChange={handleChange}
             required
           />
