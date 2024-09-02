@@ -6,10 +6,22 @@ import EditPetProfile from "../PartnerComponents/EditPetProfile";
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
-  const { name, breed, gender, birthday, color, personality, adoptionStage, medicalHistory, profilePhoto, photos = [], appointments = [] } = petData;
+  const {
+    name,
+    breed,
+    gender,
+    birthday,
+    color,
+    personality,
+    adoptionStage,
+    medicalHistory,
+    profilePhoto,
+    photos = [],
+    appointments = [],
+  } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  
+
   console.log("token in petprofile partner", token);
 
   useEffect(() => {
@@ -46,17 +58,17 @@ const PetProfile = ({ view, token }) => {
       const { pet } = await getPetById(petId, token);
       setPetData(pet);
     } catch (error) {
-      console.error("error occurred while fetching updated pet data", error)
+      console.error("error occurred while fetching updated pet data", error);
     }
   };
 
   const handleBack = () => {
     if (view === "partner") {
-      navigate("/partner/pets")
+      navigate("/partner/pets");
     } else {
-      navigate("/search")
+      navigate("/search");
     }
-  }
+  };
 
   if (!petData) {
     console.log("no pets");
@@ -65,10 +77,15 @@ const PetProfile = ({ view, token }) => {
   return (
     <>
       {isEditing ? (
-        <EditPetProfile petId={petId} petData={petData} token={token} handleSave={handleSave}/>
+        <EditPetProfile
+          petId={petId}
+          petData={petData}
+          token={token}
+          handleSave={handleSave}
+        />
       ) : (
         <>
-        <img src={profilePhoto} alt={`photo of ${name}`} />
+          <img src={profilePhoto} alt={`photo of ${name}`} />
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
@@ -85,7 +102,6 @@ const PetProfile = ({ view, token }) => {
               {medicalHistory?.vaccinated ? "Vaccinated" : "Not Vaccinated"}
             </li>
           </ul>
-          
 
           {photos.map((photoUrl) => (
             <img key={photoUrl} src={photoUrl} alt={`${name}`} />
@@ -94,15 +110,21 @@ const PetProfile = ({ view, token }) => {
           {view === "partner" && (
             <div>
               <h2>Appointments for {name}</h2>
-              {appointments.map((appointment) => (
-                <li key={appointment._id}>
-                 <p>Adopter: {appointment.adopter.userName}</p>
-                    <p>Date: {appointment.appointmentDate}</p>
-                    <p>Time: {appointment.appointmentTime}</p>
-                    <p>Contact: {appointment.contact}</p>
-                    <p>Inquiries: {appointment.inquiries}</p>
-                </li>
-              ))}
+              {appointments.length === 0 ? (
+                <h1>no appointments yet!!</h1>
+              ) : (
+                <div>
+                  {appointments.map((appointment) => (
+                    <li key={appointment._id}>
+                      <p>Adopter: {appointment.adopter.userName}</p>
+                      <p>Date: {appointment.appointmentDate}</p>
+                      <p>Time: {appointment.appointmentTime}</p>
+                      <p>Contact: {appointment.contact}</p>
+                      <p>Inquiries: {appointment.inquiries}</p>
+                    </li>
+                  ))}
+                </div>
+              )}
               <button onClick={handleBack}>Back</button>
               <button onClick={handleEdit}>Edit</button>
               <button onClick={handleDelete}>Delete</button>
