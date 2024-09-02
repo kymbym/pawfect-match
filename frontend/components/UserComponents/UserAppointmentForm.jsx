@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
-import { editSpecificAppointment } from "../../services/userService";
+import {
+  editSpecificAppointment,
+  createAppointment,
+} from "../../services/userService";
 
 export default function UserAppointmentForm({
   isEditing = false,
@@ -16,6 +19,7 @@ export default function UserAppointmentForm({
     inquiries: "",
   });
   const { petId } = useParams();
+  console.log("appointment form token", token);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -27,13 +31,11 @@ export default function UserAppointmentForm({
       console.log(formData);
       if (isEditing) {
         const appointmentInfo = formData;
-        await editSpecificAppointment(
-          appointmentInfo._id,
-          appointmentInfo,
-          token
-        );
+        console.log("appointment info:", formData);
+        await editSpecificAppointment(appointmentInfo, token);
         // navigate(`/appointments/${userId}`)
       } else {
+        createAppointment(formData, token);
         navigate("/home/:userId");
       }
     } catch (error) {
@@ -44,7 +46,7 @@ export default function UserAppointmentForm({
   const { contact, date, time, inquiries } = formData;
 
   const isFormInvalid = () => {
-    return !(contact && date && time && inquiries);
+    return !(contact && date && time);
   };
 
   return (
@@ -74,7 +76,7 @@ export default function UserAppointmentForm({
         <label>
           Date:{" "}
           <input
-            type="text"
+            type="date"
             id="date"
             value={date}
             name="date"
@@ -85,7 +87,7 @@ export default function UserAppointmentForm({
         <label>
           Time:{" "}
           <input
-            type="text"
+            type="time"
             id="time"
             value={time}
             name="time"

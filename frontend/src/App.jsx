@@ -32,24 +32,39 @@ function App() {
           path="/partner/login"
           element={<PartnerLoginForm setToken={setToken} />}
         />
-        <Route path="/partner/signup" element={<PartnerSignupForm setToken={setToken} />} />
-        <Route path="/partner/home" element={<PartnerHomePage token={token}/>}/>
+        <Route
+          path="/partner/signup"
+          element={<PartnerSignupForm setToken={setToken} />}
+        />
+        <Route
+          path="/partner/home"
+          element={<PartnerHomePage token={token} />}
+        />
         <Route path="/partner/search" element={<UserSearchPage />} />
         <Route path="/partner/pets" element={<AllPets token={token} />} />
-        <Route path="/partner/pets/add" element={<AddPetProfile token={token}/>}/>
+        <Route
+          path="/partner/pets/add"
+          element={<AddPetProfile token={token} />}
+        />
         <Route
           path="/partner/pets/:petId"
           element={<PetProfile view="partner" token={token} />}
         />
-        <Route path="/partner/appointments" element={<PartnerAppointments token={token}/>}/>
+        <Route
+          path="/partner/appointments"
+          element={<PartnerAppointments token={token} />}
+        />
 
         <Route
           path="/user/login"
           element={<UserLoginForm setToken={setToken} />}
         />
-        <Route path="/user/signup" element={<UserSignupForm />} />
-        <Route path="/home/:userId" element={<UserHomePage />} />
-        <Route path="/search" element={<UserSearchPage />} />
+        <Route
+          path="/user/signup"
+          element={<UserSignupForm setToken={token} />}
+        />
+        <Route path="/home/:userId" element={<UserHomePage token={token} />} />
+        <Route path="/search" element={<UserSearchPage token={token} />} />
         <Route path="/pets/:petId" />
         <Route path="/favorites/:userId" />
         <Route

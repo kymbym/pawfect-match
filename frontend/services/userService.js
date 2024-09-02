@@ -64,6 +64,30 @@ export async function getUserAppointments(token) {
   }
 }
 
+//user posts appointment
+export async function createAppointment(formData, token) {
+  console.log("post function form data", formData);
+  console.log("pet id in form", formData.petId);
+  const url = "/api/appointments/create/";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+    const json = await response.json();
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 //user delete appointment
 export async function deleteSpecificAppointment(appointmentId, token) {
   const url = `/api/appointments/${appointmentId}`;
@@ -86,7 +110,7 @@ export async function deleteSpecificAppointment(appointmentId, token) {
 }
 
 //edit appointment (WIP)
-export async function editSpecificAppointment(appointmentId, formData, token) {
+export async function editSpecificAppointment(formData, token) {
   const url = `/api/appointments/${appointmentId}`;
   try {
     console.log("appointment id: ", appointmentId);
@@ -111,4 +135,23 @@ export async function editSpecificAppointment(appointmentId, formData, token) {
 }
 
 //user search pets
-export async function searchPetsByName() {}
+export async function searchPetsByName(query, token) {
+  const url = "/api/pets";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("search result:", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}

@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { searchPetsByName } from "../../services/userService";
 
 export default function UserSearchBar() {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -9,6 +12,8 @@ export default function UserSearchBar() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const results = searchPetsByName(query);
+    navigate(`/search?name=${query.toLowerCase()}`, {state: {results}})
   };
 
   return (
