@@ -40,7 +40,6 @@ function App() {
           path="/partner/home"
           element={<PartnerHomePage token={token} />}
         />
-        <Route path="/partner/search" element={<UserSearchPage />} />
         <Route path="/partner/pets" element={<AllPets token={token} />} />
         <Route
           path="/partner/pets/add"
@@ -64,8 +63,8 @@ function App() {
           element={<UserSignupForm setToken={token} />}
         />
         <Route path="/home/:userId" element={<UserHomePage token={token} />} />
-        <Route path="/search" element={<UserSearchPage view="user" token={token} />} />
-        <Route path="/pets/:petId" />
+        <Route path="/search" element={<UserSearchPage token={token} />} />
+        <Route path="/pets/:petId" element={<PetProfile view="user" token={token}/>}/>
         <Route path="/favorites/:userId" />
         <Route
           path="/appointments/create/:petId"
