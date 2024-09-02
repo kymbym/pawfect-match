@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
+import { logInUser } from "../../services/userService";
+import { isValidToken } from "../../utils/jwtUtils";
 
-export default function UserLoginForm() {
+export default function UserLoginForm({ setToken }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -15,9 +17,19 @@ export default function UserLoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
     try {
       console.log(formData);
-      navigate("/home/:userId");
+      const json = await logInUser(data);
+      const token = json.token;
+      console.log(json);
+      if (isValidToken(token)) {
+        setToken(token);
+        navigate(`/home/${json.user._id}`);
+        // navigate("/home/:userId");
+      }
     } catch (error) {
       console.error("Error logging in:", error);
     }

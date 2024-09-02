@@ -15,6 +15,7 @@ import UserLoginForm from "../components/LoginForm/UserLoginForm";
 import UserAppointmentForm from "../components/UserComponents/UserAppointmentForm";
 import UserHomePage from "../pages/UserPages/UserHomePage/UserHomePage";
 import UserSearchPage from "../pages/UserPages/UserSearchPage/UserSearchPage";
+import UserViewAppointmentPage from "../pages/UserPages/UserViewAppointmentPage/UserViewAppointmentPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -26,7 +27,7 @@ function App() {
       <h1>Pawfect Match</h1>
 
       <Routes>
-        <Route path="/" element={<MainPage />}/>
+        <Route path="/" element={<MainPage />} />
         <Route
           path="/partner/login"
           element={<PartnerLoginForm setToken={setToken} />}
@@ -42,7 +43,10 @@ function App() {
         />
         <Route path="/partner/appointments" element={<PartnerAppointments token={token}/>}/>
 
-        <Route path="/user/login" element={<UserLoginForm />} />
+        <Route
+          path="/user/login"
+          element={<UserLoginForm setToken={setToken} />}
+        />
         <Route path="/user/signup" element={<UserSignupForm />} />
         <Route path="/home/:userId" element={<UserHomePage />} />
         <Route path="/search" element={<UserSearchPage />} />
@@ -50,9 +54,12 @@ function App() {
         <Route path="/favorites/:userId" />
         <Route
           path="/appointments/create/:petId"
-          element={<UserAppointmentForm />}
+          element={<UserAppointmentForm token={token} />}
         />
-        <Route path="/appointments/:userId" />
+        <Route
+          path="/appointments/:userId"
+          element={<UserViewAppointmentPage token={token} />}
+        />
       </Routes>
     </>
   );
