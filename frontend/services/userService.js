@@ -185,3 +185,24 @@ export async function followDog(petId, token) {
     console.error(error.message);
   }
 }
+
+//get favourite pets
+export async function getUserFavorites(token) {
+  const url = "/api/user";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("user fav pets", response);
+    if (!response.ok) {
+      throw new Error(`Response status ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
