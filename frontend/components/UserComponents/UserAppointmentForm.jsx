@@ -8,7 +8,7 @@ import {
 
 export default function UserAppointmentForm({
   isEditing = false,
-  appointmentInfo = {},
+  appointmentInfo,
   token,
 }) {
   const navigate = useNavigate();
@@ -32,7 +32,8 @@ export default function UserAppointmentForm({
     try {
       console.log(formData);
       if (isEditing) {
-        const appointmentInfo = formData;
+        console.log("appointment info in editing", appointmentInfo);
+        // const appointmentInfo = formData;
         console.log("appointment info:", formData);
         await editSpecificAppointment(appointmentInfo, token);
         // navigate(`/appointments/${userId}`)
@@ -63,7 +64,12 @@ export default function UserAppointmentForm({
       <form onSubmit={handleSubmit}>
         <label>
           PetId:{" "}
-          <input type="text" name="pet" value={petId} disabled="disabled" />
+          <input
+            type="text"
+            name="pet"
+            value={isEditing ? appointmentInfo.pet._id : petId}
+            disabled="disabled"
+          />
         </label>
         <br />
         <label>
@@ -71,7 +77,7 @@ export default function UserAppointmentForm({
           <input
             type="text"
             id="contact"
-            value={contact}
+            value={isEditing ? appointmentInfo.contact : contact}
             name="contact"
             onChange={handleChange}
           />
@@ -82,7 +88,9 @@ export default function UserAppointmentForm({
           <input
             type="date"
             id="date"
-            value={appointmentDate}
+            value={
+              isEditing ? appointmentInfo.appointmentDate : appointmentDate
+            }
             name="appointmentDate"
             onChange={handleChange}
           />
@@ -93,7 +101,9 @@ export default function UserAppointmentForm({
           <input
             type="time"
             id="time"
-            value={appointmentTime}
+            value={
+              isEditing ? appointmentInfo.appointmentTime : appointmentTime
+            }
             name="appointmentTime"
             onChange={handleChange}
           />
@@ -104,7 +114,7 @@ export default function UserAppointmentForm({
           <input
             type="text"
             id="inquiries"
-            value={inquiries}
+            value={isEditing ? appointmentInfo.inquiries : inquiries}
             name="inquiries"
             onChange={handleChange}
           />
