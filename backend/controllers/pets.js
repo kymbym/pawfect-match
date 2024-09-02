@@ -11,14 +11,17 @@ const { default: mongoose } = require("mongoose");
 router.get("/", verifyToken, async (req, res) => {
   const { _id } = req.partner || req.user;
   // console.log("partner id from token", req.partner._id);
-
+  const { name } = req.query;
+  // console.log("search query in router: ", name)
   try {
     let pets = [];
 
     if (req.partner) {
       pets = await Pet.find({ provider: _id });
+    } else if (req.user && name) {
+      pets = await Pet.find({ name: String(name) }); // user gets pet by name
     } else {
-      pets = await Pet.find({}); // user get all pets uploaded from all providers
+      pets = await Pet.find({}); //user gets everything if no search
     }
 
     res.status(200).json({ pets });

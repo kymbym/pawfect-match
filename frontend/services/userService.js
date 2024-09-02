@@ -68,8 +68,8 @@ export async function getUserAppointments(token) {
 
 //user posts appointment
 export async function createAppointment(formData, token) {
-  console.log("post function form data", formData);
-  console.log("pet id in create appt function", formData.pet);
+  // console.log("post function form data", formData);
+  // console.log("pet id in create appt function", formData.pet);
   const url = "/api/appointments";
   try {
     const response = await fetch(url, {
@@ -111,7 +111,7 @@ export async function deleteSpecificAppointment(appointmentId, token) {
   }
 }
 
-//edit appointment (WIP)
+//edit appointment
 export async function editSpecificAppointment(appointmentId, formData, token) {
   const url = `/api/appointments/${appointmentId}`;
   try {
@@ -138,7 +138,7 @@ export async function editSpecificAppointment(appointmentId, formData, token) {
 
 //user search pets
 export async function searchPetsByName(query, token) {
-  const url = "/api/pets";
+  const url = `/api/pets?name=${query}`;
   try {
     const response = await fetch(url, {
       method: "GET",
