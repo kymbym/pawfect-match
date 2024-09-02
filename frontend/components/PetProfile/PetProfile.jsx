@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetById, deletePet, deletePhoto } from "../../services/partnerservices";
+import {
+  getPetById,
+  deletePet,
+  deletePhoto,
+} from "../../services/partnerservices";
 import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
 import { format } from "date-fns";
+import UserNavBar from "../NavBar/UserNavBar";
+import { followDog } from "../../services/userService";
 
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
@@ -85,7 +91,7 @@ const PetProfile = ({ view, token }) => {
   const handleDeletePhoto = async (photoUrl) => {
     try {
       const updatedPet = await deletePhoto(photoUrl, petId, token);
-      setPetData({ ...petData, photos: updatedPet.photos })
+      setPetData({ ...petData, photos: updatedPet.photos });
       alert("pet photo successfully deleted");
       navigate("/partner/pets");
     } catch (error) {
@@ -99,6 +105,10 @@ const PetProfile = ({ view, token }) => {
 
   const formattedDate = new Date(petData.createdAt).toLocaleDateString();
 
+  const handleFollow = async (petId, token) => {
+    await followDog(petId, token)
+  }
+
   return (
     <>
       {isEditing ? (
@@ -110,12 +120,21 @@ const PetProfile = ({ view, token }) => {
         />
       ) : (
         <>
+          {view === "user" && (
+            <>
+              <UserNavBar />
+              <br />
+            </>
+          )}
           <img src={profilePhoto} alt={`photo of ${name}`} />
           <p>Uploaded on: {formattedDate}</p>
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
-          <p>Birthday: {birthday ? format(new Date(birthday), "dd-MMMM-yyyy") : "Unknown"}</p>
+          <p>
+            Birthday:{" "}
+            {birthday ? format(new Date(birthday), "dd-MMMM-yyyy") : "Unknown"}
+          </p>
           <p>Color: {color}</p>
           <p>Personality: {personality}</p>
           <p>Adoption Stage: {adoptionStage}</p>
@@ -129,14 +148,16 @@ const PetProfile = ({ view, token }) => {
             </li>
           </ul>
           <div>
-          {photos.map((photoUrl) => (
-            <div key={photoUrl}>
-            <img src={photoUrl} alt={`${name}`} />
-            {view === "partner" && (
-              <button onClick={() => handleDeletePhoto(photoUrl)}>🗑️</button>
-            )}
-            </div>
-          ))}
+            {photos.map((photoUrl) => (
+              <div key={photoUrl}>
+                <img src={photoUrl} alt={`${name}`} />
+                {view === "partner" && (
+                  <button onClick={() => handleDeletePhoto(photoUrl)}>
+                    🗑️
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
           {view === "partner" && (
@@ -177,7 +198,7 @@ const PetProfile = ({ view, token }) => {
               <button onClick={() => handleCreateAppointment(petId)}>
                 Book Appointment
               </button>
-              <button>Follow</button>
+              <button onClick={() => handleFollow(petId, token)}>Follow</button>
             </div>
           )}
         </>

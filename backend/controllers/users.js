@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Pet = require("../models/Pet");
 const { verifyToken } = require("../middleware/verify-token");
 const mongoose = require("mongoose");
 
@@ -63,6 +64,39 @@ router.get("/:userId", verifyToken, async (req, res) => {
       throw new Error("Please sign in again.");
     }
     res.json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//add dogs followed
+router.put("/", verifyToken, async (req, res) => {
+  try {
+    console.log("passed req body:", req.body);
+    const _id = req.body.userId;
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(400).json({ error: "Profile not found" });
+    }
+    const pet = await Pet.findById(req.body.petId);
+    const addedPet = user.dogsFollowed.push(pet);
+    user._doc.dogsFollowed = addedPet;
+    await user.save();
+    res.status(200).json({ message: "Dog followed!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//get user
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const _id = req.user;
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(400).json({ error: "Profile not found" });
+    }
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

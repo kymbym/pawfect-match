@@ -16,6 +16,7 @@ import UserAppointmentForm from "../components/UserComponents/UserAppointmentFor
 import UserHomePage from "../pages/UserPages/UserHomePage/UserHomePage";
 import UserSearchPage from "../pages/UserPages/UserSearchPage/UserSearchPage";
 import UserViewAppointmentPage from "../pages/UserPages/UserViewAppointmentPage/UserViewAppointmentPage";
+import UserFavoritesPage from "../pages/UserPages/UserFavorites/UserFavoritesPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -65,7 +66,7 @@ function App() {
         <Route path="/home/:userId" element={<UserHomePage token={token} />} />
         <Route path="/search" element={<UserSearchPage token={token} />} />
         <Route path="/pets/:petId" element={<PetProfile view="user" token={token}/>}/>
-        <Route path="/favorites/:userId" />
+        <Route path="/favorites/:userId" element={<UserFavoritesPage token={token} />} />
         <Route
           path="/appointments/create/:petId"
           element={<UserAppointmentForm token={token} />}

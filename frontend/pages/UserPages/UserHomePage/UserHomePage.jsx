@@ -1,7 +1,7 @@
 import UserNavBar from "../../../components/NavBar/UserNavBar";
 import { Link, useParams } from "react-router-dom";
 
-export default function UserHomePage() {
+export default function UserHomePage({token}) {
   const { userId } = useParams();
 
   return (
@@ -11,7 +11,7 @@ export default function UserHomePage() {
       <Link to="/search">
         <p>search pets</p>
       </Link>
-      <p>view favorites</p>
+      <Link to={`/favorites/${userId}`}><p>view favorites</p></Link>
       <Link to={`/appointments/${userId}`}>
         <p>view appointments</p>
       </Link>

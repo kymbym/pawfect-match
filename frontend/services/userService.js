@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { extractPayload } from "../utils/jwtUtils";
 
 //signing up user
 export async function signUpUser(formData) {
@@ -152,6 +153,54 @@ export async function searchPetsByName(query, token) {
     }
     const json = await response.json();
     console.log("search result:", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+//user follow dogs
+export async function followDog(petId, token) {
+  const decoded = extractPayload(token);
+  const userId = decoded._id;
+  console.log("token user id in follow dog function", userId);
+  console.log("pet id in follow dog function", petId);
+  const petAndUserId = { petId, userId }; //pass to be put in user controller
+  const url = "/api/user";
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(petAndUserId),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+//get favourite pets
+export async function getUserFavorites(token) {
+  const url = "/api/user";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("user fav pets", response);
+    if (!response.ok) {
+      throw new Error(`Response status ${response.status}`);
+    }
+    const json = await response.json();
     return json;
   } catch (error) {
     console.error(error.message);

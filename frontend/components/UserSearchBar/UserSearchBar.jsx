@@ -5,7 +5,6 @@ import { searchPetsByName } from "../../services/userService";
 export default function UserSearchBar({token}) {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-
   const handleChange = (event) => {
     setQuery(event.target.value);
   };
