@@ -5,7 +5,7 @@ const appointmentSchema = new mongoose.Schema({
   pet: { type: mongoose.Schema.Types.ObjectId, ref: "Pet" },
   provider: { type: mongoose.Schema.Types.ObjectId, ref: "Partner" },
   contact: { type: String, required: true },
-  appointmentDate: { type: String, required: true },
+  appointmentDate: { type: Date, required: true },
   appointmentTime: { type: String, required: true },
   inquiries: String,
 });

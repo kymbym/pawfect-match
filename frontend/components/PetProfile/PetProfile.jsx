@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPetById, deletePet } from "../../services/partnerservices";
 import EditPetProfile from "../PartnerComponents/EditPetProfile";
+import { format } from "date-fns";
 
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
@@ -21,6 +22,12 @@ const PetProfile = ({ view, token }) => {
   } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
+
+  // const formattedBirthday = birthday
+  //   ? format(new Date(birthday), "yyyy-MM-dd")
+  //   : "Unknown";
+  // console.log(birthday);
+  // console.log(formattedBirthday);
 
   console.log("token in petprofile partner", token);
 
@@ -72,8 +79,8 @@ const PetProfile = ({ view, token }) => {
 
   const handleCreateAppointment = (petId) => {
     console.log("petId", petId);
-    navigate(`/appointments/create/${petId}`)
-  }
+    navigate(`/appointments/create/${petId}`);
+  };
 
   if (!petData) {
     console.log("no pets");
@@ -94,7 +101,7 @@ const PetProfile = ({ view, token }) => {
           <h1>{name}</h1>
           <p>Breed: {breed}</p>
           <p>Gender: {gender}</p>
-          <p>Birthday: {birthday}</p>
+          <p>Birthday: {birthday ? format(new Date(birthday), "dd-MMMM-yyyy") : "Unknown"}</p>
           <p>Color: {color}</p>
           <p>Personality: {personality}</p>
           <p>Adoption Stage: {adoptionStage}</p>
@@ -119,15 +126,23 @@ const PetProfile = ({ view, token }) => {
                 <h1>no appointments yet!!</h1>
               ) : (
                 <div>
-                  {appointments.map((appointment) => (
-                    <li key={appointment._id}>
-                      <p>Adopter: {appointment.adopter.userName}</p>
-                      <p>Date: {appointment.appointmentDate}</p>
-                      <p>Time: {appointment.appointmentTime}</p>
-                      <p>Contact: {appointment.contact}</p>
-                      <p>Inquiries: {appointment.inquiries}</p>
-                    </li>
-                  ))}
+                  {appointments.map((appointment) => {
+                    const formattedAppointmentDate = appointment.appointmentDate
+                      ? format(
+                          new Date(appointment.appointmentDate),
+                          "dd-MMMM-yyyy"
+                        )
+                      : "N/A";
+                    return (
+                      <li key={appointment._id}>
+                        <p>Adopter: {appointment.adopter.userName}</p>
+                        <p>Date: {formattedAppointmentDate}</p>
+                        <p>Time: {appointment.appointmentTime}</p>
+                        <p>Contact: {appointment.contact}</p>
+                        <p>Inquiries: {appointment.inquiries}</p>
+                      </li>
+                    );
+                  })}
                 </div>
               )}
               <button onClick={handleBack}>Back</button>
@@ -139,7 +154,9 @@ const PetProfile = ({ view, token }) => {
           {view === "user" && (
             <div>
               <button onClick={handleBack}>Back</button>
-              <button onClick={() => handleCreateAppointment(petId)}>Book Appointment</button>
+              <button onClick={() => handleCreateAppointment(petId)}>
+                Book Appointment
+              </button>
               <button>Follow</button>
             </div>
           )}
