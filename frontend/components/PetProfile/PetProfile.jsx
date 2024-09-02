@@ -8,6 +8,7 @@ import {
 import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
 import { format } from "date-fns";
 import UserNavBar from "../NavBar/UserNavBar";
+import { followDog } from "../../services/userService";
 
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
@@ -104,6 +105,10 @@ const PetProfile = ({ view, token }) => {
 
   const formattedDate = new Date(petData.createdAt).toLocaleDateString();
 
+  const handleFollow = async (petId, token) => {
+    await followDog(petId, token)
+  }
+
   return (
     <>
       {isEditing ? (
@@ -193,7 +198,7 @@ const PetProfile = ({ view, token }) => {
               <button onClick={() => handleCreateAppointment(petId)}>
                 Book Appointment
               </button>
-              <button>Follow</button>
+              <button onClick={() => handleFollow(petId, token)}>Follow</button>
             </div>
           )}
         </>

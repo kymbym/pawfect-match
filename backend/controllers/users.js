@@ -68,4 +68,22 @@ router.get("/:userId", verifyToken, async (req, res) => {
   }
 });
 
+//add dogs followed
+router.put("/", verifyToken, async (req, res) => {
+  try {
+    console.log("passed req body:", req.body);
+    const _id = req.body.userId;
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(400).json({ error: "Profile not found" });
+    }
+    user.dogsFollowed.push(req.body.petId);
+    await user.save();
+    console.log("dogs followed array:", user.dogsFollowed);
+    res.status(200).json({ message: "Dog followed!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
