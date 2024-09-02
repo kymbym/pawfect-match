@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Pet = require("../models/Pet");
+const Appointment = require("../models/Appointment");
 const { verifyToken } = require("../middleware/verify-token");
 const { default: mongoose } = require("mongoose");
 
@@ -65,13 +66,19 @@ router.get("/:petId", verifyToken, async (req, res) => {
       return res.status(404).json({ error: "pet not found" });
     }
 
+    const appointments = await Appointment.find({ pet: petId }).populate(
+      "adopter",
+    );
+
+    console.log("fetched pet data from backend route", pet);
+
     if (req.partner) {
       if (!pet.provider.equals(req.partner._id)) {
         return res
           .status(403)
           .json({ error: "unauthorized! not allowed to edit" });
       }
-      res.status(200).json({ pet });
+      res.status(200).json({ pet, appointments });
     } else {
       res.status(200).json({ pet }); // user gets specific pet data by id. write code here
     }

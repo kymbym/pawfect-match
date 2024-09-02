@@ -6,7 +6,7 @@ import EditPetProfile from "../PartnerComponents/EditPetProfile";
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
-  const { name, breed, gender, birthday, color, personality, adoptionStage, medicalHistory, profilePhoto, photos } = petData;
+  const { name, breed, gender, birthday, color, personality, adoptionStage, medicalHistory, profilePhoto, photos = [], appointments = [] } = petData;
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   
@@ -15,9 +15,9 @@ const PetProfile = ({ view, token }) => {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const { pet } = await getPetById(petId, token);
-        console.log("received data from fetch pet", pet);
-        setPetData(pet);
+        const data = await getPetById(petId, token);
+        console.log("received data from fetch pet", data);
+        setPetData({ ...data.pet, appointments: data.appointments });
       } catch (error) {
         console.error("error", error);
       }
@@ -81,6 +81,7 @@ const PetProfile = ({ view, token }) => {
               {medicalHistory?.vaccinated ? "Vaccinated" : "Not Vaccinated"}
             </li>
           </ul>
+          
 
           {photos.map((photoUrl) => (
             <img key={photoUrl} src={photoUrl} alt={`${name}`} />
@@ -88,6 +89,16 @@ const PetProfile = ({ view, token }) => {
 
           {view === "partner" && (
             <div>
+              <h2>Appointments for {name}</h2>
+              {appointments.map((appointment) => (
+                <li key={appointment._id}>
+                 <p>Adopter: {appointment.adopter.userName}</p>
+                    <p>Date: {appointment.appointmentDate}</p>
+                    <p>Time: {appointment.appointmentTime}</p>
+                    <p>Contact: {appointment.contact}</p>
+                    <p>Inquiries: {appointment.inquiries}</p>
+                </li>
+              ))}
               <button onClick={handleBack}>Back</button>
               <button onClick={handleEdit}>Edit</button>
               <button onClick={handleDelete}>Delete</button>
