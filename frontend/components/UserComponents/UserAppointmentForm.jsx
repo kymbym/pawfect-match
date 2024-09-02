@@ -18,6 +18,7 @@ export default function UserAppointmentForm({
     time: "",
     inquiries: "",
   });
+  // ?/appointments?petId=xxx&appointmentId=xxx
   const { petId } = useParams();
   console.log("appointment form token", token);
 

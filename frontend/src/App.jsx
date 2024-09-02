@@ -64,7 +64,7 @@ function App() {
           element={<UserSignupForm setToken={token} />}
         />
         <Route path="/home/:userId" element={<UserHomePage token={token} />} />
-        <Route path="/search" element={<UserSearchPage token={token} />} />
+        <Route path="/search" element={<UserSearchPage view="user" token={token} />} />
         <Route path="/pets/:petId" />
         <Route path="/favorites/:userId" />
         <Route
