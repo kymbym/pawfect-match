@@ -51,7 +51,11 @@ const PetProfile = ({ view, token }) => {
   };
 
   const handleBack = () => {
-    navigate("/partner/pets")
+    if (view === "partner") {
+      navigate("/partner/pets")
+    } else {
+      navigate("/search")
+    }
   }
 
   if (!petData) {
@@ -107,6 +111,7 @@ const PetProfile = ({ view, token }) => {
 
           {view === "user" && (
             <div>
+              <button onClick={handleBack}>Back</button>
               <button>Book Appointment</button>
               <button>Follow</button>
             </div>
