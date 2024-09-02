@@ -112,7 +112,7 @@ export async function deleteSpecificAppointment(appointmentId, token) {
 }
 
 //edit appointment (WIP)
-export async function editSpecificAppointment(formData, token) {
+export async function editSpecificAppointment(appointmentId, formData, token) {
   const url = `/api/appointments/${appointmentId}`;
   try {
     console.log("appointment id: ", appointmentId);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
 import {
@@ -23,6 +23,18 @@ export default function UserAppointmentForm({
   // ?/appointments?petId=xxx&appointmentId=xxx -> search params?
   console.log("appointment form token", token);
 
+  useEffect(() => {
+    if (isEditing && appointmentInfo) {
+      setFormData({
+        pet: appointmentInfo.pet._id || "",
+        contact: appointmentInfo.contact || "",
+        appointmentDate: appointmentInfo.appointmentDate || "",
+        appointmentTime: appointmentInfo.appointmentTime || "",
+        inquiries: appointmentInfo.inquiries || "",
+      })
+    }
+  }, [isEditing, appointmentInfo]);
+
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -34,8 +46,8 @@ export default function UserAppointmentForm({
       if (isEditing) {
         console.log("appointment info in editing", appointmentInfo);
         // const appointmentInfo = formData;
-        console.log("appointment info:", formData);
-        await editSpecificAppointment(appointmentInfo, token);
+        await editSpecificAppointment(appointmentInfo._id, formData, token);
+        console.log("edit specific appt form data:", formData);
         // navigate(`/appointments/${userId}`)
       } else {
         createAppointment(formData, token);
@@ -67,7 +79,7 @@ export default function UserAppointmentForm({
           <input
             type="text"
             name="pet"
-            value={isEditing ? appointmentInfo.pet._id : petId}
+            value={formData.pet || ""}
             disabled="disabled"
           />
         </label>
@@ -77,7 +89,7 @@ export default function UserAppointmentForm({
           <input
             type="text"
             id="contact"
-            value={isEditing ? appointmentInfo.contact : contact}
+            value={formData.contact || ""}
             name="contact"
             onChange={handleChange}
           />
@@ -89,7 +101,7 @@ export default function UserAppointmentForm({
             type="date"
             id="date"
             value={
-              isEditing ? appointmentInfo.appointmentDate : appointmentDate
+              formData.appointmentDate || ""
             }
             name="appointmentDate"
             onChange={handleChange}
@@ -102,7 +114,7 @@ export default function UserAppointmentForm({
             type="time"
             id="time"
             value={
-              isEditing ? appointmentInfo.appointmentTime : appointmentTime
+              formData.appointmentTime || ""
             }
             name="appointmentTime"
             onChange={handleChange}
@@ -114,7 +126,7 @@ export default function UserAppointmentForm({
           <input
             type="text"
             id="inquiries"
-            value={isEditing ? appointmentInfo.inquiries : inquiries}
+            value={formData.inquiries || ""}
             name="inquiries"
             onChange={handleChange}
           />
