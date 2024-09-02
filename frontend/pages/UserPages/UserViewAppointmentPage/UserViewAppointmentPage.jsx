@@ -43,9 +43,17 @@ export default function UserViewAppointmentPage({ token }) {
   };
 
   const handleEdit = (appointment) => {
-    setSelectedAppointment(appointment._id);
-    setShowAppointmentForm(true);
-  }
+    console.log("appointment in handleEdit", appointment);
+    setSelectedAppointment(appointment);
+    // setShowAppointmentForm(true);
+  };
+
+  useEffect(() => {
+    if (selectedAppointment) {
+      console.log("selected appointment updated", selectedAppointment);
+      setShowAppointmentForm(true);
+    }
+  }, [selectedAppointment]);
 
   return (
     <>
@@ -66,7 +74,13 @@ export default function UserViewAppointmentPage({ token }) {
               </button>
             </div>
           ))}
-          {showAppointmentForm && (<UserAppointmentForm isEditing={true} appointmentInfo={selectedAppointment} token={token} />)}
+          {showAppointmentForm && (
+            <UserAppointmentForm
+              isEditing={true}
+              appointmentInfo={selectedAppointment}
+              token={token}
+            />
+          )}
         </div>
       )}
     </>
