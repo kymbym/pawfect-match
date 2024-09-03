@@ -41,12 +41,12 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-//filter search categories (cannot use get, must post)
+// filter search categories (cannot use get, must post)
 router.post("/filter", verifyToken, async (req, res) => {
   const pet = await Pet.find({ color: req.body.color });
   try {
     if (req.partner) {
-      //if partner cannot search
+      // if partner cannot search
       return res
         .status(403)
         .json({ error: "unauthorized! not allowed to search" });
