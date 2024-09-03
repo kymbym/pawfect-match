@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { extractPayload } from "../utils/jwtUtils";
 
 //signing up user

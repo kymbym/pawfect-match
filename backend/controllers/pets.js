@@ -53,7 +53,16 @@ router.get("/", verifyToken, async (req, res) => {
 
 // filter search categories (cannot use get, must post)
 router.post("/filter", verifyToken, async (req, res) => {
-  const pet = await Pet.find({ color: req.body.color });
+  console.log("filtered req.body", req.body);
+  const pets = await Pet.find({
+    $and: [
+      //check if have this field or not. if dont have, give empty object
+      req.body.gender ? { gender: req.body.gender } : {},
+      req.body.color ? { color: req.body.color } : {},
+      req.body.personality ? { personality: req.body.personality } : {},
+    ],
+  });
+  console.log("query result", pets);
   try {
     if (req.partner) {
       // if partner cannot search
@@ -61,7 +70,7 @@ router.post("/filter", verifyToken, async (req, res) => {
         .status(403)
         .json({ error: "unauthorized! not allowed to search" });
     }
-    res.status(200).json({ pet });
+    res.status(200).json({ pets });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -181,12 +190,10 @@ router.delete("/:petId", verifyToken, async (req, res) => {
 
     const deletedPet = await Pet.findByIdAndDelete(petId);
     await Appointment.deleteMany({ pet: petId });
-    res
-      .status(200)
-      .json({
-        msg: "pet and associated appointments deleted successfully",
-        deletedPet,
-      });
+    res.status(200).json({
+      msg: "pet and associated appointments deleted successfully",
+      deletedPet,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -105,7 +105,7 @@ router.put("/", verifyToken, async (req, res) => {
 router.get("/", verifyToken, async (req, res) => {
   try {
     const _id = req.user;
-    const user = await User.findById(_id);
+    const user = await User.findById(_id).populate("dogsFollowed"); //adds entire pet data into dogsFollowed
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
     }
