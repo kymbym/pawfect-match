@@ -44,7 +44,7 @@ export default function UserSearchPage({ token }) {
     const formData = new FormData(form); //FormData is part of some web api
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson);
-    await getFilteredPets(formJson, token)
+    await getFilteredPets(formJson, token);
   };
 
   return (
@@ -93,7 +93,10 @@ export default function UserSearchPage({ token }) {
             value={searchOption.personality}
             name="personality"
             onChange={(event) =>
-              setSearchOption({ ...searchOption, personality: event.target.value })
+              setSearchOption({
+                ...searchOption,
+                personality: event.target.value,
+              })
             }
           >
             <option value=""></option>
