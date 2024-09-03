@@ -75,14 +75,15 @@ router.put("/", verifyToken, async (req, res) => {
   console.log(req.body.petId);
 
   try {
+    //     console.log("passed req body:", req.body);
+    //     const pet = await Pet.findById(req.body.petId);
+    //     console.log("pet object", pet);
     const user = await User.findById(req.body.userId);
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
     }
     const pet = await Pet.findById(req.body.petId);
-    user.dogsFollowed.push(req.body.petId);
-    console.log(pet._id);
-
+    user.dogsFollowed.push(pet._id); //pushing the mongo object id. req.body.petId is a string. cannot work.
     await user.save();
     res.status(200).json({ message: "Dog followed!" });
   } catch (error) {
