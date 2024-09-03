@@ -8,7 +8,7 @@ import {
 import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
 import { format, differenceInYears } from "date-fns";
 import UserNavBar from "../NavBar/UserNavBar";
-import { followDog } from "../../services/userService";
+import { followDog, unfollowDog } from "../../services/userService";
 
 const PetProfile = ({ view, token }) => {
   const { petId } = useParams();
@@ -27,6 +27,7 @@ const PetProfile = ({ view, token }) => {
     appointments = [],
   } = petData;
   const [isEditing, setIsEditing] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
   const navigate = useNavigate();
 
   // const formattedBirthday = birthday
@@ -84,7 +85,8 @@ const PetProfile = ({ view, token }) => {
   };
 
   const handleCancel = () => {
-    navigate(`/partner/pets/${petId}`)
+    setIsEditing(false);
+    navigate(`/partner/pets/${petId}`);
     console.log("cancel clicked", petId)
   };
 
@@ -110,8 +112,18 @@ const PetProfile = ({ view, token }) => {
 
   const formattedDate = new Date(petData.createdAt).toLocaleDateString();
 
-  const handleFollow = async (petId, token) => {
-    await followDog(petId, token)
+  const handleFollow = async () => {
+    try {
+      if (isFollowed) {
+        await unfollowDog(petId, token);
+        setIsFollowed(false);
+      } else {
+        await followDog(petId, token);
+        setIsFollowed(true);
+      }
+    } catch (error) {
+      console.error("error", error.message)
+    }
   };
 
   const petAge = differenceInYears(new Date(), new Date(birthday))
@@ -210,7 +222,7 @@ const PetProfile = ({ view, token }) => {
               <button onClick={() => handleCreateAppointment(petId)}>
                 Book Appointment
               </button>
-              <button onClick={() => handleFollow(petId, token)}>Follow</button>
+              <button onClick={handleFollow}>{isFollowed ? "Unfollow" : "Follow"}</button>
             </div>
           )}
         </>
