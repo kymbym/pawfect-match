@@ -51,17 +51,6 @@ export default function UserSearchPage({ token }) {
     // console.log("updated pet state", pets)
   };
 
-  const handleChange = (e) => {
-    if (e.target.type === "checkbox") {
-      setSearchOption({
-        ...searchOption,
-        medicalHistory: {
-          ...searchOption.medicalHistory,
-          [e.target.name]: e.target.checked,
-        },
-      });
-    }}
-
   return (
     <>
       <UserNavBar />
