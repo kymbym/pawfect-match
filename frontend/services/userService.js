@@ -201,6 +201,7 @@ export async function getUserFavorites(token) {
       throw new Error(`Response status ${response.status}`);
     }
     const json = await response.json();
+    console.log("return fav pets json:", json);
     return json;
   } catch (error) {
     console.error(error.message);
