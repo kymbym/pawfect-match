@@ -63,8 +63,8 @@ export default function UserSearchPage({ token }) {
             }
           >
             <option value=""></option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
         </label>
         <label>
@@ -77,14 +77,14 @@ export default function UserSearchPage({ token }) {
             }
           >
             <option value=""></option>
-            <option value="black">Black</option>
-            <option value="blue merle">Blue Merle</option>
-            <option value="brindle">Brindle</option>
-            <option value="brown">Brown</option>
-            <option value="cream">Cream</option>
-            <option value="gray">Gray</option>
-            <option value="tan">Tan</option>
-            <option value="white">White</option>
+            <option value="Black">Black</option>
+            <option value="Blue Merle">Blue Merle</option>
+            <option value="Brindle">Brindle</option>
+            <option value="Brown">Brown</option>
+            <option value="Cream">Cream</option>
+            <option value="Gray">Gray</option>
+            <option value="Tan">Tan</option>
+            <option value="White">White</option>
           </select>
         </label>
         <label>
@@ -97,14 +97,14 @@ export default function UserSearchPage({ token }) {
             }
           >
             <option value=""></option>
-            <option value="affectionate">Affectionate</option>
-            <option value="calm">Calm</option>
-            <option value="curious">Curious</option>
-            <option value="energetic">Energetic</option>
-            <option value="friendly">Friendly</option>
-            <option value="gentle">Gentle</option>
-            <option value="loyal">Loyal</option>
-            <option value="playful">Playful</option>
+            <option value="Affectionate">Affectionate</option>
+            <option value="Calm">Calm</option>
+            <option value="Curious">Curious</option>
+            <option value="Energetic">Energetic</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Gentle">Gentle</option>
+            <option value="Loyal">Loyal</option>
+            <option value="Playful">Playful</option>
           </select>
         </label>
         <button type="submit">Search</button>

@@ -95,9 +95,9 @@ export const getPartnerById = async (token) => {
   }
 };
 
-export const getAllPets = async (token, sort) => {
-  const url = `/api/pets?sort=${sort}`;
-  console.log("fetching pets with token", token, sort);
+export const getAllPets = async (token, sort, search) => {
+  const url = `/api/pets?sort=${sort}&${search}`;
+  console.log("fetching pets with token", token, sort, search);
   console.log("request getallpets url", url);
 
   try {

@@ -8,7 +8,7 @@ const AllPets = ({ token }) => {
   const [pets, setPets] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedPets, setSearchedPets] = useState([]);
-  const [sortBy, setSortBy] = useState("latest");
+  const [sortBy, setSortBy] = useState("");
   const navigate = useNavigate();
   const view = "partner";
 
@@ -18,7 +18,7 @@ const AllPets = ({ token }) => {
     const fetchPets = async () => {
       try {
         console.log("fetching pets with token in allpets component and sortby", token, sortBy);
-        const data = await getAllPets(token, sortBy);
+        const data = await getAllPets(token, sortBy, searchQuery);
         console.log("pets data", data);
         if (data && data.pets) {
           setPets(data.pets);
@@ -32,20 +32,15 @@ const AllPets = ({ token }) => {
     };
 
     fetchPets();
-  }, [token, sortBy]);
+  }, [token, sortBy, searchQuery]);
 
-  useEffect(() => {
-    const search = searchQuery.toLowerCase();
+  //  useEffect(() => {
+  //   const results = pets.filter((pet) =>
+  //     pet.name.toLowerCase().includes(searchQuery.toLowerCase())
+  //   )
 
-    if (search) {
-      const filtered = pets.filter((pet) =>
-        pet.name.toLowerCase().includes(search)
-      );
-      setSearchedPets(filtered);
-    } else {
-      setSearchedPets(pets);
-    }
-  }, [searchQuery, pets]);
+  //   setSearchedPets(results)
+  // }, [searchQuery, pets])
 
   const handleAddPet = () => {
     navigate("/partner/pets/add");
@@ -53,7 +48,11 @@ const AllPets = ({ token }) => {
 
   const handleSortBy = (order) => {
     setSortBy(order);
-  }
+  };
+
+   const handleSearch = () => {
+    setSearchQuery(searchQuery.trim());
+  };
 
   return (
     <>
@@ -66,6 +65,7 @@ const AllPets = ({ token }) => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      <button onClick={handleSearch}>Search</button>
       <button onClick={() => handleSortBy("latest")}>Sort By Latest</button>
       <button onClick={() => handleSortBy("earliest")}>Sort By Earliest</button>
       {searchedPets.length === 0 ? (
