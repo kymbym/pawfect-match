@@ -15,24 +15,19 @@ export default function UserFavoritesPage({ token }) {
           console.log("fetch fav pets token", token);
           const data = await getUserFavorites(token);
           console.log("got user", data);
-          console.log("fav pets id", data.user.dogsFollowed)
-        //   if (data && data.pets) {
-        //     setPets(data.pets);
-        //   } else {
-        //     console.error("no pets data found!");
-        //   }
-        //   if (location.state) {
-        //     console.log("location state result:", location.state.results.pets);
-        //     const findPetByNameResult = location.state.results.pets;
-        //     setPets(findPetByNameResult);
-        //   }
+          console.log("fav pets data", data.user.dogsFollowed)
+          if (data.user.dogsFollowed) {
+            setPets(data.user.dogsFollowed);
+          } else {
+            console.error("No favorites!")
+          }
         } catch (error) {
           console.error("error fetching pets", error);
         }
       };
 
       fetchPets();
-    }, [token, location.state]);
+    }, [token]);
 
   return (
     <>

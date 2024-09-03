@@ -50,7 +50,7 @@ router.get("/", verifyToken, async (req, res) => {
 // filter search categories (cannot use get, must post)
 router.post("/filter", verifyToken, async (req, res) => {
   console.log("filtered req.body", req.body);
-  const pet = await Pet.find({
+  const pets = await Pet.find({
     $and: [
       //check if have this field or not. if dont have, give empty object
       req.body.gender ? { gender: req.body.gender } : {},
@@ -58,7 +58,7 @@ router.post("/filter", verifyToken, async (req, res) => {
       req.body.personality ? { personality: req.body.personality } : {},
     ],
   });
-  console.log("query result", pet);
+  console.log("query result", pets);
   try {
     if (req.partner) {
       // if partner cannot search
@@ -66,7 +66,7 @@ router.post("/filter", verifyToken, async (req, res) => {
         .status(403)
         .json({ error: "unauthorized! not allowed to search" });
     }
-    res.status(200).json({ pet });
+    res.status(200).json({ pets });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
