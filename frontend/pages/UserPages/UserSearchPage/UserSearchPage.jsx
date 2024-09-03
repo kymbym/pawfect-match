@@ -41,7 +41,16 @@ export default function UserSearchPage({ token }) {
       <UserNavBar />
       <h1>Find your bestie!</h1>
       <UserSearchBar token={token} />
-      <p>other search functions</p>
+      <form>
+        <label>
+          Gender:
+            <select>
+              <option value=""></option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+        </label>
+      </form>
       <div>
         {pets.map((pet) => (
           <PetCard key={pet._id} pet={pet} view={view} />

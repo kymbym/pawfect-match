@@ -79,9 +79,12 @@ router.put("/", verifyToken, async (req, res) => {
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
     }
-    const pet = await Pet.findById(req.body.petId);
-    user.dogsFollowed.push(pet._id); //pushing the mongo object id. req.body.petId is a string. cannot work.
-    await user.save();
+    // const pet = await Pet.findById(req.body.petId);
+    //if include same pet id, dont push
+    // user.dogsFollowed.push(pet._id); //pushing the mongo object id. req.body.petId is a string. cannot work.
+    user.dogsFollowed.push(req.body.petId); //pushing the mongo object id. req.body.petId is a string. cannot work.
+    // await User.findByIdAndUpdate(req.body.userId, user); -> alternative way to .save()
+    await user.save(); //need to save so db updates
     res.status(200).json({ message: "Dog followed!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
