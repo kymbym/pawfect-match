@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { uploadFile, uploadFiles } from "../../services/partnerservices";
 import { updatePet } from "../../services/partnerservices";
 import { useState } from "react";
@@ -10,6 +11,7 @@ const UpdatePetProfile = ({ petId, petData, token, handleSave, handleCancel }) =
       vaccinated: petData.medicalHistory?.vaccinated,
     },
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
 

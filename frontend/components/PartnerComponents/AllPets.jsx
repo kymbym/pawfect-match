@@ -17,7 +17,11 @@ const AllPets = ({ token }) => {
 
     const fetchPets = async () => {
       try {
-        console.log("fetching pets with token in allpets component and sortby", token, sortBy);
+        console.log(
+          "fetching pets with token in allpets component and sortby",
+          token,
+          sortBy
+        );
         const data = await getAllPets(token, sortBy, searchQuery);
         console.log("pets data", data);
         if (data && data.pets) {
@@ -34,24 +38,12 @@ const AllPets = ({ token }) => {
     fetchPets();
   }, [token, sortBy, searchQuery]);
 
-  //  useEffect(() => {
-  //   const results = pets.filter((pet) =>
-  //     pet.name.toLowerCase().includes(searchQuery.toLowerCase())
-  //   )
-
-  //   setSearchedPets(results)
-  // }, [searchQuery, pets])
-
   const handleAddPet = () => {
     navigate("/partner/pets/add");
   };
 
   const handleSortBy = (order) => {
     setSortBy(order);
-  };
-
-   const handleSearch = () => {
-    setSearchQuery(searchQuery.trim());
   };
 
   return (
@@ -65,7 +57,6 @@ const AllPets = ({ token }) => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
       <button onClick={() => handleSortBy("latest")}>Sort By Latest</button>
       <button onClick={() => handleSortBy("earliest")}>Sort By Earliest</button>
       {searchedPets.length === 0 ? (

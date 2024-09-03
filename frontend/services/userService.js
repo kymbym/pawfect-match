@@ -159,12 +159,38 @@ export async function searchPetsByName(query, token) {
   }
 }
 
-//user follow dogs
+// user follow dogs
 export async function followDog(petId, token) {
   const decoded = extractPayload(token);
   const userId = decoded._id;
   console.log("token user id in follow dog function", userId);
   console.log("pet id in follow dog function", petId);
+  const petAndUserId = { petId, userId }; //pass to be put in user controller
+  const url = "/api/user";
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(petAndUserId),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+// user unfollow dogs
+export async function unfollowDog(petId, token) {
+  const decoded = extractPayload(token);
+  const userId = decoded._id;
+
   const petAndUserId = { petId, userId }; //pass to be put in user controller
   const url = "/api/user";
   try {
