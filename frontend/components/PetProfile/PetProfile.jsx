@@ -6,7 +6,7 @@ import {
   deletePhoto,
 } from "../../services/partnerservices";
 import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
-import { format } from "date-fns";
+import { format, differenceInYears } from "date-fns";
 import UserNavBar from "../NavBar/UserNavBar";
 import { followDog } from "../../services/userService";
 
@@ -114,6 +114,8 @@ const PetProfile = ({ view, token }) => {
     await followDog(petId, token)
   };
 
+  const petAge = differenceInYears(new Date(), new Date(birthday))
+
   return (
     <>
       {isEditing ? (
@@ -132,6 +134,7 @@ const PetProfile = ({ view, token }) => {
               <br />
             </>
           )}
+
           <img src={profilePhoto} alt={`photo of ${name}`} />
           <p>Uploaded on: {formattedDate}</p>
           <h1>{name}</h1>
@@ -139,7 +142,8 @@ const PetProfile = ({ view, token }) => {
           <p>Gender: {gender}</p>
           <p>
             Birthday:{" "}
-            {birthday ? format(new Date(birthday), "dd-MMMM-yyyy") : "Unknown"}
+            {birthday ? format(new Date(birthday), "d MMMM yyyy") : "Unknown"}
+            {" "}(Age: {petAge})
           </p>
           <p>Color: {color}</p>
           <p>Personality: {personality}</p>
@@ -157,11 +161,13 @@ const PetProfile = ({ view, token }) => {
             {photos.map((photoUrl) => (
               <div key={photoUrl}>
                 <img src={photoUrl} alt={`${name}`} />
+                
                 {view === "partner" && (
                   <button onClick={() => handleDeletePhoto(photoUrl)}>
                     🗑️
                   </button>
                 )}
+
               </div>
             ))}
           </div>
@@ -177,7 +183,7 @@ const PetProfile = ({ view, token }) => {
                     const formattedAppointmentDate = appointment.appointmentDate
                       ? format(
                           new Date(appointment.appointmentDate),
-                          "dd-MMMM-yyyy"
+                          "d MMMM yyyy"
                         )
                       : "N/A";
                     return (

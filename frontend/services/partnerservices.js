@@ -1,6 +1,5 @@
 import AWS from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
-import { query } from "express";
 
 export const signupPartner = async (formData) => {
   const url = "/api/partner/signup";

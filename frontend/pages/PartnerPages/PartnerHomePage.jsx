@@ -50,11 +50,11 @@ const PartnerHomePage = ({ token }) => {
           <p>Pet Name: {upcomingAppointment.pet?.name}</p>
           <p>Breed: {upcomingAppointment.pet?.breed}</p>
           <p>
-            Date:
+            Date:{" "}
             {upcomingAppointment.appointmentDate
               ? format(
                   new Date(upcomingAppointment.appointmentDate),
-                  "dd-MMMM-yyyy"
+                  "d MMMM yyyy"
                 )
               : "N/A"}
           </p>

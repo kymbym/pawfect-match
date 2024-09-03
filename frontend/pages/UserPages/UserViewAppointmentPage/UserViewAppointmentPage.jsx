@@ -66,7 +66,7 @@ export default function UserViewAppointmentPage({ token }) {
         <div>
           {appointments.map((appointment) => {
             const formattedAppointmentDate = appointment.appointmentDate
-              ? format(new Date(appointment.appointmentDate), "dd-MMMM-yyyy")
+              ? format(new Date(appointment.appointmentDate), "d MMMM yyyy")
               : "N/A";
             return (
               <div key={appointment._id}>

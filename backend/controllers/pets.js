@@ -180,7 +180,13 @@ router.delete("/:petId", verifyToken, async (req, res) => {
     }
 
     const deletedPet = await Pet.findByIdAndDelete(petId);
-    res.status(200).json({ msg: "pet deleted successfully", deletedPet });
+    await Appointment.deleteMany({ pet: petId });
+    res
+      .status(200)
+      .json({
+        msg: "pet and associated appointments deleted successfully",
+        deletedPet,
+      });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
