@@ -69,6 +69,7 @@ router.get("/:userId", verifyToken, async (req, res) => {
   }
 });
 
+// user follows pets
 router.put("/", verifyToken, async (req, res) => {
   console.log(req.user._id);
   console.log(req.body.userId);
@@ -86,10 +87,10 @@ router.put("/", verifyToken, async (req, res) => {
       return res.status(400).json({ error: "Profile not found" });
     }
     const pet = await Pet.findById(req.body.petId);
+    const index = user.dogsFollowed.indexOf(req.body.petId);
 
-    if (user.dogsFollowed.includes(req.body.petId)) {
-      return res.status(400).json({ msg: "cannot follow, already followed" });
-      // user.dogsFollowed.pop(pet) // use splice to unfollow
+    if (index !== -1) {
+      user.dogsFollowed.splice(index, 1);
     } else {
       user.dogsFollowed.push(pet);
     }

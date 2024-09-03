@@ -13,6 +13,7 @@ router.get("/", verifyToken, async (req, res) => {
   // console.log("partner id from token", req.partner._id);
   const { name, sort } = req.query;
   console.log("received sort query", sort);
+  console.log("received name query", name);
   // console.log("search query in router: ", name)
   try {
     let pets = [];
@@ -26,7 +27,10 @@ router.get("/", verifyToken, async (req, res) => {
 
     if (req.partner) {
       if (name) {
-        pets = await Pet.find({ provider: _id, name: String(name) })
+        pets = await Pet.find({
+          provider: _id,
+          name: { $regex: name, $options: "i" },
+        })
           .sort(sortBy)
           .exec();
       } else {
@@ -34,7 +38,7 @@ router.get("/", verifyToken, async (req, res) => {
       }
     } else if (req.user) {
       if (name) {
-        pets = await Pet.find({ name: String(name) }); // user gets pet by name
+        pets = await Pet.find({ name: { $regex: name, $options: "i" } }); // user gets pet by name
       } else {
         pets = await Pet.find({}); // user gets everything if no search
       }
@@ -185,7 +189,11 @@ router.delete("/:petId", verifyToken, async (req, res) => {
     }
 
     const deletedPet = await Pet.findByIdAndDelete(petId);
-    res.status(200).json({ msg: "pet deleted successfully", deletedPet });
+    await Appointment.deleteMany({ pet: petId });
+    res.status(200).json({
+      msg: "pet and associated appointments deleted successfully",
+      deletedPet,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
