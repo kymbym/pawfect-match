@@ -75,9 +75,12 @@ router.put("/", verifyToken, async (req, res) => {
   console.log(req.body.petId);
 
   try {
-    //     console.log("passed req body:", req.body);
-    //     const pet = await Pet.findById(req.body.petId);
-    //     console.log("pet object", pet);
+    /* notes don't delete!
+    user.dogsFollowed.push(pet._id); - pushing the mongo object id. req.body.petId is a string. cannot work.
+    user.dogsFollowed.push(req.body.petId); - pushing the mongo object id. req.body.petId is a string. cannot work.
+    await User.findByIdAndUpdate(req.body.userId, user); -> alternative way to .save()
+    */
+
     const user = await User.findById(req.body.userId);
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
@@ -86,11 +89,10 @@ router.put("/", verifyToken, async (req, res) => {
 
     if (user.dogsFollowed.includes(req.body.petId)) {
       return res.status(400).json({ msg: "cannot follow, already followed" });
-      // user.dogsFollowed.pop(pet) // SPLICE IT UP!
+      // user.dogsFollowed.pop(pet) // use splice to unfollow
     } else {
-      user.dogsFollowed.push(pet); //pushing the mongo object id. req.body.petId is a string. cannot work.
+      user.dogsFollowed.push(pet);
     }
-
     await user.save();
     res.status(200).json({ message: "Dog followed!" });
   } catch (error) {

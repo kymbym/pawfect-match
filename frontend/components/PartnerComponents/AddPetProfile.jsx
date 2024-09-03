@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { uploadFile, uploadFiles } from "../../services/partnerservices";
 
 const AddPetProfile = ({ token }) => {
-  
   const [newPetData, setNewPetData] = useState({
     name: "",
     breed: "",
@@ -68,14 +67,14 @@ const AddPetProfile = ({ token }) => {
     if (!file) return;
 
     try {
-      alert("uploading profile photo...")
+      alert("uploading profile photo...");
       const uploadedImageUrl = await uploadFile(file);
-      setNewPetData({...newPetData, profilePhoto: uploadedImageUrl});
+      setNewPetData({ ...newPetData, profilePhoto: uploadedImageUrl });
       console.log("uploaded profile photo url", uploadedImageUrl);
     } catch (error) {
-      console.error("error uploading file", error)
+      console.error("error uploading file", error);
     }
-  }
+  };
 
   return (
     <>
@@ -103,13 +102,17 @@ const AddPetProfile = ({ token }) => {
         </label>
         <label>
           Gender:
-          <input
-            type="text"
-            name="gender"
+          <select
             value={newPetData.gender}
-            onChange={handleChange}
+            onChange={(event) =>
+              setNewPetData({ ...newPetData, gender: event.target.value })
+            }
             required
-          />
+          >
+            <option value=""></option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
         </label>
         <label>
           Birthday:
@@ -123,33 +126,60 @@ const AddPetProfile = ({ token }) => {
         </label>
         <label>
           Color:
-          <input
-            type="text"
-            name="color"
+          <select
             value={newPetData.color}
-            onChange={handleChange}
+            onChange={(event) =>
+              setNewPetData({ ...newPetData, color: event.target.value })
+            }
             required
-          />
+          >
+            <option value=""></option>
+            <option value="black">Black</option>
+            <option value="blue merle">Blue Merle</option>
+            <option value="brindle">Brindle</option>
+            <option value="brown">Brown</option>
+            <option value="cream">Cream</option>
+            <option value="gray">Gray</option>
+            <option value="tan">Tan</option>
+            <option value="white">White</option>
+          </select>
         </label>
         <label>
           Personality:
-          <input
-            type="text"
-            name="personality"
+          <select
             value={newPetData.personality}
-            onChange={handleChange}
+            onChange={(event) =>
+              setNewPetData({ ...newPetData, personality: event.target.value })
+            }
             required
-          />
+          >
+            <option value=""></option>
+            <option value="affectionate">Affectionate</option>
+            <option value="calm">Calm</option>
+            <option value="curious">Curious</option>
+            <option value="energetic">Energetic</option>
+            <option value="friendly">Friendly</option>
+            <option value="gentle">Gentle</option>
+            <option value="loyal">Loyal</option>
+            <option value="playful">Playful</option>
+          </select>
         </label>
         <label>
           Adoption Stage:
-          <input
-            type="text"
-            name="adoptionStage"
+          <select
             value={newPetData.adoptionStage}
-            onChange={handleChange}
+            onChange={(event) =>
+              setNewPetData({
+                ...newPetData,
+                adoptionStage: event.target.value,
+              })
+            }
             required
-          />
+          >
+            <option value="available">Available</option>
+            <option value="under review">Under Review</option>
+            <option value="adopted">Adopted</option>
+          </select>
         </label>
         <label>
           Sterilized:

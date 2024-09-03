@@ -207,3 +207,26 @@ export async function getUserFavorites(token) {
     console.error(error.message);
   }
 }
+
+//get pets from search categories
+export async function getFilteredPets(filteredPet, token) {
+  const url = "api/pets/filter";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(filteredPet),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("return filtered pets json:", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
