@@ -2,7 +2,7 @@ import { uploadFile, uploadFiles } from "../../services/partnerservices";
 import { updatePet } from "../../services/partnerservices";
 import { useState } from "react";
 
-const UpdatePetProfile = ({ petId, petData, token, handleSave }) => {
+const UpdatePetProfile = ({ petId, petData, token, handleSave, handleCancel }) => {
   const [newPetData, setNewPetData] = useState({
     ...petData,
     medicalHistory: {
@@ -64,6 +64,10 @@ const UpdatePetProfile = ({ petId, petData, token, handleSave }) => {
     } catch (error) {
       console.error("error occurred while updating pet", error);
     }
+  };
+
+  const handleCancelClick = () => {
+    handleCancel();
   };
 
   return (
@@ -169,8 +173,8 @@ const UpdatePetProfile = ({ petId, petData, token, handleSave }) => {
             onChange={handleFileChange}
           />
         </label>
-        <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button>Save</button>
+        <button type="button" onClick={handleCancelClick}>Cancel</button>
       </form>
     </>
   );
