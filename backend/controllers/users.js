@@ -72,15 +72,15 @@ router.get("/:userId", verifyToken, async (req, res) => {
 //add dogs followed
 router.put("/", verifyToken, async (req, res) => {
   try {
-    console.log("passed req body:", req.body);
-    const _id = req.body.userId;
-    const user = await User.findById(_id);
+    //     console.log("passed req body:", req.body);
+    //     const pet = await Pet.findById(req.body.petId);
+    //     console.log("pet object", pet);
+    const user = await User.findById(req.body.userId);
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
     }
     const pet = await Pet.findById(req.body.petId);
-    const addedPet = user.dogsFollowed.push(pet);
-    user._doc.dogsFollowed = addedPet;
+    user.dogsFollowed.push(pet._id); //pushing the mongo object id. req.body.petId is a string. cannot work.
     await user.save();
     res.status(200).json({ message: "Dog followed!" });
   } catch (error) {
