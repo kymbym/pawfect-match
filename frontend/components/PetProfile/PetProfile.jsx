@@ -68,8 +68,8 @@ const PetProfile = ({ view, token }) => {
   const handleSave = async () => {
     setIsEditing(false);
     try {
-      const { pet } = await getPetById(petId, token);
-      setPetData(pet);
+      const data = await getPetById(petId, token);
+      setPetData({...data.pet, appointments: data.appointments});
     } catch (error) {
       console.error("error occurred while fetching updated pet data", error);
     }
@@ -81,6 +81,11 @@ const PetProfile = ({ view, token }) => {
     } else {
       navigate("/search");
     }
+  };
+
+  const handleCancel = () => {
+    navigate(`/partner/pets/${petId}`)
+    console.log("cancel clicked", petId)
   };
 
   const handleCreateAppointment = (petId) => {
@@ -107,7 +112,7 @@ const PetProfile = ({ view, token }) => {
 
   const handleFollow = async (petId, token) => {
     await followDog(petId, token)
-  }
+  };
 
   return (
     <>
@@ -117,6 +122,7 @@ const PetProfile = ({ view, token }) => {
           petData={petData}
           token={token}
           handleSave={handleSave}
+          handleCancel={handleCancel}
         />
       ) : (
         <>

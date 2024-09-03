@@ -69,8 +69,11 @@ router.get("/:userId", verifyToken, async (req, res) => {
   }
 });
 
-//add dogs followed
 router.put("/", verifyToken, async (req, res) => {
+  console.log(req.user._id);
+  console.log(req.body.userId);
+  console.log(req.body.petId);
+
   try {
     //     console.log("passed req body:", req.body);
     //     const pet = await Pet.findById(req.body.petId);
