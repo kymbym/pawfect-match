@@ -69,29 +69,38 @@ router.get("/:userId", verifyToken, async (req, res) => {
   }
 });
 
-//add dogs followed
 router.put("/", verifyToken, async (req, res) => {
+  console.log(req.user._id);
+  console.log(req.body.userId);
+  console.log(req.body.petId);
+
   try {
-    //     console.log("passed req body:", req.body);
-    //     const pet = await Pet.findById(req.body.petId);
-    //     console.log("pet object", pet);
+    /* notes don't delete!
+    user.dogsFollowed.push(pet._id); - pushing the mongo object id. req.body.petId is a string. cannot work.
+    user.dogsFollowed.push(req.body.petId); - pushing the mongo object id. req.body.petId is a string. cannot work.
+    await User.findByIdAndUpdate(req.body.userId, user); -> alternative way to .save()
+    */
+
     const user = await User.findById(req.body.userId);
     if (!user) {
       return res.status(400).json({ error: "Profile not found" });
     }
-    // const pet = await Pet.findById(req.body.petId);
-    //if include same pet id, dont push
-    // user.dogsFollowed.push(pet._id); //pushing the mongo object id. req.body.petId is a string. cannot work.
-    user.dogsFollowed.push(req.body.petId); //pushing the mongo object id. req.body.petId is a string. cannot work.
-    // await User.findByIdAndUpdate(req.body.userId, user); -> alternative way to .save()
-    await user.save(); //need to save so db updates
+    const pet = await Pet.findById(req.body.petId);
+
+    if (user.dogsFollowed.includes(req.body.petId)) {
+      return res.status(400).json({ msg: "cannot follow, already followed" });
+      // user.dogsFollowed.pop(pet) // use splice to unfollow
+    } else {
+      user.dogsFollowed.push(pet);
+    }
+    await user.save();
     res.status(200).json({ message: "Dog followed!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-//get user
+// get user
 router.get("/", verifyToken, async (req, res) => {
   try {
     const _id = req.user;

@@ -10,11 +10,9 @@ const { default: mongoose } = require("mongoose");
 // get pets
 router.get("/", verifyToken, async (req, res) => {
   const { _id } = req.partner || req.user;
-  const { sort } = req.query;
   // console.log("partner id from token", req.partner._id);
+  const { name, sort } = req.query;
   console.log("received sort query", sort);
-
-  const { name } = req.query;
   // console.log("search query in router: ", name)
   try {
     let pets = [];
@@ -27,11 +25,19 @@ router.get("/", verifyToken, async (req, res) => {
     }
 
     if (req.partner) {
-      pets = await Pet.find({ provider: _id }).sort(sortBy).exec();
-    } else if (req.user && name) {
-      pets = await Pet.find({ name: String(name) }); // user gets pet by name
-    } else {
-      pets = await Pet.find({}); //user gets everything if no search
+      if (name) {
+        pets = await Pet.find({ provider: _id, name: String(name) })
+          .sort(sortBy)
+          .exec();
+      } else {
+        pets = await Pet.find({ provider: _id }).sort(sortBy).exec();
+      }
+    } else if (req.user) {
+      if (name) {
+        pets = await Pet.find({ name: String(name) }); // user gets pet by name
+      } else {
+        pets = await Pet.find({}); // user gets everything if no search
+      }
     }
 
     res.status(200).json({ pets });
@@ -41,7 +47,7 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-//filter search categories (cannot use get, must post)
+// filter search categories (cannot use get, must post)
 router.post("/filter", verifyToken, async (req, res) => {
   const pet = await Pet.find({
     $and: [
@@ -53,7 +59,7 @@ router.post("/filter", verifyToken, async (req, res) => {
   });
   try {
     if (req.partner) {
-      //if partner cannot search
+      // if partner cannot search
       return res
         .status(403)
         .json({ error: "unauthorized! not allowed to search" });

@@ -53,7 +53,10 @@ router.get("/", async (req, res) => {
     if (getPartner(req)) {
       const appointmentsReceived = await Appointment.find({
         provider: req.partner._id,
-      }).populate("pet");
+      })
+        .populate("pet")
+        .sort({ appointmentDate: 1 })
+        .exec();
       res.status(200).json(appointmentsReceived);
     }
     // show all appointments made by me (user):
@@ -61,6 +64,7 @@ router.get("/", async (req, res) => {
       const allAppointments = await Appointment.find({ adopter: req.user._id })
         .populate("adopter")
         .populate("pet")
+        .sort({ appointmentDate: 1 })
         .exec();
       res.status(200).json(allAppointments);
     }

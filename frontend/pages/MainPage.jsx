@@ -1,10 +1,8 @@
-import UserNavBar from "../components/NavBar/UserNavBar";
 import { Link } from "react-router-dom";
 
 export default function MainPage () {
   return (
     <>
-      <UserNavBar />
       <h1>Find your furrever friend today.</h1>
       <h2>Making a difference, one doggo at a time.</h2>
       <img src="/images/main-banner.png" alt="A ring of various dogs"/>
