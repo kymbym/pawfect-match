@@ -176,6 +176,7 @@ const AddPetProfile = ({ token }) => {
             }
             required
           >
+            <option value=""></option>
             <option value="Available">Available</option>
             <option value="Under review">Under Review</option>
             <option value="Adopted">Adopted</option>

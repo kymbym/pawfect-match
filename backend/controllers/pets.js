@@ -49,6 +49,7 @@ router.get("/", verifyToken, async (req, res) => {
 
 // filter search categories (cannot use get, must post)
 router.post("/filter", verifyToken, async (req, res) => {
+  console.log("filtered req.body", req.body);
   const pet = await Pet.find({
     $and: [
       //check if have this field or not. if dont have, give empty object
@@ -57,6 +58,7 @@ router.post("/filter", verifyToken, async (req, res) => {
       req.body.personality ? { personality: req.body.personality } : {},
     ],
   });
+  console.log("query result", pet);
   try {
     if (req.partner) {
       // if partner cannot search

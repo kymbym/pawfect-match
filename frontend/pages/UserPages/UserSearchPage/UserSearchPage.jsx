@@ -43,7 +43,7 @@ export default function UserSearchPage({ token }) {
     const form = event.target;
     const formData = new FormData(form); //FormData is part of some web api
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+    console.log("formJson:", formJson);
     await getFilteredPets(formJson, token);
   };
 
