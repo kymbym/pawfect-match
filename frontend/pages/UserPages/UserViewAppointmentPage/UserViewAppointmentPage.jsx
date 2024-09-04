@@ -67,29 +67,30 @@ export default function UserViewAppointmentPage({ token }) {
 
   return (
     <>
-      <UserNavBar token={token} />
-      <h1>view all your appointments</h1>
+      {!showAppointmentForm && <UserNavBar token={token} />}
+      {!showAppointmentForm && <h1>view all your appointments</h1>}
       {appointments.length === 0 ? (
         <p>Currently no appointments!</p>
       ) : (
         <div>
-          {appointments.map((appointment) => {
-            const formattedAppointmentDate = appointment.appointmentDate
-              ? format(new Date(appointment.appointmentDate), "d MMMM yyyy")
-              : "N/A";
-            return (
-              <div key={appointment._id}>
-                <h2>Pet Name: {appointment.pet.name}</h2>
-                <h3>Date: {formattedAppointmentDate}</h3>
-                <h3>Time: {appointment.appointmentTime}</h3>
-                <h3>Inquiries: {appointment.inquiries}</h3>
-                <button onClick={() => handleEdit(appointment)}>Edit</button>
-                <button onClick={() => handleDelete(appointment._id)}>
-                  Delete
-                </button>
-              </div>
-            );
-          })}
+          {!showAppointmentForm &&
+            appointments.map((appointment) => {
+              const formattedAppointmentDate = appointment.appointmentDate
+                ? format(new Date(appointment.appointmentDate), "d MMMM yyyy")
+                : "N/A";
+              return (
+                <div key={appointment._id}>
+                  <h2>Pet Name: {appointment.pet.name}</h2>
+                  <h3>Date: {formattedAppointmentDate}</h3>
+                  <h3>Time: {appointment.appointmentTime}</h3>
+                  <h3>Inquiries: {appointment.inquiries}</h3>
+                  <button onClick={() => handleEdit(appointment)}>Edit</button>
+                  <button onClick={() => handleDelete(appointment._id)}>
+                    Delete
+                  </button>
+                </div>
+              );
+            })}
           {showAppointmentForm && (
             <UserAppointmentForm
               isEditing={true}
