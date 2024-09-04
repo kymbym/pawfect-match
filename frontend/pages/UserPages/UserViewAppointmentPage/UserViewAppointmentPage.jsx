@@ -6,12 +6,15 @@ import {
 } from "../../../services/userService";
 import UserAppointmentForm from "../../../components/UserComponents/UserAppointmentForm";
 import { format } from "date-fns";
+import { extractPayload } from "../../../utils/jwtUtils";
+import { useNavigate } from "react-router-dom";
 
 export default function UserViewAppointmentPage({ token }) {
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   // console.log("token in userview page:", token)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUserAppointments = async () => {
@@ -56,9 +59,15 @@ export default function UserViewAppointmentPage({ token }) {
     }
   }, [selectedAppointment]);
 
+  const handleBack = () => {
+    const decoded = extractPayload(token);
+    const userId = decoded._id;
+    navigate(`/home/${userId}`);
+  };
+
   return (
     <>
-      <UserNavBar />
+      <UserNavBar token={token} />
       <h1>view all your appointments</h1>
       {appointments.length === 0 ? (
         <p>Currently no appointments!</p>
@@ -90,6 +99,7 @@ export default function UserViewAppointmentPage({ token }) {
           )}
         </div>
       )}
+      <button onClick={handleBack}>Back to Home</button>
     </>
   );
 }
