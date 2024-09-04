@@ -28,8 +28,8 @@ export default function UserSignupForm() {
   };
 
   const handleLoginClick = () => {
-    navigate("/user/login")
-  }
+    navigate("/user/login");
+  };
 
   const { userName, email, password, confirmPw } = formData;
 
@@ -39,60 +39,127 @@ export default function UserSignupForm() {
 
   return (
     <>
-      <img src="../../../images/sign-up-banner.png" alt="A poodle" />
-      <h1>Create an account</h1>
-      <h2>Enter your details to create an account.</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:{" "}
-          <input
-            type="text"
-            id="userName"
-            value={userName}
-            name="userName"
-            onChange={handleChange}
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            alt="A poodle"
+            src="../../../images/sign-up-banner.png"
+            className="mx-auto h-10 w-auto"
           />
-        </label>
-        <br />
-        <label>
-          Email:{" "}
-          <input
-            type="email"
-            id="email"
-            value={email}
-            name="email"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:{" "}
-          <input
-            type="password"
-            id="password"
-            value={password}
-            name="password"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Confirm Password:{" "}
-          <input
-            type="password"
-            id="confirmPw"
-            value={confirmPw}
-            name="confirmPw"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <br />
-        <button disabled={isFormInvalid()}>Submit</button>
-      </form>
-      <p>
-        Have an existing account? <u onClick={handleLoginClick} style={{ cursor: "pointer" }}>Login here</u> 
-      </p>
+          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Create an account
+          </h1>
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Enter your details to create an account.
+          </h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label
+                htmlFor="userName"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name:
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  id="userName"
+                  value={userName}
+                  name="userName"
+                  onChange={handleChange}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Email:
+              </label>
+              <div className="mt-2">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  name="email"
+                  onChange={handleChange}
+                  autoComplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Password:
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  name="password"
+                  onChange={handleChange}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="confirmPw"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Confirm Password:
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="password"
+                  id="confirmPw"
+                  value={confirmPw}
+                  name="confirmPw"
+                  onChange={handleChange}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <br />
+            <div>
+              <button
+                disabled={isFormInvalid()}
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Have an existing account?{" "}
+            <a
+              onClick={handleLoginClick}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              style={{ cursor: "pointer" }}
+            >
+              Login here
+            </a>
+          </p>
+        </div>
+      </div>
     </>
   );
 }
