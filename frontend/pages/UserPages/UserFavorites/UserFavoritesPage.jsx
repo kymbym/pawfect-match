@@ -41,7 +41,7 @@ export default function UserFavoritesPage({ token }) {
   return (
     <>
       <UserNavBar token={token} />
-      <h1>Your Favourites</h1>
+      <h1>Your Favorites</h1>
       {pets.length === 0 ? (
         <p>Start following some pets!</p>
       ) : (

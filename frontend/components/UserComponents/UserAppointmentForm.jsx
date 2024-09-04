@@ -5,6 +5,7 @@ import {
   editSpecificAppointment,
   createAppointment,
 } from "../../services/userService";
+import { extractPayload } from "../../utils/jwtUtils";
 
 export default function UserAppointmentForm({
   isEditing = false,
@@ -22,7 +23,6 @@ export default function UserAppointmentForm({
   });
 
   console.log("appointment form token", token);
-  
 
   useEffect(() => {
     if (isEditing && appointmentInfo) {
@@ -32,7 +32,7 @@ export default function UserAppointmentForm({
         appointmentDate: appointmentInfo.appointmentDate || "",
         appointmentTime: appointmentInfo.appointmentTime || "",
         inquiries: appointmentInfo.inquiries || "",
-      })
+      });
     }
   }, [isEditing, appointmentInfo]);
 
@@ -49,10 +49,14 @@ export default function UserAppointmentForm({
         // const appointmentInfo = formData;
         await editSpecificAppointment(appointmentInfo._id, formData, token);
         console.log("edit specific appt form data:", formData);
+        // const decoded = extractPayload(token);
+        // const userId = decoded._id;
         // navigate(`/appointments/${userId}`)
       } else {
         createAppointment(formData, token);
-        // navigate(`/home/${userId}`);
+        const decoded = extractPayload(token);
+        const userId = decoded._id;
+        navigate(`/home/${userId}`);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -67,7 +71,7 @@ export default function UserAppointmentForm({
 
   return (
     <>
-      <UserNavBar />
+      <UserNavBar token={token} />
       <h1>{isEditing ? "Edit appointment" : "Book an appointment"}</h1>
       <h2>
         {isEditing
@@ -101,9 +105,7 @@ export default function UserAppointmentForm({
           <input
             type="date"
             id="date"
-            value={
-              formData.appointmentDate || ""
-            }
+            value={formData.appointmentDate || ""}
             name="appointmentDate"
             onChange={handleChange}
           />
@@ -114,9 +116,7 @@ export default function UserAppointmentForm({
           <input
             type="time"
             id="time"
-            value={
-              formData.appointmentTime || ""
-            }
+            value={formData.appointmentTime || ""}
             name="appointmentTime"
             onChange={handleChange}
           />
