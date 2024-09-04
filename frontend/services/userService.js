@@ -250,7 +250,7 @@ export async function getFilteredPets(filteredPet, token) {
     }
     const json = await response.json();
     console.log("return filtered pets json:", json);
-    return json;
+    return json.pets;
   } catch (error) {
     console.error(error.message);
   }

@@ -8,7 +8,6 @@ import { getFilteredPets } from "../../../services/userService";
 
 export default function UserSearchPage({ token }) {
   const [pets, setPets] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState(null);
   const [searchOption, setSearchOption] = useState("");
   const location = useLocation();
   const view = "user";
@@ -39,17 +38,16 @@ export default function UserSearchPage({ token }) {
     fetchPets();
   }, [token, location.state]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form); //FormData is part of some web api
-    const formJson = Object.fromEntries(formData.entries());
-    console.log("formJson:", formJson);
-    const filteredPets = await getFilteredPets(formJson, token);
-    console.log("filtered pets", filteredPets)
-    // setPets(filteredPets);
-    // console.log("updated pet state", pets)
-  };
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form); //FormData is part of some web api
+      const formJson = Object.fromEntries(formData.entries());
+      console.log("formJson:", formJson);
+      const filteredPets = await getFilteredPets(formJson, token);
+      console.log("filtered pets", filteredPets);
+      setPets(filteredPets);
+    };
 
   return (
     <>
