@@ -20,6 +20,15 @@ import UserFavoritesPage from "../pages/UserPages/UserFavorites/UserFavoritesPag
 
 function App() {
   const [token, setToken] = useState("");
+  const [followedPets, setFollowedPets] = useState([]);
+
+  const handleToggleFollow = (petId) => {
+    if (followedPets.includes(petId)) {
+      setFollowedPets(followedPets.filter((id) => id !== petId)); 
+    } else {
+      setFollowedPets([...followedPets, petId]); 
+    }
+  };
 
   console.log("token in app jsx", token);
 
@@ -64,8 +73,8 @@ function App() {
           element={<UserSignupForm setToken={token} />}
         />
         <Route path="/home/:userId" element={<UserHomePage token={token} />} />
-        <Route path="/search" element={<UserSearchPage token={token} />} />
-        <Route path="/pets/:petId" element={<PetProfile view="user" token={token}/>}/>
+        <Route path="/search" element={<UserSearchPage token={token} followedPets={followedPets} handleToggleFollow={handleToggleFollow}/>} />
+        <Route path="/pets/:petId" element={<PetProfile view="user" token={token} followedPets={followedPets} handleToggleFollow={handleToggleFollow}/>}/>
         <Route path="/favorites/:userId" element={<UserFavoritesPage token={token} />} />
         <Route
           path="/appointments/create/:petId"
