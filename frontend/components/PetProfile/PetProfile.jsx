@@ -10,7 +10,7 @@ import { format, differenceInYears } from "date-fns";
 import UserNavBar from "../NavBar/UserNavBar";
 import { followDog, unfollowDog } from "../../services/userService";
 
-const PetProfile = ({ view, token }) => {
+const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
   const { petId } = useParams();
   const [petData, setPetData] = useState("");
   const {
@@ -44,13 +44,14 @@ const PetProfile = ({ view, token }) => {
         const data = await getPetById(petId, token);
         console.log("received data from fetch pet", data);
         setPetData({ ...data.pet, appointments: data.appointments });
+        setIsFollowed(followedPets.includes(petId));
       } catch (error) {
         console.error("error", error);
       }
     };
 
     fetchPet();
-  }, [petId, token]);
+  }, [petId, token, followedPets]);
 
   const handleDelete = async () => {
     try {
@@ -121,6 +122,7 @@ const PetProfile = ({ view, token }) => {
         await followDog(petId, token);
         setIsFollowed(true);
       }
+      handleToggleFollow(petId); 
     } catch (error) {
       console.error("error", error.message)
     }
@@ -232,3 +234,5 @@ const PetProfile = ({ view, token }) => {
 };
 
 export default PetProfile;
+
+
