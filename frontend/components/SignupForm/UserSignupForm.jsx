@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserNavBar from "../NavBar/UserNavBar";
 import { signUpUser } from "../../services/userService";
 
 export default function UserSignupForm() {
@@ -40,7 +39,6 @@ export default function UserSignupForm() {
 
   return (
     <>
-      {/* <UserNavBar /> i feel like just need to show the pawfect match button to return to main and not the entire nav bar! */}
       <img src="../../../images/sign-up-banner.png" alt="A poodle" />
       <h1>Create an account</h1>
       <h2>Enter your details to create an account.</h2>

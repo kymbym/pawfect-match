@@ -59,7 +59,8 @@ export default function UserSearchPage({ token }) {
 
   return (
     <>
-      <UserNavBar token={token}/>
+      <UserNavBar token={token}/><br />
+      <img src="../public/images/find-new-bestie-banner.png" alt="A person hugging a poodle" />
       <h1>Find your bestie!</h1>
       <UserSearchBar token={token} />
       <form onSubmit={handleSubmit}>

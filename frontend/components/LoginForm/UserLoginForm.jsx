@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserNavBar from "../NavBar/UserNavBar";
 import { logInUser } from "../../services/userService";
 import { isValidToken } from "../../utils/jwtUtils";
 
@@ -51,7 +50,6 @@ export default function UserLoginForm({ setToken }) {
 
   return (
     <>
-      {/* <UserNavBar /> i feel like just need to show the pawfect match button to return to main and not the entire nav bar!*/}
       <img src="../../../images/user-login-banner.png" alt="A poodle sniffing coffee" />
       <h1>Log in to your account</h1>
       <h2>Enter your details to sign in to your account.</h2>
