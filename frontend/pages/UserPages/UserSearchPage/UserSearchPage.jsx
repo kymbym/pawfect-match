@@ -2,15 +2,16 @@ import UserNavBar from "../../../components/NavBar/UserNavBar";
 import PetCard from "../../../components/PetCard/PetCard";
 import UserSearchBar from "../../../components/UserSearchBar/UserSearchBar";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAllPets } from "../../../services/partnerservices";
 import { getFilteredPets } from "../../../services/userService";
+import { extractPayload } from "../../../utils/jwtUtils";
 
 export default function UserSearchPage({ token }) {
   const [pets, setPets] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState(null);
   const [searchOption, setSearchOption] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
   const view = "user";
 
   useEffect(() => {
@@ -46,14 +47,19 @@ export default function UserSearchPage({ token }) {
     const formJson = Object.fromEntries(formData.entries());
     console.log("formJson:", formJson);
     const filteredPets = await getFilteredPets(formJson, token);
-    console.log("filtered pets", filteredPets)
-    // setPets(filteredPets);
-    // console.log("updated pet state", pets)
+    console.log("filtered pets", filteredPets);
+    setPets(filteredPets);
   };
+
+  const handleBack = () => {
+    const decoded = extractPayload(token)
+    const userId = decoded._id
+    navigate(`/home/${userId}`)
+  }
 
   return (
     <>
-      <UserNavBar />
+      <UserNavBar token={token}/>
       <h1>Find your bestie!</h1>
       <UserSearchBar token={token} />
       <form onSubmit={handleSubmit}>
@@ -121,6 +127,7 @@ export default function UserSearchPage({ token }) {
           <PetCard key={pet._id} pet={pet} view={view} />
         ))}
       </div>
+      <button onClick={handleBack}>Back to Home</button>
     </>
   );
 }

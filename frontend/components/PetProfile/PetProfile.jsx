@@ -144,7 +144,7 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
         <>
           {view === "user" && (
             <>
-              <UserNavBar />
+              <UserNavBar token={token} />
               <br />
             </>
           )}

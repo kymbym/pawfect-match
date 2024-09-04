@@ -6,7 +6,7 @@ export default function UserHomePage({token}) {
 
   return (
     <>
-      <UserNavBar />
+      <UserNavBar token={token} />
       <h1>What would you like to do today?</h1>
       <Link to="/search">
         <p>search pets</p>
