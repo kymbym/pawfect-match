@@ -142,7 +142,7 @@ const PetProfile = ({ view, token }) => {
         <>
           {view === "user" && (
             <>
-              <UserNavBar />
+              <UserNavBar token={token} />
               <br />
             </>
           )}
