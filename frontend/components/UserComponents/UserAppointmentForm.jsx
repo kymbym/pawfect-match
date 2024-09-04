@@ -49,9 +49,9 @@ export default function UserAppointmentForm({
         // const appointmentInfo = formData;
         await editSpecificAppointment(appointmentInfo._id, formData, token);
         console.log("edit specific appt form data:", formData);
-        // const decoded = extractPayload(token);
-        // const userId = decoded._id;
-        // navigate(`/appointments/${userId}`)
+        const decoded = extractPayload(token);
+        const userId = decoded._id;
+        navigate(`/home/${userId}`)
       } else {
         createAppointment(formData, token);
         const decoded = extractPayload(token);
