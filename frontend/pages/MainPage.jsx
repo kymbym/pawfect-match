@@ -17,12 +17,16 @@ export default function MainPage() {
           <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
             Making a difference, one doggo at a time.
           </h2>
-          <button style={{ margin: "0.3em", background: "#fff4f2" }}>
-            <Link to="/user/signup">Get Started</Link>
+          <button style={{ margin: "0.3em", background: "#ff4e4e" }}>
+            <Link to="/user/signup" style={{ color: "#fff4f2" }} className="main-button">
+              Get Started
+            </Link>
           </button>
           {` `}
-          <button style={{ margin: "0.3em", background: "#fff4f2" }}>
-            <Link to="/user/login">Log In</Link>
+          <button style={{ margin: "0.3em", background: "#ff4e4e" }}>
+            <Link to="/user/login" style={{ color: "#fff4f2" }} className="main-button">
+              Log In
+            </Link>
           </button>
         </div>
         <div className="column">

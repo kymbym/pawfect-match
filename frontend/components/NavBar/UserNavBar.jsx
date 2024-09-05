@@ -11,7 +11,11 @@ export default function UserNavBar({ token }) {
         className="navbar is-justify-content-center"
         role="navigation"
         aria-label="main navigation"
-        style={{ marginLeft: "17em", marginRight: "17em" }}
+        style={{
+          marginLeft: "17em",
+          marginRight: "17em",
+          background: "#f6f3e9",
+        }}
       >
         <div className="navbar-brand" style={{ fontSize: "1.3em" }}>
           <Link to="/about" className="navbar-item">

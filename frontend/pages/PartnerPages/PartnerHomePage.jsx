@@ -42,14 +42,30 @@ const PartnerHomePage = ({ token }) => {
 
   return (
     <>
+      <Link to="/" style={{ color: "#ff4e4e" }}>
+        <h1
+          className="titan-one-regular"
+          style={{ fontSize: "4.5em", margin: "0.3em" }}
+        >
+          Pawfect Match
+        </h1>
+      </Link>
       <PartnerNavBar />
-      <h1>Welcome, {organizationName}!</h1>
-      <h3>Your next upcoming appointment:</h3>
+      <h1 className="quattrocento-sans-regular">
+        Welcome, {organizationName}!
+      </h1>
+      <h3 className="quattrocento-sans-regular">
+        Your next upcoming appointment:
+      </h3>
       {upcomingAppointment ? (
         <div>
-          <p>Pet Name: {upcomingAppointment.pet?.name}</p>
-          <p>Breed: {upcomingAppointment.pet?.breed}</p>
-          <p>
+          <p className="quattrocento-sans-regular">
+            Pet Name: {upcomingAppointment.pet?.name}
+          </p>
+          <p className="quattrocento-sans-regular">
+            Breed: {upcomingAppointment.pet?.breed}
+          </p>
+          <p className="quattrocento-sans-regular">
             Date:{" "}
             {upcomingAppointment.appointmentDate
               ? format(
@@ -58,17 +74,49 @@ const PartnerHomePage = ({ token }) => {
                 )
               : "N/A"}
           </p>
-          <p>Time: {upcomingAppointment.appointmentTime}</p>
-          <p>Contact: {upcomingAppointment.contact}</p>
-          <p>Inquiries: {upcomingAppointment.inquiries}</p>
+          <p className="quattrocento-sans-regular">
+            Time: {upcomingAppointment.appointmentTime}
+          </p>
+          <p className="quattrocento-sans-regular">
+            Contact: {upcomingAppointment.contact}
+          </p>
+          <p className="quattrocento-sans-regular">
+            Inquiries: {upcomingAppointment.inquiries}
+          </p>
         </div>
       ) : (
-        <h1>No upcoming appointments!</h1>
+        <h1 className="quattrocento-sans-regular">No upcoming appointments!</h1>
       )}
-      <img src="../../../images/partner-view-appointments-banner.png" alt="Poodle reading a book" />
-      <Link to="/partner/appointments">View Appointments</Link>
-      <img src="../../../images/partner-view-pets-banner.png" alt="Poodles at a party" />
-      <Link to="/partner/pets">View Current Pet Listings</Link>
+      <div className="columns" style={{ marginTop: "1.7em" }}>
+        <div className="column is-align-self-flex-end">
+          <Link to="/partner/appointments">
+            <img
+              src="../../../images/partner-view-appointments-banner.png"
+              alt="Poodle reading a book"
+            />
+            <p
+              className="quattrocento-sans-regular"
+              style={{ fontSize: "1.3em" }}
+            >
+              View Appointments
+            </p>
+          </Link>
+        </div>
+        <div className="column is-align-self-flex-end">
+          <Link to="/partner/pets">
+            <img
+              src="../../../images/partner-view-pets-banner.png"
+              alt="Poodles at a party"
+            />
+            <p
+              className="quattrocento-sans-regular"
+              style={{ fontSize: "1.3em" }}
+            >
+              View Current Pet Listings
+            </p>
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

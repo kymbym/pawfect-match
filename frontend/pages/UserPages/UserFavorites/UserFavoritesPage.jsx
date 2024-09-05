@@ -45,7 +45,7 @@ export default function UserFavoritesPage({ token }) {
       {pets.length === 0 ? (
         <p>Start following some pets!</p>
       ) : (
-        <div>
+        <div className="grid is-col-min-12">
           {pets.map((pet) => (
             <PetCard key={pet._id} pet={pet} view={view} />
           ))}
