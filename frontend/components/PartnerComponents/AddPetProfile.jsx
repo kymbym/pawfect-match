@@ -270,7 +270,7 @@ const AddPetProfile = ({ token }) => {
               <div className="column">
                 <div className="file">
                   <label className="file-label">
-                    <b>Profile Picture:</b>
+                    <b style={{alignContent:"center"}}>Profile Picture:</b>
                     <input
                       className="file-input"
                       type="file"
@@ -287,7 +287,7 @@ const AddPetProfile = ({ token }) => {
               <div className="column">
                 <div className="file">
                   <label className="file-label">
-                    <b>Other Photos:</b>
+                    <b style={{alignContent:"center"}}>Other Photos:</b>
                     <input
                       className="file-input"
                       type="file"
