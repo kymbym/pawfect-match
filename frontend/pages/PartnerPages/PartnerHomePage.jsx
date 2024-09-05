@@ -51,41 +51,47 @@ const PartnerHomePage = ({ token }) => {
         </h1>
       </Link>
       <PartnerNavBar />
-      <h1 className="quattrocento-sans-regular">
+      <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
         Welcome, {organizationName}!
       </h1>
-      <h3 className="quattrocento-sans-regular">
+      <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
         Your next upcoming appointment:
-      </h3>
+      </h2>
       {upcomingAppointment ? (
-        <div>
-          <p className="quattrocento-sans-regular">
-            Pet Name: {upcomingAppointment.pet?.name}
-          </p>
-          <p className="quattrocento-sans-regular">
-            Breed: {upcomingAppointment.pet?.breed}
-          </p>
-          <p className="quattrocento-sans-regular">
-            Date:{" "}
-            {upcomingAppointment.appointmentDate
-              ? format(
-                  new Date(upcomingAppointment.appointmentDate),
-                  "d MMMM yyyy"
-                )
-              : "N/A"}
-          </p>
-          <p className="quattrocento-sans-regular">
-            Time: {upcomingAppointment.appointmentTime}
-          </p>
-          <p className="quattrocento-sans-regular">
-            Contact: {upcomingAppointment.contact}
-          </p>
-          <p className="quattrocento-sans-regular">
-            Inquiries: {upcomingAppointment.inquiries}
-          </p>
+        <div className="card" style={{ background: "#fbfbfb" }}>
+          <div className="card-content">
+            <div className="content">
+              <h2 className="quattrocento-sans-regular">
+                {upcomingAppointment.pet?.name}
+              </h2>
+              <h4 className="quattrocento-sans-regular">
+                Breed: {upcomingAppointment.pet?.breed}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Date:{" "}
+                {upcomingAppointment.appointmentDate
+                  ? format(
+                      new Date(upcomingAppointment.appointmentDate),
+                      "d MMMM yyyy"
+                    )
+                  : "N/A"}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Time: {upcomingAppointment.appointmentTime}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Contact: {upcomingAppointment.contact}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Inquiries: {upcomingAppointment.inquiries}
+              </h4>
+            </div>
+          </div>
         </div>
       ) : (
-        <h1 className="quattrocento-sans-regular">No upcoming appointments!</h1>
+        <h3 className="quattrocento-sans-regular" style={{ margin: "1em" }}>
+          No upcoming appointments!
+        </h3>
       )}
       <div className="columns" style={{ marginTop: "1.7em" }}>
         <div className="column is-align-self-flex-end">
