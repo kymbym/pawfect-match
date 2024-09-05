@@ -269,7 +269,7 @@ const AddPetProfile = ({ token }) => {
             <div className="columns">
               <div className="column">
                 <div className="file">
-                  <label className="file-label">
+                  <label>
                     <b>Profile Picture:</b>
                     <input
                       className="file-input"
@@ -286,7 +286,7 @@ const AddPetProfile = ({ token }) => {
               </div>
               <div className="column">
                 <div className="file">
-                  <label className="file-label">
+                  <label>
                     <b>Other Photos:</b>
                     <input
                       className="file-input"
