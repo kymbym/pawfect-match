@@ -7,7 +7,7 @@ export default function MainPage() {
         <div className="column is-align-content-center">
           <h1
             className="titan-one-regular"
-            style={{ fontSize: "4.5em", margin: "0.3em" }}
+            style={{ fontSize: "4.5em", margin: "0.3em", color: "#ff4e4e" }}
           >
             Pawfect Match
           </h1>
@@ -37,8 +37,12 @@ export default function MainPage() {
             alt="A dog bone"
             width="200px"
           />
-          <h2>A unified platform for pet adoption</h2>
-          <h3>Find available pets across multiple shelters in one place.</h3>
+          <h2 className="quattrocento-sans-regular">
+            A unified platform for pet adoption
+          </h2>
+          <h3 className="quattrocento-sans-regular">
+            Find available pets across multiple shelters in one place.
+          </h3>
         </div>
         <br />
         <div className="column">
@@ -47,8 +51,10 @@ export default function MainPage() {
             alt="A dog bone"
             width="200px"
           />
-          <h2>Stay connected with your favorites</h2>
-          <h3>
+          <h2 className="quattrocento-sans-regular">
+            Stay connected with your favorites
+          </h2>
+          <h3 className="quattrocento-sans-regular">
             Explore your favorite pets{`'`} unique stories and shelter
             activities.
           </h3>
