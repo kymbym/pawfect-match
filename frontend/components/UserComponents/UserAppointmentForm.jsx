@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import UserNavBar from "../NavBar/UserNavBar";
 import {
   editSpecificAppointment,
@@ -51,7 +51,7 @@ export default function UserAppointmentForm({
         console.log("edit specific appt form data:", formData);
         const decoded = extractPayload(token);
         const userId = decoded._id;
-        navigate(`/home/${userId}`)
+        navigate(`/home/${userId}`);
       } else {
         createAppointment(formData, token);
         const decoded = extractPayload(token);
@@ -71,73 +71,106 @@ export default function UserAppointmentForm({
 
   return (
     <>
+      <Link to="/" style={{ color: "#ff4e4e" }}>
+        <h1
+          className="titan-one-regular"
+          style={{ fontSize: "4.5em", margin: "0.3em" }}
+        >
+          Pawfect Match
+        </h1>
+      </Link>
       <UserNavBar token={token} />
-      <h1>{isEditing ? "Edit appointment" : "Book an appointment"}</h1>
-      <h2>
+      <h1 className="titan-one-regular">
+        {isEditing ? "Edit appointment" : "Book an appointment"}
+      </h1>
+      <h3 className="quattrocento-sans-regular">
         {isEditing
           ? "Update your appointment details"
           : "Enter your details and we'll see you real soon!"}
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          PetId:{" "}
-          <input
-            type="text"
-            name="pet"
-            value={formData.pet || ""}
-            disabled="disabled"
-          />
-        </label>
-        <br />
-        <label>
-          Contact:{" "}
-          <input
-            type="text"
-            id="contact"
-            value={formData.contact || ""}
-            name="contact"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Date:{" "}
-          <input
-            type="date"
-            id="date"
-            value={formData.appointmentDate || ""}
-            name="appointmentDate"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Time:{" "}
-          <input
-            type="time"
-            id="time"
-            value={formData.appointmentTime || ""}
-            name="appointmentTime"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Inquiries (if any):{" "}
-          <input
-            type="text"
-            id="inquiries"
-            value={formData.inquiries || ""}
-            name="inquiries"
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <br />
-        <button disabled={isFormInvalid()}>
-          {isEditing ? "Update Appointment" : "Submit"}
-        </button>
-      </form>
+      </h3>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="label">PetId: </label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="pet"
+                value={formData.pet || ""}
+                disabled="disabled"
+                style={{ textAlign: "center" }}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Contact: </label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                id="contact"
+                placeholder="Contact"
+                value={formData.contact || ""}
+                name="contact"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Date: </label>
+            <div className="control">
+              <input
+                className="input"
+                type="date"
+                id="date"
+                value={formData.appointmentDate || ""}
+                name="appointmentDate"
+                onChange={handleChange}
+                style={{ width: "10em" }}
+                required
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Time: </label>
+            <div className="control">
+              <input
+                className="input"
+                type="time"
+                id="time"
+                value={formData.appointmentTime || ""}
+                name="appointmentTime"
+                onChange={handleChange}
+                style={{ width: "8em" }}
+                required
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Inquiries (if any): </label>
+            <div className="control">
+              <textarea
+                className="textarea"
+                type="text"
+                id="inquiries"
+                placeholder="Inquiries"
+                value={formData.inquiries || ""}
+                name="inquiries"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <button
+            disabled={isFormInvalid()}
+            style={{ margin: "0.3em", background: "#ff4e4e" }}
+          >
+            <p style={{ color: "#fff4f2" }}>
+              {isEditing ? "Update Appointment" : "Submit"}
+            </p>
+          </button>
+        </form>
+      </div>
     </>
   );
 }
