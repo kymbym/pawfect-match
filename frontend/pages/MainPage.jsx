@@ -5,11 +5,12 @@ export default function MainPage () {
     <>
       <h1>Find your furrever friend today.</h1>
       <h2>Making a difference, one doggo at a time.</h2>
-      <img src="/images/main-banner.png" alt="A ring of various dogs"/>
+      <img src="/images/main-banner.png" alt="A ring of various dogs" />
       <br />
-      <button>
+      <button className="button is-danger" style={{background: "black"}}>
         <Link to="/user/signup">Get Started</Link>
-      </button>{` `}
+      </button>
+      {` `}
       <button>
         <Link to="/user/login">Log In</Link>
       </button>
