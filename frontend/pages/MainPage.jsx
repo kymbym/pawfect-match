@@ -17,11 +17,11 @@ export default function MainPage() {
           <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
             Making a difference, one doggo at a time.
           </h2>
-          <button style={{ margin: "0.3em" }}>
+          <button style={{ margin: "0.3em", background: "#fea485" }}>
             <Link to="/user/signup">Get Started</Link>
           </button>
           {` `}
-          <button style={{ margin: "0.3em" }}>
+          <button style={{ margin: "0.3em", background: "#fea485" }}>
             <Link to="/user/login">Log In</Link>
           </button>
         </div>
