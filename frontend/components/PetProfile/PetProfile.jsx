@@ -333,13 +333,13 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
               </button>
               <button
                 onClick={() => handleCreateAppointment(petId)}
-                style={{ background: "#ff4e4e", color: "#fff4f2" }}
+                style={{ background: "#ff4e4e", color: "#fff4f2", margin:"4px" }}
               >
                 Book Appointment
               </button>
               <button
                 onClick={handleFollow}
-                style={{ background: "#ff4e4e", color: "#fff4f2" }}
+                style={{ background: "#ff4e4e", color: "#fff4f2", margin:"4px" }}
               >
                 {isFollowed ? "Unfollow" : "Follow"}
               </button>

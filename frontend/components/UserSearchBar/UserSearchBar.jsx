@@ -20,18 +20,21 @@ export default function UserSearchBar({token}) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} id="search-bar">
-        <div className="wrapper">
-          <label htmlFor="search-bar">
-            <input
-              type="text"
-              placeholder="Search pet by name"
-              value={query}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      </form>
+      <form onSubmit={handleSubmit} id="search-bar" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+      <div className="wrapper" style={{ display: "flex", alignItems: "center" }}>
+        <label htmlFor="search-bar">
+          <input
+          className="quattrocento-sans-regular-italic"
+            type="text"
+            id="search-bar"
+            placeholder="Search pet by name"
+            value={query}
+            onChange={handleChange}
+            style={{ padding: "10px", width: "200px", border: "1px solid #ffffff", borderRadius: "5px" }}
+          />
+        </label>
+      </div>
+    </form>
     </>
   );
 }

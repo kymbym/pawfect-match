@@ -77,7 +77,7 @@ const AllPets = ({ token }) => {
           placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{ width: "180px", margin: "0 2px 0 2px" }}
+          style={{ width: "180px", margin: "0 2px 0 2px", borderRadius: "5px"  }}
         />
         <button
           onClick={() => handleSortBy("latest")}
