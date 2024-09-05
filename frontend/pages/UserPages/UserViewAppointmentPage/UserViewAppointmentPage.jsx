@@ -78,8 +78,8 @@ export default function UserViewAppointmentPage({ token }) {
       </Link>
       {!showAppointmentForm && <UserNavBar token={token} />}
       {!showAppointmentForm && (
-        <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
-          View all your appointments
+        <h1 className="titan-one-regular" style={{ margin: "0.3em" }}>
+          View your appointments
         </h1>
       )}
       {appointments.length === 0 ? (
