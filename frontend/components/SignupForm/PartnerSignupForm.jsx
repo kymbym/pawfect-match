@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signupPartner } from "../../services/partnerservices";
 import { useNavigate } from "react-router-dom";
 import { isValidToken } from "../../utils/jwtUtils";
+import { Link } from "react-router-dom";
 
 const PartnerSignupForm = ({ setToken }) => {
   const navigate = useNavigate();
@@ -54,67 +55,116 @@ const PartnerSignupForm = ({ setToken }) => {
   };
 
   return (
+
     <>
-    <img src="../../../images/sign-up-banner.png" alt="A poodle" />
-      <h1>Create an account</h1>
-      <h2>Enter your details to create an account.</h2>
-      <form onSubmit={handleSignup}>
-        <div>
-          <label>Organization Name:</label>
-          <input
-            type="text"
-            id="organizationName"
-            name="organizationName"
-            value={formData.organizationName}
-            onChange={handleChange}
-            required
-          />
+      <div className="columns is-justify-content-center" style={{marginBottom:"15px"}}>
+        <div className="column is-align-content-center">
+          <Link to="/" style={{ color: "#ff4e4e" }}>
+          <h1
+            className="titan-one-regular has-text-centered"
+            style={{ fontSize: "4.5em", margin: "0.1em" }}
+          >
+            Pawfect Match
+          </h1>
+          </Link>
         </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+      </div>
+ 
+
+      <div className="columns is-justify-content-center">
+        <div className="column is-align-content-center">
+          <figure className="image is-16 by 9 ">
+            <iframe
+              width="400"
+              height="180"
+              src="../../../images/sign-up-banner.png"
+              alt="A poodle"
+            />
+          </figure>
+          <h2 className="quattrocento-sans-regular">Create an account</h2>
+          <h3 className="quattrocento-sans-regular">
+            Enter your details to create an account.
+          </h3>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+
+        <div className="column is-half">
+          <form onSubmit={handleSignup}>
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Organization Name</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="text"
+                placeholder="e.g SPCA"
+                value={formData.organizationName}
+                name="organizationName"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Email</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="email"
+                placeholder="e.g. spca@mail.com"
+                value={formData.email}
+                name="email"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={formData.password}
+                name="password"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Confirm Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={formData.confirmPw}
+                name="confirmPw"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="control">
+            <button
+              type="submit"
+              className="button is-primary quattrocento-sans-bold"
+              disabled={isFormInvalid()}
+              style={{ margin: "0.3em", background: "#ff4e4e", color:"#fff4f2" }}
+            >
+              Submit
+            </button>
+          </div>
+
+          <h4 style={{ paddingTop: "8px" }} className="quattrocento-sans-regular">
+            Have an existing account?{" "}
+            <u onClick={handleLoginClick} style={{ cursor: "pointer" }} className="quattrocento-sans-regular-italic">
+              Login here
+            </u>{" "}
+          </h4>
+          </form>
         </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            id="confirmPw"
-            name="confirmPw"
-            value={formData.confirmPw}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isFormInvalid()}>
-          Submit
-        </button>
-      </form>
-      <p>
-        Have an existing account?{" "}
-        <u onClick={handleLoginClick} style={{ cursor: "pointer" }}>
-          Login here
-        </u>
-      </p>
+      </div>
     </>
-  );
+  )
 };
 
 export default PartnerSignupForm;

@@ -9,7 +9,7 @@ export default function MainPage({token}) {
         <div className="column is-align-content-center">
           <h1
             className="titan-one-regular"
-            style={{ fontSize: "4.5em", margin: "0.3em", color: "#ff4e4e" }}
+            style={{ fontSize: "4.5em", margin: "0.1em", color: "#ff4e4e" }}
           >
             Pawfect Match
           </h1>
@@ -32,7 +32,7 @@ export default function MainPage({token}) {
           </button>
         </div>
         <div className="column">
-          <img src="/images/main-banner.png" alt="A ring of various dogs" />
+          <img src="/images/main-banner.png" alt="A ring of various dogs"/>
         </div>
       </div>
       <br />

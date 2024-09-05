@@ -3,6 +3,7 @@ import { getAllPets } from "../../services/partnerservices";
 import PartnerNavBar from "../NavBar/PartnerNavBar";
 import { useNavigate } from "react-router-dom";
 import PetCard from "../PetCard/PetCard";
+import { Link } from "react-router-dom";
 
 const AllPets = ({ token }) => {
   const [pets, setPets] = useState([]);
@@ -48,26 +49,79 @@ const AllPets = ({ token }) => {
 
   return (
     <>
-      <h1>All Pets</h1>
+      <Link to="/" style={{ color: "#ff4e4e" }}>
+        <h1
+          className="titan-one-regular"
+          style={{ fontSize: "4.5em", margin: "0.3em" }}
+        >
+          Pawfect Match
+        </h1>
+      </Link>
       <PartnerNavBar />
-      <button onClick={handleAddPet}>Upload Pet</button>
-      <input
-        type="text"
-        placeholder="search"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <button onClick={() => handleSortBy("latest")}>Sort By Latest</button>
-      <button onClick={() => handleSortBy("earliest")}>Sort By Earliest</button>
-      {searchedPets.length === 0 ? (
-        <h1>no pets found!</h1>
-      ) : (
-        <div>
-          {searchedPets.map((pet) => (
-            <PetCard key={pet._id} pet={pet} view={view} />
-          ))}
-        </div>
-      )}
+      <div
+        style={{ textAlign: "center", alignItems: "center", paddingTop: "5px" }}
+      >
+        <button
+          onClick={handleAddPet}
+          style={{
+            background: "#ff4e4e",
+            color: "#fff4f2",
+            margin: "0 2px 0 2px",
+          }}
+        >
+          Upload Pet
+        </button>
+        <input
+          className="input"
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: "180px", margin: "0 2px 0 2px" }}
+        />
+        <button
+          onClick={() => handleSortBy("latest")}
+          style={{
+            background: "#ff4e4e",
+            color: "#fff4f2",
+            margin: "0 2px 0 2px",
+          }}
+        >
+          Sort By Latest
+        </button>
+        <button
+          onClick={() => handleSortBy("earliest")}
+          style={{
+            background: "#ff4e4e",
+            color: "#fff4f2",
+            margin: "0 2px 0 2px",
+          }}
+        >
+          Sort By Earliest
+        </button>
+      </div>
+
+      <div style={{ textAlign: "center", marginBottom: "20px", marginTop:"15px" }}>
+        {searchedPets.length === 0 ? (
+          <h1 className="quattrocento-sans-bold" style={{ paddingTop: "50px" }}>
+            No pets found!
+          </h1>
+        ) : (
+          <div
+            className="grid is-col-min-12"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "20px",
+              justifyContent: "center",
+            }}
+          >
+            {searchedPets.map((pet) => (
+              <PetCard key={pet._id} pet={pet} view={view} />
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 };

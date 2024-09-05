@@ -71,8 +71,8 @@ function App() {
           element={<UserSignupForm setToken={token} />}
         />
         <Route path="/home/:userId" element={<UserHomePage token={token} />} />
-        <Route path="/search" element={<UserSearchPage token={token} followedPets={followedPets} handleToggleFollow={handleToggleFollow}/>} />
-        <Route path="/pets/:petId" element={<PetProfile view="user" token={token} followedPets={followedPets} handleToggleFollow={handleToggleFollow}/>}/>
+        <Route path="/search" element={<UserSearchPage token={token} />} />
+        <Route path="/pets/:petId" element={<PetProfile view="user" token={token} followedPets={followedPets} setFollowedPets={setFollowedPets} handleToggleFollow={handleToggleFollow}/>}/>
         <Route path="/favorites/:userId" element={<UserFavoritesPage token={token} />} />
         <Route
           path="/appointments/create/:petId"
