@@ -68,15 +68,17 @@ export default function UserViewAppointmentPage({ token }) {
 
   return (
     <>
-      <Link to="/" style={{ color: "#ff4e4e" }}>
-        <h1
-          className="titan-one-regular"
-          style={{ fontSize: "4.5em", margin: "0.3em" }}
-        >
-          Pawfect Match
-        </h1>
-      </Link>
-      {!showAppointmentForm && <UserNavBar token={token} />}
+      {!showAppointmentForm && (
+        <Link to="/" style={{ color: "#ff4e4e" }}>
+          <h1
+            className="titan-one-regular"
+            style={{ fontSize: "4.5em", margin: "0.3em" }}
+          >
+            Pawfect Match
+          </h1>
+        </Link>
+      )}
+      {!showAppointmentForm && (<UserNavBar token={token} />)}
       {!showAppointmentForm && (
         <h1 className="titan-one-regular" style={{ margin: "0.3em" }}>
           View your appointments

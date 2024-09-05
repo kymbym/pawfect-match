@@ -73,8 +73,8 @@ const PartnerSignupForm = ({ setToken }) => {
 
       <div className="columns is-justify-content-center">
         <div className="column is-align-content-center">
-          <figure className="image is-16 by 9 ">
-            <iframe
+          <figure className="image is-16by9" style={{width: "22em"}}>
+            <img
               width="400"
               height="180"
               src="../../../images/sign-up-banner.png"

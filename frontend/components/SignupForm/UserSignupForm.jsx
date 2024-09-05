@@ -55,9 +55,9 @@ export default function UserSignupForm() {
  
 
       <div className="columns is-justify-content-center">
-        <div className="column is-align-content-center">
+        <div className="column is-align-content-center" style={{width: "33em"}}>
           <figure className="image is-16 by 9 ">
-            <iframe
+            <img
               width="400"
               height="180"
               src="../../../images/sign-up-banner.png"
