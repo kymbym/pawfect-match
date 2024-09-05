@@ -7,7 +7,8 @@ import {
 import UserAppointmentForm from "../../../components/UserComponents/UserAppointmentForm";
 import { format } from "date-fns";
 import { extractPayload } from "../../../utils/jwtUtils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import PetCard from "../../../components/PetCard/PetCard";
 
 export default function UserViewAppointmentPage({ token }) {
   const [appointments, setAppointments] = useState([]);
@@ -67,40 +68,89 @@ export default function UserViewAppointmentPage({ token }) {
 
   return (
     <>
+      <Link to="/" style={{ color: "#ff4e4e" }}>
+        <h1
+          className="titan-one-regular"
+          style={{ fontSize: "4.5em", margin: "0.3em" }}
+        >
+          Pawfect Match
+        </h1>
+      </Link>
       {!showAppointmentForm && <UserNavBar token={token} />}
-      {!showAppointmentForm && <h1>view all your appointments</h1>}
+      {!showAppointmentForm && (
+        <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
+          View all your appointments
+        </h1>
+      )}
       {appointments.length === 0 ? (
-        <p>Currently no appointments!</p>
+        <h3 className="quattrocento-sans-regular" style={{ margin: "1em" }}>
+          Currently no appointments!
+        </h3>
       ) : (
-        <div>
-          {!showAppointmentForm &&
-            appointments.map((appointment) => {
-              const formattedAppointmentDate = appointment.appointmentDate
-                ? format(new Date(appointment.appointmentDate), "d MMMM yyyy")
-                : "N/A";
-              return (
-                <div key={appointment._id}>
-                  <h2>Pet Name: {appointment.pet.name}</h2>
-                  <h3>Date: {formattedAppointmentDate}</h3>
-                  <h3>Time: {appointment.appointmentTime}</h3>
-                  <h3>Inquiries: {appointment.inquiries}</h3>
-                  <button onClick={() => handleEdit(appointment)}>Edit</button>
-                  <button onClick={() => handleDelete(appointment._id)}>
-                    Delete
-                  </button>
-                </div>
-              );
-            })}
-          {showAppointmentForm && (
-            <UserAppointmentForm
-              isEditing={true}
-              appointmentInfo={selectedAppointment}
-              token={token}
-            />
-          )}
+        <div className="fixed-grid">
+          <div className="grid">
+            {!showAppointmentForm &&
+              appointments.map((appointment) => {
+                const formattedAppointmentDate = appointment.appointmentDate
+                  ? format(new Date(appointment.appointmentDate), "d MMMM yyyy")
+                  : "N/A";
+                return (
+                  <div
+                    key={appointment._id}
+                    className="card"
+                    style={{ background: "#fbfbfb" }}
+                  >
+                    <div className="card-content">
+                      <div className="content">
+                        <h2 className="quattrocento-sans-regular">
+                          {appointment.pet.name}
+                        </h2>
+                        <h4 className="quattrocento-sans-regular">
+                          Scheduled Date: {formattedAppointmentDate}
+                        </h4>
+                        <h4 className="quattrocento-sans-regular">
+                          Scheduled Time: {appointment.appointmentTime}
+                        </h4>
+                        <h4 className="quattrocento-sans-regular">
+                          Inquiries: {appointment.inquiries}
+                        </h4>
+                        <footer className="card-footer">
+                          <button
+                            onClick={() => handleEdit(appointment)}
+                            className="card-footer-item"
+                            style={{ margin: "0.3em", background: "#ff4e4e" }}
+                          >
+                            <p style={{ color: "#fff4f2" }}>Edit</p>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(appointment._id)}
+                            className="card-footer-item"
+                            style={{ margin: "0.3em", background: "#ff4e4e" }}
+                          >
+                            <p style={{ color: "#fff4f2" }}>Delete</p>
+                          </button>
+                        </footer>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            {showAppointmentForm && (
+              <UserAppointmentForm
+                isEditing={true}
+                appointmentInfo={selectedAppointment}
+                token={token}
+              />
+            )}
+          </div>
         </div>
       )}
-      <button onClick={handleBack}>Back to Home</button>
+      <button
+        onClick={handleBack}
+        style={{ margin: "0.3em", background: "#ff4e4e" }}
+      >
+        <p style={{ color: "#fff4f2" }}>Back to Home</p>
+      </button>
     </>
   );
 }

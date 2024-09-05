@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import UserNavBar from "../components/NavBar/UserNavBar";
 
-export default function MainPage() {
+export default function MainPage({token}) {
   return (
     <>
+      <UserNavBar token={token}/>
       <div className="columns">
         <div className="column is-align-content-center">
           <h1

@@ -27,12 +27,16 @@ export default function UserNavBar({ token }) {
           <Link to="/events" className="navbar-item">
             Events
           </Link>
-          <Link to="/search" className="navbar-item">
-            Find Pets
-          </Link>
-          <Link to={`/home/${userId}`} className="navbar-item">
-            Home
-          </Link>
+          {token && (
+            <>
+              <Link to="/search" className="navbar-item">
+                Find Pets
+              </Link>
+              <Link to={`/home/${userId}`} className="navbar-item">
+                Home
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </>
