@@ -51,7 +51,7 @@ const PartnerHomePage = ({ token }) => {
         </h1>
       </Link>
       <PartnerNavBar />
-      <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
+      <h1 className="titan-one-regular" style={{ margin: "0.3em" }}>
         Welcome, {organizationName}!
       </h1>
       <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em", paddingBottom:"15px" }}>
