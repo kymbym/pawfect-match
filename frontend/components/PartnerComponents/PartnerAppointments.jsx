@@ -27,7 +27,6 @@ const PartnerAppointments = ({ token }) => {
     fetchAppointments();
   }, [token]);
 
-
   return (
     <>
       <h1>Your Appointments</h1>
@@ -38,19 +37,19 @@ const PartnerAppointments = ({ token }) => {
         <div>
           {appointments.map((appointment) => {
             const formattedAppointmentDate = appointment.appointmentDate
-            ? format(new Date(appointment.appointmentDate), "dd-MMMM-yyyy")
-            : "N/A";
-          return (
-            <li key={appointment._id}>
-              <p>Pet Name: {appointment.pet?.name}</p>
-              <p>Breed: {appointment.pet?.breed}</p>
-              <p>Date: {formattedAppointmentDate}</p>
-              <p>Time: {appointment.appointmentTime}</p>
-              <p>Contact: {appointment.contact}</p>
-              <p>Inquiries: {appointment.inquiries}</p>
-            </li>
-          )
-        })}
+              ? format(new Date(appointment.appointmentDate), "dd-MMMM-yyyy")
+              : "N/A";
+            return (
+              <li key={appointment._id}>
+                <p>Pet Name: {appointment.pet?.name}</p>
+                <p>Breed: {appointment.pet?.breed}</p>
+                <p>Date: {formattedAppointmentDate}</p>
+                <p>Time: {appointment.appointmentTime}</p>
+                <p>Contact: {appointment.contact}</p>
+                <p>Inquiries: {appointment.inquiries}</p>
+              </li>
+            );
+          })}
         </div>
       )}
       <button onClick={() => navigate(`/partner/home`)}>Back to Home</button>

@@ -42,33 +42,87 @@ const PartnerHomePage = ({ token }) => {
 
   return (
     <>
+      <Link to="/" style={{ color: "#ff4e4e" }}>
+        <h1
+          className="titan-one-regular"
+          style={{ fontSize: "4.5em", margin: "0.3em" }}
+        >
+          Pawfect Match
+        </h1>
+      </Link>
       <PartnerNavBar />
-      <h1>Welcome, {organizationName}!</h1>
-      <h3>Your next upcoming appointment:</h3>
+      <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
+        Welcome, {organizationName}!
+      </h1>
+      <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
+        Your next upcoming appointment:
+      </h2>
       {upcomingAppointment ? (
-        <div>
-          <p>Pet Name: {upcomingAppointment.pet?.name}</p>
-          <p>Breed: {upcomingAppointment.pet?.breed}</p>
-          <p>
-            Date:{" "}
-            {upcomingAppointment.appointmentDate
-              ? format(
-                  new Date(upcomingAppointment.appointmentDate),
-                  "d MMMM yyyy"
-                )
-              : "N/A"}
-          </p>
-          <p>Time: {upcomingAppointment.appointmentTime}</p>
-          <p>Contact: {upcomingAppointment.contact}</p>
-          <p>Inquiries: {upcomingAppointment.inquiries}</p>
+        <div className="card" style={{ background: "#fbfbfb" }}>
+          <div className="card-content">
+            <div className="content">
+              <h2 className="quattrocento-sans-regular">
+                {upcomingAppointment.pet?.name}
+              </h2>
+              <h4 className="quattrocento-sans-regular">
+                Breed: {upcomingAppointment.pet?.breed}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Date:{" "}
+                {upcomingAppointment.appointmentDate
+                  ? format(
+                      new Date(upcomingAppointment.appointmentDate),
+                      "d MMMM yyyy"
+                    )
+                  : "N/A"}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Time: {upcomingAppointment.appointmentTime}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Contact: {upcomingAppointment.contact}
+              </h4>
+              <h4 className="quattrocento-sans-regular">
+                Inquiries: {upcomingAppointment.inquiries}
+              </h4>
+            </div>
+          </div>
         </div>
       ) : (
-        <h1>No upcoming appointments!</h1>
+        <h3 className="quattrocento-sans-regular" style={{ margin: "1em" }}>
+          No upcoming appointments!
+        </h3>
       )}
-      <img src="../../../images/partner-view-appointments-banner.png" alt="Poodle reading a book" />
-      <Link to="/partner/appointments">View Appointments</Link>
-      <img src="../../../images/partner-view-pets-banner.png" alt="Poodles at a party" />
-      <Link to="/partner/pets">View Current Pet Listings</Link>
+      <div className="columns" style={{ marginTop: "1.7em" }}>
+        <div className="column is-align-self-flex-end">
+          <Link to="/partner/appointments">
+            <img
+              src="../../../images/partner-view-appointments-banner.png"
+              alt="Poodle reading a book"
+            />
+            <p
+              className="quattrocento-sans-regular"
+              style={{ fontSize: "1.3em" }}
+            >
+              View Appointments
+            </p>
+          </Link>
+        </div>
+        <div className="column is-align-self-flex-end">
+          <Link to="/partner/pets">
+            <img
+              src="../../../images/partner-view-pets-banner.png"
+              alt="Poodles at a party"
+            />
+            <p
+              className="quattrocento-sans-regular"
+              style={{ fontSize: "1.3em" }}
+            >
+              View Current Pet Listings
+            </p>
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

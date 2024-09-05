@@ -7,13 +7,38 @@ export default function UserNavBar({ token }) {
 
   return (
     <>
-      <Link to="/">Pawfect Match</Link>
-      <Link to="/about">About</Link>
-      <Link to="/contact">Contact</Link>
-      <Link to="/events">Events</Link>
-      {/* THE BELOW TWO NAVS LINKS SHOULD ONLY APPEAR WHEN USER HAS LOGGED IN. FIGURE OUT LATER */}
-      <Link to="/search">Find Pets</Link>
-      <Link to={`/home/${userId}`}>Home</Link>
+      <nav
+        className="navbar is-justify-content-center"
+        role="navigation"
+        aria-label="main navigation"
+        style={{
+          marginLeft: "17em",
+          marginRight: "17em",
+          background: "#f6f3e9",
+        }}
+      >
+        <div className="navbar-brand" style={{ fontSize: "1.3em" }}>
+          <Link to="/about" className="navbar-item">
+            About
+          </Link>
+          <Link to="/contact" className="navbar-item">
+            Contact
+          </Link>
+          <Link to="/events" className="navbar-item">
+            Events
+          </Link>
+          {token && (
+            <>
+              <Link to="/search" className="navbar-item">
+                Find Pets
+              </Link>
+              <Link to={`/home/${userId}`} className="navbar-item">
+                Home
+              </Link>
+            </>
+          )}
+        </div>
+      </nav>
     </>
   );
 }
