@@ -35,6 +35,15 @@ export default function UserNavBar({ token }) {
               <Link to={`/home/${userId}`} className="navbar-item">
                 Home
               </Link>
+              <a
+                href="/"
+                className="navbar-item"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Sign Out
+              </a>
             </>
           )}
         </div>
