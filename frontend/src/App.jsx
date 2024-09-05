@@ -34,8 +34,6 @@ function App() {
 
   return (
     <>
-      <h1>Pawfect Match</h1>
-
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route

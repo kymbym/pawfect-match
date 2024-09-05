@@ -1,3 +1,7 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -12,6 +16,39 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+/* For Title */
+.titan-one-regular {
+    font-family: "Titan One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* For Body Text*/
+.quattrocento-sans-regular {
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quattrocento-sans-bold {
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.quattrocento-sans-regular-italic {
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.quattrocento-sans-bold-italic {
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+ /* End of Font for body text */
 
 #root {
     max-width: 1280px;
@@ -41,6 +78,16 @@ body {
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
+}
+
+h2 {
+    font-size: 2em;
+    line-height: 1.3;
+}
+
+h3 {
+    font-size: 1.3em;
+    line-height: 1.4;
 }
 
 button {
@@ -79,7 +126,7 @@ button:focus-visible {
     }
 }
 
-img {
+/* img {
     width: 400px;
     height: auto;
-}
+} */

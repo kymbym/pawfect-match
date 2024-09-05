@@ -7,16 +7,20 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-bulma": "sass --load-path=node_modules my-bulma-project.scss my-bulma-project.css",
+    "start": "npm run build-bulma -- --watch"
   },
   "dependencies": {
     "aws-sdk": "^2.1674.0",
     "bootstrap": "^5.3.3",
+    "bulma": "^1.0.2",
     "date-fns": "^3.6.0",
     "debug": "^4.3.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1"
+    "react-router-dom": "^6.26.1",
+    "sass": "^1.78.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
