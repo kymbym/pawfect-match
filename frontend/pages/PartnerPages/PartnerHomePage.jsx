@@ -54,7 +54,7 @@ const PartnerHomePage = ({ token }) => {
       <h1 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
         Welcome, {organizationName}!
       </h1>
-      <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em" }}>
+      <h2 className="quattrocento-sans-regular" style={{ margin: "0.3em", paddingBottom:"15px" }}>
         Your next upcoming appointment:
       </h2>
       {upcomingAppointment ? (
@@ -93,7 +93,7 @@ const PartnerHomePage = ({ token }) => {
           No upcoming appointments!
         </h3>
       )}
-      <div className="columns" style={{ marginTop: "1.7em" }}>
+      <div className="columns">
         <div className="column is-align-self-flex-end">
           <Link to="/partner/appointments">
             <img
