@@ -26,10 +26,19 @@ const PartnerNavBar = () => {
           <Link to="/partner/home" className="navbar-item">
             Home
           </Link>
+          <a
+            href="/"
+            className="navbar-item"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Sign Out
+          </a>
         </div>
       </nav>
     </>
   );
-}
+};
 
 export default PartnerNavBar;
