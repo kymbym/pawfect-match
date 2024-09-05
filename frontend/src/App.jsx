@@ -35,7 +35,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainPage token={token} />} />
         <Route
           path="/partner/login"
           element={<PartnerLoginForm setToken={setToken} />}
