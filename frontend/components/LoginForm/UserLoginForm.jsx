@@ -50,6 +50,113 @@ export default function UserLoginForm({ setToken }) {
 
   return (
     <>
+    <div className="columns">
+        <div className="column is-align-content-center">
+          <h1
+            className="titan-one-regular"
+            style={{ fontSize: "4.5em", margin: "0.1em" }}
+          >
+            Pawfect Match
+          </h1>
+        </div>
+      </div>
+ 
+
+      <div className="columns">
+        <div className="column is-align-content-center">
+          <figure className="image is-16 by 9 ">
+            <iframe
+              width="350"
+              height="180"
+              src="../../../images/sign-up-banner.png"
+              alt="A poodle"
+            />
+          </figure>
+          <h2 className="quattrocento-sans-regular">Login to your account</h2>
+          <h3 className="quattrocento-sans-regular">
+            Enter your details to sign in your account.
+          </h3>
+        </div>
+
+        <div className="column is-half">
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Name</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="text"
+                placeholder="e.g Jane Doe"
+                value={userName}
+                name="userName"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Email</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="email"
+                placeholder="e.g. janedoe@mail.com"
+                value={email}
+                name="email"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={password}
+                name="password"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Confirm Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={confirmPw}
+                name="confirmPw"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="control">
+            <button
+              type="submit"
+              className="button is-primary quattrocento-sans-bold"
+              onClick={handleSubmit}
+              disabled={isFormInvalid()}
+              style={{ margin: "0.3em", background: "#fff4f2", color:"#ff4e4e" }}
+            >
+              Submit
+            </button>
+          </div>
+
+          <h4 style={{ paddingTop: "8px" }} className="quattrocento-sans-regular">
+            Have an existing account?{" "}
+            <u onClick={handleLoginClick} style={{ cursor: "pointer" }} className="quattrocento-sans-regular-italic">
+              Login here
+            </u>{" "}
+          </h4>
+        </div>
+      </div>
+
+
+
+
       <img src="../../../images/user-login-banner.png" alt="A poodle sniffing coffee" />
       <h1>Log in to your account</h1>
       <h2>Enter your details to sign in to your account.</h2>

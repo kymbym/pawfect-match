@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signupPartner } from "../../services/partnerservices";
 import { useNavigate } from "react-router-dom";
 import { isValidToken } from "../../utils/jwtUtils";
+import { Link } from "react-router-dom";
 
 const PartnerSignupForm = ({ setToken }) => {
   const navigate = useNavigate();
@@ -54,191 +55,115 @@ const PartnerSignupForm = ({ setToken }) => {
   };
 
   return (
+
     <>
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="A poodle"
-            src="../../../images/sign-up-banner.png"
-            className="mx-auto h-10 w-auto"
-          />
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create an account
+      <div className="columns is-justify-content-center" style={{marginBottom:"15px"}}>
+        <div className="column is-align-content-center">
+          <Link to="/" style={{ color: "#ff4e4e" }}>
+          <h1
+            className="titan-one-regular has-text-centered"
+            style={{ fontSize: "4.5em", margin: "0.1em" }}
+          >
+            Pawfect Match
           </h1>
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          </Link>
+        </div>
+      </div>
+ 
+
+      <div className="columns is-justify-content-center">
+        <div className="column is-align-content-center">
+          <figure className="image is-16 by 9 ">
+            <iframe
+              width="400"
+              height="180"
+              src="../../../images/sign-up-banner.png"
+              alt="A poodle"
+            />
+          </figure>
+          <h2 className="quattrocento-sans-regular">Create an account</h2>
+          <h3 className="quattrocento-sans-regular">
             Enter your details to create an account.
-          </h2>
+          </h3>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="partner/signup" method="POST" className="space-y-6"> 
-            <div>
-              <label htmlFor="organizationName" className="block text-sm font-medium leading-6 text-gray-900">
-                Organization Name:
-              </label>
-              <div className="mt-2">
-                <input
-                  id="organizationName"
-                  name="organizationName"
-                  type="text"
-                  value={formData.organizationName}
-                  onChange={handleChange}
-                  required
-                  autoComplete="organizationName"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+        <div className="column is-half">
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Organization Name</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="text"
+                placeholder="e.g SPCA"
+                value={formData.organizationName}
+                name="organizationName"
+                onChange={handleChange}
+              />
             </div>
+          </div>
 
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email address:
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Email</label>
+            <div className="control">
+              <input
+                className="input is-normal quattrocento-sans-regular"
+                type="email"
+                placeholder="e.g. spca@mail.com"
+                value={formData.email}
+                name="email"
+                onChange={handleChange}
+              />
             </div>
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password:
-                </label>
-                <div className="text-sm">
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={formData.password}
+                name="password"
+                onChange={handleChange}
+              />
             </div>
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="confirmPw" className="block text-sm font-medium leading-6 text-gray-900">
-                  Confirm Password:
-                </label>
-                <div className="text-sm">
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="confirmPw"
-                  name="confirmPw"
-                  type="password"
-                  value={formData.confirmPw}
-                  onChange={handleChange}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+          <div className="field">
+            <label className="label quattrocento-sans-bold">Confirm Password</label>
+            <div className="control">
+              <input
+                className="input is-normal"
+                type="password"
+                value={formData.confirmPw}
+                name="confirmPw"
+                onChange={handleChange}
+              />
             </div>
+          </div>
 
-            <br />
+          <div className="control">
+            <button
+              type="submit"
+              className="button is-primary quattrocento-sans-bold"
+              onClick={handleSignup}
+              disabled={isFormInvalid()}
+              style={{ margin: "0.3em", background: "#fff4f2", color:"#ff4e4e" }}
+            >
+              Submit
+            </button>
+          </div>
 
-            <div>
-              <button
-                onClick={handleSignup}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                disabled={isFormInvalid()}
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Have an existing account?{' '}
-            <a onClick={handleLoginClick} style={{ cursor: "pointer" }} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <h4 style={{ paddingTop: "8px" }} className="quattrocento-sans-regular">
+            Have an existing account?{" "}
+            <u onClick={handleLoginClick} style={{ cursor: "pointer" }} className="quattrocento-sans-regular-italic">
               Login here
-            </a>
-          </p>
+            </u>{" "}
+          </h4>
         </div>
       </div>
     </>
   )
-}
+};
 
-  export default PartnerSignupForm;
-
-//   return (
-//     <>
-//     <img src="../../../images/sign-up-banner.png" alt="A poodle" />
-//       <h1>Create an account</h1>
-//       <h2>Enter your details to create an account.</h2>
-//       <form onSubmit={handleSignup}>
-//         <div>
-//           <label>Organization Name:</label>
-//           <input
-//             type="text"
-//             id="organizationName"
-//             name="organizationName"
-//             value={formData.organizationName}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Email:</label>
-//           <input
-//             type="email"
-//             id="email"
-//             name="email"
-//             value={formData.email}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Password:</label>
-//           <input
-//             type="password"
-//             id="password"
-//             name="password"
-//             value={formData.password}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label>Confirm Password:</label>
-//           <input
-//             type="password"
-//             id="confirmPw"
-//             name="confirmPw"
-//             value={formData.confirmPw}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-//         <button type="submit" disabled={isFormInvalid()}>
-//           Submit
-//         </button>
-//       </form>
-//       <p>
-//         Have an existing account?{" "}
-//         <u onClick={handleLoginClick} style={{ cursor: "pointer" }}>
-//           Login here
-//         </u>
-//       </p>
-//     </>
-//   );
-// };
-
+export default PartnerSignupForm;

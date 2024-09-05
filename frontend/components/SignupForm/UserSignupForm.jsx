@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUpUser } from "../../services/userService";
+import { Link } from "react-router-dom";
 
 export default function UserSignupForm() {
   const navigate = useNavigate();
@@ -39,23 +40,25 @@ export default function UserSignupForm() {
 
   return (
     <>
-      <div className="columns">
+      <div className="columns is-justify-content-center" style={{marginBottom:"15px"}}>
         <div className="column is-align-content-center">
+          <Link to="/" style={{ color: "#ff4e4e" }}>
           <h1
             className="titan-one-regular"
             style={{ fontSize: "4.5em", margin: "0.1em" }}
           >
             Pawfect Match
           </h1>
+          </Link>
         </div>
       </div>
  
 
-      <div className="columns">
+      <div className="columns is-justify-content-center">
         <div className="column is-align-content-center">
           <figure className="image is-16 by 9 ">
             <iframe
-              width="350"
+              width="400"
               height="180"
               src="../../../images/sign-up-banner.png"
               alt="A poodle"
@@ -72,7 +75,7 @@ export default function UserSignupForm() {
             <label className="label quattrocento-sans-bold">Name</label>
             <div className="control">
               <input
-                className="input is-small quattrocento-sans-regular"
+                className="input is-normal quattrocento-sans-regular"
                 type="text"
                 placeholder="e.g Jane Doe"
                 value={userName}
@@ -86,7 +89,7 @@ export default function UserSignupForm() {
             <label className="label quattrocento-sans-bold">Email</label>
             <div className="control">
               <input
-                className="input is-small quattrocento-sans-regular"
+                className="input is-normal quattrocento-sans-regular"
                 type="email"
                 placeholder="e.g. janedoe@mail.com"
                 value={email}
@@ -100,7 +103,7 @@ export default function UserSignupForm() {
             <label className="label quattrocento-sans-bold">Password</label>
             <div className="control">
               <input
-                className="input is-small"
+                className="input is-normal"
                 type="password"
                 value={password}
                 name="password"
@@ -113,7 +116,7 @@ export default function UserSignupForm() {
             <label className="label quattrocento-sans-bold">Confirm Password</label>
             <div className="control">
               <input
-                className="input is-small"
+                className="input is-normal"
                 type="password"
                 value={confirmPw}
                 name="confirmPw"
@@ -128,7 +131,7 @@ export default function UserSignupForm() {
               className="button is-primary quattrocento-sans-bold"
               onClick={handleSubmit}
               disabled={isFormInvalid()}
-              style={{ margin: "0.3em", background: "#fff4f2" }}
+              style={{ margin: "0.3em", background: "#fff4f2", color:"#ff4e4e" }}
             >
               Submit
             </button>
