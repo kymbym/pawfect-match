@@ -67,9 +67,9 @@ export default function UserLoginForm({ setToken }) {
  
 
        <div className="columns is-justify-content-center">
-        <div className="column is-align-content-center">
-          <figure className="image is-16 by 9 ">
-            <iframe
+        <div className="column is-align-content-center" style={{width: "33em"}}>
+          <figure className="image is-16by9 ">
+            <img
             style={{overflow:"hidden"}}
               width="400"
               height="180"
