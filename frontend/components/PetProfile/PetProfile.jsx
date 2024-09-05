@@ -132,6 +132,22 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
 
   return (
     <>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {isEditing ? (
         <UpdatePetProfile
           petId={petId}

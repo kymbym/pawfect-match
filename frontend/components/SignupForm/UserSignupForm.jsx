@@ -71,6 +71,7 @@ export default function UserSignupForm() {
         </div>
 
         <div className="column is-half">
+          <form onSubmit={handleSubmit}>
           <div className="field">
             <label className="label quattrocento-sans-bold">Name</label>
             <div className="control">
@@ -129,9 +130,8 @@ export default function UserSignupForm() {
             <button
               type="submit"
               className="button is-primary quattrocento-sans-bold"
-              onClick={handleSubmit}
               disabled={isFormInvalid()}
-              style={{ margin: "0.3em", background: "#fff4f2", color:"#ff4e4e" }}
+              style={{ margin: "0.3em", background: "#ff4e4e", color:"#fff4f2" }}
             >
               Submit
             </button>
@@ -143,6 +143,7 @@ export default function UserSignupForm() {
               Login here
             </u>{" "}
           </h4>
+          </form>
         </div>
       </div>
     </>
