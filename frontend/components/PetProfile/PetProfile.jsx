@@ -3,13 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   getPetById,
   deletePet,
-  deletePhoto,
 } from "../../services/partnerservices";
 import UpdatePetProfile from "../PartnerComponents/UpdatePetProfile";
 import { format, differenceInYears } from "date-fns";
 import UserNavBar from "../NavBar/UserNavBar";
 import PartnerNavBar from "../NavBar/PartnerNavBar";
 import { followDog, unfollowDog } from "../../services/userService";
+import { Link } from "react-router-dom";
 
 const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
   const { petId } = useParams();
@@ -97,16 +97,16 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
     navigate(`/appointments/create/${petId}`);
   };
 
-  const handleDeletePhoto = async (photoUrl) => {
-    try {
-      const updatedPet = await deletePhoto(photoUrl, petId, token);
-      setPetData({ ...petData, photos: updatedPet.photos });
-      alert("pet photo successfully deleted");
-      navigate("/partner/pets");
-    } catch (error) {
-      console.error("error occurred while deleting photo", error);
-    }
-  };
+  // const handleDeletePhoto = async (photoUrl) => {
+  //   try {
+  //     const updatedPet = await deletePhoto(photoUrl, petId, token);
+  //     setPetData({ ...petData, photos: updatedPet.photos });
+  //     alert("pet photo successfully deleted");
+  //     navigate("/partner/pets");
+  //   } catch (error) {
+  //     console.error("error occurred while deleting photo", error);
+  //   }
+  // };
 
   if (!petData) {
     console.log("no pets");
@@ -133,6 +133,16 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
 
   return (
     <>
+    <div style={{ position: "sticky" }}>
+        <Link to="/" style={{ color: "#ff4e4e" }}>
+          <h1 className="titan-one-regular" style={{ fontSize: "4.5em", margin: "0.3em" }}>
+            Pawfect Match
+          </h1>
+        </Link>
+        {view === "user" && <UserNavBar token={token}/>}
+        {view === "partner" && <PartnerNavBar token={token} />}
+      </div>
+      
       {isEditing ? (
         <UpdatePetProfile
           petId={petId}
@@ -144,20 +154,8 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
       ) : (
         <>
           <div className="columns">
-            <div className="column">
-              {view === "user" && (
-                <>
-                  <UserNavBar token={token} />
-                  <br />
-                </>
-              )}
-
-              {view === "partner" && (
-                <>
-                  <PartnerNavBar token={token} />
-                  <br />
-                </>
-              )}
+            <div className="column" style={{paddingTop: "40px"}}>
+              
               <figure className="image is-256x256" style={{ width: "24em" }}>
                 <img
                   className="is-rounded"
@@ -181,40 +179,40 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
                   margin: "auto",
                 }}
               >
-                <p className="quattrocento-sans-regular">
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">Breed:</span> {breed}
-                </p>
-                <p className="quattrocento-sans-regular">
+                </h3>
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">Gender:</span>{" "}
                   {gender}
-                </p>
-                <p className="quattrocento-sans-regular">
+                </h3>
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">Birthday:</span>{" "}
                   {birthday
                     ? format(new Date(birthday), "d MMMM yyyy")
                     : "Unknown"}{" "}
                   ({petAge} Years Old)
-                </p>
-                <p className="quattrocento-sans-regular">
+                </h3>
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">Color:</span> {color}
-                </p>
-                <p className="quattrocento-sans-regular">
+                </h3>
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">Personality:</span>{" "}
                   {personality}
-                </p>
-                <p className="quattrocento-sans-regular">
+                </h3>
+                <h3 className="quattrocento-sans-regular">
                   <span className="quattrocento-sans-bold">
                     Adoption Stage:
                   </span>{" "}
                   {adoptionStage}
-                </p>
-                <p>
+                </h3>
+                <h3>
                   <span className="quattrocento-sans-bold">
                     Medical History:
                   </span>
-                </p>
+                </h3>
                 <ul>
-                  <li className="quattrocento-sans-regular">
+                  <h3 className="quattrocento-sans-regular">
                     <span
                       className={`icon ${medicalHistory?.sterilized ? "has-text-success" : "has-text-danger"}`}
                     >
@@ -225,8 +223,8 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
                     {medicalHistory?.sterilized
                       ? " Sterilized"
                       : " Not Sterilized"}
-                  </li>
-                  <li className="quattrocento-sans-regular">
+                  </h3>
+                  <h3 className="quattrocento-sans-regular">
                     <span
                       className={`icon ${medicalHistory?.vaccinated ? "has-text-success" : "has-text-danger"}`}
                     >
@@ -237,7 +235,7 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
                     {medicalHistory?.vaccinated
                       ? " Vaccinated"
                       : " Not Vaccinated"}
-                  </li>
+                  </h3>
                 </ul>
               </div>
             </div>
@@ -253,7 +251,7 @@ const PetProfile = ({ view, token, followedPets, handleToggleFollow }) => {
 
           {view === "partner" && (
             <div>
-              <h2 className="quattrocento-sans-bold" style={{paddingBottom:"5px"}}>
+              <h2 className="quattrocento-sans-bold" style={{paddingBottom:"10px"}}>
                 Appointments for {name}
               </h2>
               {appointments.length === 0 ? (
