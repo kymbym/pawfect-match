@@ -2,6 +2,8 @@
 
 Pawfect Match aims to be the go-to platform to connect people with various animal welfare agencies and organizations, helping everyone (humans and dogs alike) find their pawfect match.
 
+![main page](/frontend/public/images/main-page.png)
+
 **A unified platform for pet adoption**
 
 With Pawfect Match, organizations can create their organization profile and upload their pets for adoption. When users sign in, they can search for pets across multiple agencies all in one place.
@@ -20,11 +22,23 @@ This has been a group project embarked by Kymmy and Carmen in fulfillment of the
 
 Find your furrever friend today by creating an account.
 
+![login page](/frontend/public/images/login-page.png)
+
+![user home page](/frontend/public/images/user-home-page.png)
+
 Search for pets by name, or other specifications you may have: gender, color, and/or personality.
+
+![search page](/frontend/public/images/search-page.png)
 
 View the pet profiles and add them to your favorites by clicking "follow". When you're ready, book an appointment with the relevant provider and they will be in touch with you shortly.
 
-As a Partner, create an account with us and start uploading pets by filling in our questionnaire. Continue to update your pets' profiles to showcase their personality and keep potential adopters informed.
+![pet profile page](/frontend/public/images/koda-pet-profile.png)
+
+As a Partner, create an account with us and start uploading pets by filling in our questionnaire. Continue to update your pets' profiles to showcase their personality and keep potential adopters informed. 
+
+![partner home page](/frontend/public/images/partner-home-page.png)
+
+![upload pets page](/frontend/public/images/upload-pet-page.png)
 
 See how we planned this game [here](https://miro.com/app/board/uXjVKnOMIGM=/?share_link_id=155609356887).
 
@@ -35,7 +49,7 @@ See how we planned this game [here](https://miro.com/app/board/uXjVKnOMIGM=/?sha
 
 ## Technologies Used
 
-HTML, CSS, JavaScript, MongoDB, Express.js, React, Node.js
+- HTML, CSS, JavaScript, MongoDB, Express.js, React, Node.js
 
 ## Next Steps
 
