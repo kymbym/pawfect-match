@@ -50,7 +50,7 @@ export default function UserFavoritesPage({ token }) {
         </h1>
       </Link>
       <UserNavBar token={token} />
-      <h1 className="quattrocento-sans-regular">Your Favorites</h1>
+      <h1 className="titan-one-regular">Your Favorites</h1>
       {pets.length === 0 ? (
         <p>Start following some pets!</p>
       ) : (
