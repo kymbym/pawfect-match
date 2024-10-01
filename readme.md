@@ -16,7 +16,7 @@ User who are interested in certain pets can "follow" them and check back in for 
 
 Whenever users are ready to arrange for a viewing, they can simply fill up an appointment form that will go straight to the relevant providers.
 
-This has been a group project embarked by Kymmy and Carmen in fulfillment of the third coding bootcamp project to build a full-stack web app.
+This has been a group project embarked by Kymmy and Carmen in fulfillment of the third project to build a full-stack web app.
 
 ## Getting Started
 
